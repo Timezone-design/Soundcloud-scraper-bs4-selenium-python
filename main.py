@@ -24,6 +24,44 @@ instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_)
 
 proxy_list = []
 
+def get_bio_excludes():
+	excludes = []
+	try:
+		if os.path.exists('bio.exclude.json'):
+			with open('bio.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print(ex)
+	return excludes
+
+
+def get_title_excludes():
+	excludes = []
+	try:
+		if os.path.exists('title.exclude.json'):
+			with open('title.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print(ex)
+	return excludes
+
+def get_famous_rapper_excludes():
+	excludes = []
+	try:
+		if os.path.exists('famous_rapper.exclude.json'):
+			with open('famous_rapper.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print(ex)
+	return excludes
+
+
 def get_proxies():
 	url = "https://free-proxy-list.net/"
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
@@ -44,6 +82,7 @@ def get_proxies():
 		except IndexError:
 			continue
 	return proxies
+
 
 def get_session(proxies):
 	session = requests.Session()
@@ -323,6 +362,16 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		artistname = None
 		pass
 	
+	search_entity = []
+	search_entity.append(username)
+	search_entity.append(fullname)
+	search_entity.append(artistname)
+	search_entity.append(songtitlefull)
+	title_excludes = get_title_excludes()
+	for entity in search_entity:
+		for item in title_excludes:
+			if item in entity:
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if not username:
 		username = track_object['user']['username']
@@ -480,6 +529,10 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('Mixed By')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('mixed by')[0]
 	except:
 		pass
@@ -586,6 +639,16 @@ def get_rapper_details():
 		time.sleep(1)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
+
+		if not bio:
+			continue
+
+		bio_excludes = get_bio_excludes()
+		bio_text = bio.text
+		for item in bio_excludes:
+			if item in bio_text:
+				continue
+
 		web_profiles = rapper_soup.find('div', class_="web-profiles")
 
 		print('Searching {}th user as above url.'.format(rapper_profile_url_unique.index(rapper) + 1))
@@ -594,7 +657,9 @@ def get_rapper_details():
 
 		if rapper_email or rapper_instagram_username:
 			username, fullname, artistname, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
-			
+			if username == fullname == artistname == location == country == songtitle == songtitlefull == 'excluded':
+				continue
+
 			if rapper_email:
 				emailwriter.writerow([rapper.strip(), username, fullname, artistname, location, country, rapper_email, songtitle, songtitlefull])
 				print('Email written as: ', [rapper.strip(), username, fullname, artistname, location, country, rapper_email, songtitle, songtitlefull])
@@ -611,6 +676,8 @@ def get_rapper_details():
 def main(): # Main workflow of SoundCloud Scraper
 
 	permalinks = []
+
+	"""
 
 	use_auto_proxy = False
 	use_manual_proxy = False
@@ -642,6 +709,8 @@ def main(): # Main workflow of SoundCloud Scraper
 	if use_manual_proxy == 'n':
 		proxy_list = get_manual_proxies()
 		print("Reading files for proxies")
+
+	"""
 		
 
 	if not os.path.exists("permalinks.txt"): # Searches if permalinks to repost profiles are already made
