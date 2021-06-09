@@ -25,32 +25,47 @@ instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_)
 proxy_list = []
 
 def get_proxies():
-    url = "https://free-proxy-list.net/"
-    driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	url = "https://free-proxy-list.net/"
+	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 	driver.set_page_load_timeout(10000)
 	driver.get(url)
 	time.sleep(2)
 	country_select = driver.find_element_by_xpath('//*[@id="proxylisttable"]/tfoot/tr/th[3]/select/option[text()="US"]')
 	country_select.click()
-    soup = bs(driver.page_source, "html.parser")
-    proxies = []
-    for row in soup.find("table", attrs={"id": "proxylisttable"}).find_all("tr")[1:]:
-        tds = row.find_all("td")
-        try:
-            ip = tds[0].text.strip()
-            port = tds[1].text.strip()
-            host = f"{ip}:{port}"
-            proxies.append(host)
-        except IndexError:
-            continue
-
-    return proxies
+	soup = BeautifulSoup(driver.page_source, "html.parser")
+	proxies = []
+	for row in soup.find("table", attrs={"id": "proxylisttable"}).find_all("tr")[1:]:
+		tds = row.find_all("td")
+		try:
+			ip = tds[0].text.strip()
+			port = tds[1].text.strip()
+			host = f"{ip}:{port}"
+			proxies.append(host)
+		except IndexError:
+			continue
+	return proxies
 
 def get_session(proxies):
-    session = requests.Session()
-    proxy = random.choice(proxies)
-    session.proxies = {"http": proxy, "https": proxy}
-    return session, proxy
+	session = requests.Session()
+	proxy = random.choice(proxies)
+	session.proxies = {"http": proxy, "https": proxy}
+	return session, proxy
+
+def get_new_driver_from_proxy_list(proxy_list):
+	s, p = get_session(proxy_list)
+	options.add_argument("proxy-server={}".format(p))
+	for i in range(25):
+		try:
+			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH, service_log_path="NULL")
+		except Exception as e:
+			print(e)
+			pass
+		if driver:
+			print("Proxy server changed to ", p)
+			return driver
+		elif i == 24:
+			print("Cannot create webdriver from proxies.")
+			exit(0)
 
 
 def replace_all(text):
@@ -67,139 +82,133 @@ def replace_all(text):
 	return text
 
 
-def song_title_and_rapper_name(name_title,index,index1):
+def song_title_and_artist_name(songtitlefull,index,index1):
 
-	print('name_title: ', name_title)
+	print('songtitlefull: ', songtitlefull)
+	artistname = songtitlefull
 	try:
-		rapper_name = name_title.split('-')[index]
+		artistname = artistname.split('-')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('x ')[index]
+		artistname = artistname.split('x ')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split(',')[index]
+		artistname = artistname.split(',')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('feat')[index]
+		artistname = artistname.split('feat')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('Feat')[index]
+		artistname = artistname.split('Feat')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('prod')[index]
+		artistname = artistname.split('prod')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('(')[index]
+		artistname = artistname.split('(')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('and')[index]
+		artistname = artistname.split('and')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('&')[index]
+		artistname = artistname.split('&')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('+')[index]
+		artistname = artistname.split('+')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('[')[index]
+		artistname = artistname.split('[')[index]
 	except:
 		pass
 	try:
-		rapper_name = rapper_name.split('|')[index]
+		artistname = artistname.split('|')[index]
 	except:
 		pass
-
-	try:
-		song_title = name_title.split('-')[index1] + name_title.split('-')[2]
-	except:
-		song_title = name_title.split('-')[index1]
-	song_title_full = song_title
+	
 
 	try:
-		song_title = song_title.split('(')[0]
+		songtitle = songtitlefull.split('-')[index1] + songtitlefull.split('-')[2]
+	except:
+		songtitle = songtitlefull.split('-')[index1]
+	try:
+		songtitle = songtitle.split('(')[0]
 	except:
 		pass
 	try:
-		song_title = song_title.split('[')[0]
+		songtitle = songtitle.split('[')[0]
 	except:
 		pass
 	try:
-		song_title = song_title.split('feat')[0]
+		songtitle = songtitle.split('feat')[0]
 	except:
 		pass
 	try:
-		song_title = song_title.split('Feat')[0]
+		songtitle = songtitle.split('Feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(':')[0]
 	except:
 		pass
 
-	return rapper_name, song_title, song_title_full
+	return artistname, songtitle
 
 
 def get_rapper_profile_urls_from_reposts(permalinks):
+	driver = None
 
 	if use_auto_proxy:
+		driver = get_new_driver_from_proxy_list(proxy_list)
 
 	if use_manual_proxy:
+		pass
 
-
-	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	if not use_manual_proxy and not use_auto_proxy:
+		driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
 	for permalink in permalinks:
 		
+		if use_auto_proxy or use_manual_proxy and permalinks.index(permalink) % 20 == 0:
+			driver = get_new_driver_from_proxy_list(proxy_list)
+
 		rapper_urls = []
-
 		driver.set_page_load_timeout(10000)
-
 		driver.get(permalink)
-
 		time.sleep(2)
-
 		scroll_pause_time = 1.5
-
 		scroll_threshold = 10
-
 		i = 0
 
 		while True:
-			
 			i += 1
-
 			last_height = driver.execute_script("return document.body.scrollHeight")
-
 			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-
 			time.sleep(scroll_pause_time)
-
 			new_height = driver.execute_script("return document.body.scrollHeight")
 
 			if last_height == new_height or i == scroll_threshold:
-
-				print("Scroll finished. Now scraping...")
-				
+				print("Scroll finished. Now scraping...")			
 				break
 
 		soup = BeautifulSoup(driver.page_source, "html.parser")
 
 		for rapper_profile_url in soup.find_all(class_="soundTitle__username"):
-
 			rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 
 		print("{} / {} finished.".format(permalinks.index(permalink) + 1, len(permalinks)))
 
 		with open('rappers.txt', 'a') as f:
-
 			for item in rapper_urls:
-
 				f.write("%s\n" % item)
 
 		print("{} rapper profile URLs are written into file rappers.txt.".format(len(rapper_urls)))
@@ -276,27 +285,48 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 	return email, instagram_username, instagram_url
 
 
-def get_other_info_of_rapper(rapper_soup):
+def get_other_info_of_rapper(rapper_soup, permalink):
+	songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
+	username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
+	user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
+	
+	flag = False
+	for item in user_search['collection']:
+		if permalink in item['permalink']:
+			user_object = item
+			flag = True
+			break
+	if not flag:
+		user_object = user_search['collection'][0]
 
-	songtitlefull = rapper_soup.find('a', class_='soundTitle__title').get_text().strip()
+	location = user_object['city']
+	country = user_object['country_code']
+	permalink = user_object['permalink']
+	fullname = user_object['full_name']
+	username = user_object['username']
 
 	track_search = json.loads(requests.get(track_search_api.format(urllib.parse.quote(songtitlefull))).content.decode('utf-8'))
+	track_object = track_search['collection']
 
-	track_object = track_search['collection'][0]
+	flag = False
+	for item in track_object:
+		if permalink in item['permalink_url']:
+			track_object = item
+			flag = True
+			break
+	if not flag:
+		track_object = track_object[0]
 
-	username = track_object['user']['username']
-	fullname = track_object['user']['full_name']
 	try:
 		artistname = track_object['publisher_metadata']['artist']
 	except:
 		artistname = None
 		pass
-	location = track_object['user']['city']
-	country = track_object['user']['country_code']
+	
 
 	if not username:
-		username = rapper_soup.find('h3', class_='profileHeaderInfo__userName')
-		username = username.h3.find(text=True, recursive=False)
+		username = track_object['user']['username']
+		fullname = track_object['user']['full_name']
 
 	if not fullname:
 		fullname = username
@@ -305,24 +335,15 @@ def get_other_info_of_rapper(rapper_soup):
 		artistname = username
 
 	if not location or not country:
-		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
-		user_object = user_search['collection'][0]
-
-		location = user_object['city']
-		country = user_object['country_code']
+		location = track_object['user']['city']
+		country = track_object['user']['country_code']
 
 	songtitle = songtitlefull
-
-	if location == '':
-		location = None
-
-	if country == '':
-		country = None
 
 	# get correct fullname and trackname
 
 	if '- ' in songtitlefull:
-		temp_fullname, songtitle, songtitlefull = song_title_and_rapper_name(songtitlefull, 0, 1)
+		temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
 		username_list = username.split()
 		songtitle_list = songtitle.split()
 		fullname2_list = artistname.split()
@@ -352,54 +373,137 @@ def get_other_info_of_rapper(rapper_soup):
 						flag_full_name2_match = True
 						break
 				if flag_full_name2_match:
-					temp_fullname, songtitle, songtitlefull = song_title_and_rapper_name(songtitlefull, 1, 0)
+					temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 1, 0)
 					break
 				i += 1
 
-	else:
-		fullname = replace_all(username)
-		try:
-			fullname = fullname.split('(')[0]
-		except:
-			pass
-		try:
-			fullname = fullname.split('[')[0]
-		except:
-			pass
-		try:
-			fullname = fullname.split('|')[0]
-		except:
-			pass
+	# else:
+	artistname = replace_all(artistname)
+	try:
+		artistname = artistname.split('(')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('[')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('/')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('|')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(',')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('&')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' x ')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' - ')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' ft')[0]
+	except:
+		pass
 
-		songtitle = songtitlefull
+	if not songtitle[0] == '(':
 		try:
-			songtitle = songtitlefull.split('(')[0]
+			songtitle = songtitle.split('(')[0]
 		except:
 			pass
+	if not songtitle[0] == "'":
+		try:
+			songtitle = songtitle.split("'")[0]
+		except:
+			pass
+	if not songtitle[0] == "[":
 		try:
 			songtitle = songtitle.split('[')[0]
 		except:
 			pass
-		try:
-			songtitle = songtitle.split('Feat')[0]
-		except:
-			pass
-		try:
-			songtitle = songtitle.split('feat')[0]
-		except:
-			pass
-		try:
-			songtitle = songtitle.split('ft')[0]
-		except:
-			pass
-		try:
-			songtitle = songtitle.split('Ft')[0]
-		except:
-			pass
-		try:
-			songtitle = songtitle.split('/')[0]
-		except:
-			pass
+	try:
+		songtitle = songtitle.split('Feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' x ')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('/')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('|')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('+')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FREE] ')[1]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(':')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('?')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Mixed by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('mixed by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('produced by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('¨')[0]
+	except:
+		pass
+	if songtitle.split()[0][0] == '#':
+		songtitle = ' '.join(songtitle.split()[1:])
+	
+	src_str  = re.compile("freestyle", re.IGNORECASE)
+	songtitle  = src_str.sub('', songtitle)
 
 	if artistname == '':
 		artistname = fullname.strip()
@@ -423,11 +527,11 @@ def get_rapper_details():
 	filenameEmail = "Email-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
 	filenameInstagram = "Instagram-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
 
-	emailFile = open(filenameEmail, 'w', newline='', encoding='utf-8')
-	instaFile = open(filenameInstagram, 'w', newline='', encoding='utf-8')
+	emailFile = open(filenameEmail, 'w', newline='', encoding='utf-16	')
+	instaFile = open(filenameInstagram, 'w', newline='', encoding='utf-16	')
 
-	emailwriter = csv.writer(emailFile)
-	instawriter = csv.writer(instaFile)
+	emailwriter = csv.writer(emailFile, delimiter='\t')
+	instawriter = csv.writer(instaFile, delimiter='\t')
 
 	emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
 	instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
@@ -489,7 +593,7 @@ def get_rapper_details():
 		rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
 
 		if rapper_email or rapper_instagram_username:
-			username, fullname, artistname, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup)
+			username, fullname, artistname, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
 			
 			if rapper_email:
 				emailwriter.writerow([rapper.strip(), username, fullname, artistname, location, country, rapper_email, songtitle, songtitlefull])
@@ -513,20 +617,20 @@ def main(): # Main workflow of SoundCloud Scraper
 
 	while True:
 		use_auto_proxy_string = input("Do you want to automatically select proxy? (y/n)")
-		if use_auto_proxy_string.lowercase() != 'y' or use_auto_proxy_string.lowercase() != 'n':
+		if use_auto_proxy_string.lower() != 'y' and use_auto_proxy_string.lower() != 'n':
 			print("Please input Y or N for an answer")
 			continue
-		if use_auto_proxy_string.lowercase() == 'y':
+		if use_auto_proxy_string.lower() == 'y':
 			use_auto_proxy = True
 		break
 
-	if use_auto_proxy.lowercase() == 'n':
+	if use_auto_proxy == False:
 		while True:
 			use_manual_proxy_string = input("Do you want to use manually chosen proxy? (y/n)")
-			if use_manual_proxy_string.lowercase() != 'y' or use_manual_proxy_string.lowercase() != 'n':
+			if use_manual_proxy_string.lower() != 'y' and use_manual_proxy_string.lower() != 'n':
 				print("Please input	Y or N for an answer")
 				continue
-			if use_manual_proxy_string.lowercase() == 'y':
+			if use_manual_proxy_string.lower() == 'y':
 				use_manual_proxy = True
 			break
 
@@ -535,7 +639,7 @@ def main(): # Main workflow of SoundCloud Scraper
 		proxy_list = get_proxies()
 		print("Proxies found: \n", proxy_list)
 
-	if use_manual_proxy.lowercase() == 'n':
+	if use_manual_proxy == 'n':
 		proxy_list = get_manual_proxies()
 		print("Reading files for proxies")
 		
