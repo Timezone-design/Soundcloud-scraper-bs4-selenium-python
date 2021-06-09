@@ -44,10 +44,12 @@ def get_title_excludes():
 			with open('title.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
+				# print("title excludes returned: ", excludes)
 				return excludes
 	except Exception as ex:
 		print(ex)
 	return excludes
+
 
 def get_famous_rapper_excludes():
 	excludes = []
@@ -370,7 +372,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	title_excludes = get_title_excludes()
 	for entity in search_entity:
 		for item in title_excludes:
-			if item in entity:
+			if entity is not None and item in entity:
 				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if not username:
@@ -489,7 +491,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
-		artistname = artistname.split(' x ')[0]
+		songtitle = songtitle.split(' x ')[0]
 	except:
 		pass
 	try:
@@ -560,6 +562,12 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 
 	if artistname == '':
 		artistname = fullname.strip()
+
+	famous_rapper_excludes = get_famous_rapper_excludes()
+	for item in famous_rapper_excludes:
+		if item in artistname:
+			artistname = 'man'
+			break
 
 	songtitle = songtitle.strip()
 	if songtitle:
