@@ -8,6 +8,7 @@ import os
 import re
 import urllib.parse
 import csv
+import pandas as pd
 
 
 options = Options()
@@ -19,6 +20,12 @@ init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&
 track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=20&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
 
 profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=20&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
+
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=20&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=20&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
 
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 
@@ -56,6 +63,32 @@ def get_famous_rapper_excludes():
 	try:
 		if os.path.exists('famous_rapper.exclude.json'):
 			with open('famous_rapper.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print(ex)
+	return excludes
+
+
+def get_email_excludes():
+	excludes = []
+	try:
+		if os.path.exists('email.exclude.json'):
+			with open('email.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print(ex)
+	return excludes
+
+
+def get_repost_excludes():
+	excludes = []
+	try:
+		if os.path.exists('repost.exclude.json'):
+			with open('repost.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				return excludes
@@ -201,6 +234,90 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 		songtitle = songtitle.split(':')[0]
 	except:
 		pass
+	try:
+		songtitle = songtitle.split('@')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('#')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' x ')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(',')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEATURING')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' Pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('+')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('*')[0]
+	except:
+		pass
 
 	return artistname, songtitle
 
@@ -208,19 +325,19 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 def get_rapper_profile_urls_from_reposts(permalinks):
 	driver = None
 
-	if use_auto_proxy:
-		driver = get_new_driver_from_proxy_list(proxy_list)
+	# if use_auto_proxy:
+	# 	driver = get_new_driver_from_proxy_list(proxy_list)
 
-	if use_manual_proxy:
-		pass
+	# if use_manual_proxy:
+	# 	pass
 
-	if not use_manual_proxy and not use_auto_proxy:
-		driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	# if not use_manual_proxy and not use_auto_proxy:
+	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
 	for permalink in permalinks:
 		
-		if use_auto_proxy or use_manual_proxy and permalinks.index(permalink) % 20 == 0:
-			driver = get_new_driver_from_proxy_list(proxy_list)
+		# if use_auto_proxy or use_manual_proxy and permalinks.index(permalink) % 20 == 0:
+		# 	driver = get_new_driver_from_proxy_list(proxy_list)
 
 		rapper_urls = []
 		driver.set_page_load_timeout(10000)
@@ -318,6 +435,10 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 			email = email.split(":")[1]
 		if not email.find("/") == -1:
 			email = email.split("//")[1]
+		email_excludes = get_email_excludes()
+		for item in email_excludes:
+			if item in email:
+				return None, None, None
 
 	print("Email: ", email)
 
@@ -327,9 +448,12 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 
 def get_other_info_of_rapper(rapper_soup, permalink):
-	songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
-	username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
-	user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
+	try:
+		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
+		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
+		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
+	except:
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
 	flag = False
 	for item in user_search['collection']:
@@ -356,7 +480,10 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		track_object = track_object[0]
+		try:
+			track_object = track_object[0]
+		except:
+			pass
 
 	try:
 		artistname = track_object['publisher_metadata']['artist']
@@ -386,8 +513,13 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		artistname = username
 
 	if not location or not country:
-		location = track_object['user']['city']
-		country = track_object['user']['country_code']
+		try:
+			location = track_object['user']['city']
+			country = track_object['user']['country_code']
+		except:
+			location = ''
+			country = ''
+			pass
 
 	songtitle = songtitlefull
 
@@ -472,11 +604,6 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			songtitle = songtitle.split('(')[0]
 		except:
 			pass
-	if not songtitle[0] == "'":
-		try:
-			songtitle = songtitle.split("'")[0]
-		except:
-			pass
 	if not songtitle[0] == "[":
 		try:
 			songtitle = songtitle.split('[')[0]
@@ -554,7 +681,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitle = songtitle.split('¨')[0]
 	except:
 		pass
-	if songtitle.split()[0][0] == '#':
+	if songtitle[0] == '#':
 		songtitle = ' '.join(songtitle.split()[1:])
 	
 	src_str  = re.compile("freestyle", re.IGNORECASE)
@@ -755,6 +882,23 @@ def main(): # Main workflow of SoundCloud Scraper
 
 			for single_response_object in api_response_object["collection"]:
 				
+				repost_excludes = get_repost_excludes()
+				search_entity = []
+				try:
+					search_entity.append(single_response_object["permalink"], single_response_object["full_name"], single_response_object["username"])
+				except:
+					pass
+				flag = False
+				for entity in search_entity:
+					for item in repost_excludes:
+						if item in entity:
+							flag = True
+							break
+					if flag:
+						break
+				if flag:
+					continue
+
 				permalinks.append(single_response_object["permalink_url"])
 
 				print("{}th permalink added.".format(len(permalinks)))
