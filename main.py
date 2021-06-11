@@ -323,7 +323,21 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 
 
 def get_rapper_profile_urls_from_reposts(permalinks):
-	driver = None
+
+	scroll_threshold = 10
+	while True: # Gets user input for API connection quantity
+		scroll_threshold = input("How many scrolls do you want to make for one page? (Default: 10) ")
+
+		try:
+			int(scroll_threshold)
+			break
+		except Exception as e:
+			print("Please input a valid integer.")
+		else:
+			pass
+		finally:
+			pass
+	# driver = None
 
 	# if use_auto_proxy:
 	# 	driver = get_new_driver_from_proxy_list(proxy_list)
@@ -332,6 +346,8 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 	# 	pass
 
 	# if not use_manual_proxy and not use_auto_proxy:
+
+
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
 	for permalink in permalinks:
@@ -344,7 +360,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		driver.get(permalink)
 		time.sleep(2)
 		scroll_pause_time = 1.5
-		scroll_threshold = 10
+		# scroll_threshold = 10
 		i = 0
 
 		while True:
@@ -363,7 +379,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		for rapper_profile_url in soup.find_all(class_="soundTitle__username"):
 			rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 
-		print("{} / {} finished.".format(permalinks.index(permalink) + 1, len(permalinks)))
+		print("\n{} / {} repost urls are searched.".format(permalinks.index(permalink) + 1, len(permalinks)))
 
 		with open('rappers.txt', 'a') as f:
 			for item in rapper_urls:
@@ -866,6 +882,7 @@ def main(): # Main workflow of SoundCloud Scraper
 			finally:
 				pass
 
+		repost_excludes = get_repost_excludes()
 		for x in range(int(api_conn_count)): # Send API request
 
 			url = init_url.format(x * 200)
@@ -881,22 +898,15 @@ def main(): # Main workflow of SoundCloud Scraper
 				break
 
 			for single_response_object in api_response_object["collection"]:
-				
-				repost_excludes = get_repost_excludes()
-				search_entity = []
-				try:
-					search_entity.append(single_response_object["permalink"], single_response_object["full_name"], single_response_object["username"])
-				except:
-					pass
 				flag = False
-				for entity in search_entity:
-					for item in repost_excludes:
-						if item in entity:
-							flag = True
-							break
-					if flag:
+				search_entity = single_response_object['permalink'] + ' ' + single_response_object['username'] + ' ' + single_response_object['full_name']
+				for exclude_word in repost_excludes:
+					if exclude_word in search_entity:
+						flag = True
 						break
+
 				if flag:
+					print("Excluded repost profile:", single_response_object["permalink_url"])
 					continue
 
 				permalinks.append(single_response_object["permalink_url"])
@@ -919,7 +929,7 @@ def main(): # Main workflow of SoundCloud Scraper
 
 				permalinks.append(item)
 
-	print("Getting repost profiles...")
+	print("\n\nOpening repost profiles to get rappers...")
 
 	if not os.path.exists("rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
 
