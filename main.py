@@ -13,6 +13,7 @@ import pandas as pd
 
 options = Options()
 options.headless = True
+options.add_argument('--log-level=3')
 DRIVER_PATH = 'chromedriver.exe'
 
 init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
@@ -640,6 +641,10 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		artistname = artistname.split(' ft')[0]
 	except:
 		pass
+	try:
+		artistname = artistname.split(' feat')[0]
+	except:
+		pass
 
 	if not songtitle[0] == '(':
 		try:
@@ -754,17 +759,24 @@ def get_rapper_details():
 	# initalizing csv files
 	# write to new file everytime
 
-	filenameEmail = "Email-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
-	filenameInstagram = "Instagram-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
+	# filenameEmail = "Email-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
+	# filenameInstagram = "Instagram-{}.csv".format(time.strftime("%Y%m%d-%H%M%S"))
 
-	emailFile = open(filenameEmail, 'w', newline='', encoding='utf-16	')
-	instaFile = open(filenameInstagram, 'w', newline='', encoding='utf-16	')
+	filenameEmail = "Rappers with Email.csv"
+	filenameInstagram = "Rappers with Instagram.csv"
+
+	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
+	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
 
 	emailwriter = csv.writer(emailFile, delimiter='\t')
 	instawriter = csv.writer(instaFile, delimiter='\t')
 
-	emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
-	instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
+	if os.path.getsize(filenameEmail) == 0:
+		print("Writing a new file for Email")
+		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
+	if os.path.getsize(filenameInstagram) == 0:
+		print("Writing a new file for Instagram")
+		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
@@ -779,6 +791,13 @@ def get_rapper_details():
 					rapper_profile_url.append(item)
 
 			rapper_profile_url_unique = pd.unique(rapper_profile_url).tolist()
+			rapper_profile_url_unique = [i.strip() for i in rapper_profile_url_unique]
+
+			with open('permalinks.txt') as f:
+				for item in f:
+					if item.strip() in rapper_profile_url_unique:
+						rapper_profile_url_unique.remove(item.strip())
+						print(item.strip, "\tremoved for it appeared in permalinks.txt")
 
 			with open('rappers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
