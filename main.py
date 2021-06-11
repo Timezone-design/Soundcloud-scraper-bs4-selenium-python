@@ -329,7 +329,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		scroll_threshold = input("How many scrolls do you want to make for one page? (Default: 10) ")
 
 		try:
-			int(scroll_threshold)
+			int(scroll_threshold) > 0
 			break
 		except Exception as e:
 			print("Please input a valid integer.")
@@ -337,6 +337,10 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			pass
 		finally:
 			pass
+
+	scroll_threshold = int(scroll_threshold)
+
+	
 	# driver = None
 
 	# if use_auto_proxy:
