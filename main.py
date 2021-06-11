@@ -97,6 +97,19 @@ def get_repost_excludes():
 	return excludes
 
 
+def get_genre_includes():
+	includes = []
+	try:
+		if os.path.exists('genre.include.json'):
+			with open('genre.include.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print(ex)
+	return includes
+
+
 def get_proxies():
 	url = "https://free-proxy-list.net/"
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
@@ -340,7 +353,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 
 	scroll_threshold = int(scroll_threshold)
 
-	
+
 	# driver = None
 
 	# if use_auto_proxy:
@@ -354,6 +367,9 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
+	genre_includes = get_genre_includes()
+	print("Following genre will be included.")
+	print(genre_includes)
 	for permalink in permalinks:
 		
 		# if use_auto_proxy or use_manual_proxy and permalinks.index(permalink) % 20 == 0:
@@ -366,13 +382,14 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		scroll_pause_time = 1.5
 		# scroll_threshold = 10
 		i = 0
-
+		print('Now scrolling page...')
 		while True:
 			i += 1
 			last_height = driver.execute_script("return document.body.scrollHeight")
 			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 			time.sleep(scroll_pause_time)
 			new_height = driver.execute_script("return document.body.scrollHeight")
+			print('{}th scroll made.'.format(i))
 
 			if last_height == new_height or i == scroll_threshold:
 				print("Scroll finished. Now scraping...")			
@@ -380,10 +397,15 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 
 		soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		for rapper_profile_url in soup.find_all(class_="soundTitle__username"):
-			rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+		for rapper_profile in soup.find_all(class_="sound__header"):
+			for include in genre_includes:
+				if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
+					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+					rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
+					break
 
-		print("\n{} / {} repost urls are searched.".format(permalinks.index(permalink) + 1, len(permalinks)))
+		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
 		with open('rappers.txt', 'a') as f:
 			for item in rapper_urls:
