@@ -9,18 +9,21 @@ import re
 import urllib.parse
 import csv
 import pandas as pd
+import emoji
+# import string
 
 
 options = Options()
 options.headless = True
 options.add_argument('--log-level=3')
 DRIVER_PATH = 'chromedriver.exe'
+# printable = set(string.printable)
 
 init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
 
-track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=20&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
 
-profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=20&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
 
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
 
@@ -31,6 +34,10 @@ profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 
 proxy_list = []
+
+def remove_emoji(text):
+	return emoji.get_emoji_regexp().sub(u'', text)
+
 
 def get_bio_excludes():
 	excludes = []
@@ -498,6 +505,11 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
+	if len(user_search['collection']) == 0:
+		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
+	if len(user_search['collection']) == 0:
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
 	flag = False
 	for item in user_search['collection']:
 		if permalink in item['permalink']:
@@ -505,7 +517,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		user_object = user_search['collection'][0]
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	location = user_object['city']
 	country = user_object['country_code']
@@ -523,10 +535,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		try:
-			track_object = track_object[0]
-		except:
-			pass
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	try:
 		artistname = track_object['publisher_metadata']['artist']
@@ -568,7 +577,48 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 
 	# get correct fullname and trackname
 
-	if '- ' in songtitlefull:
+	# cleaning username
+	username = remove_emoji(username)
+	username = re.sub(r'[^\x00-\x7f]', r'', username)
+	username = username.strip()
+	try:
+		if username[0] == '(' and ')' in username:
+			username = username[1:].replace(')', '')
+		if username[0] == '@':
+			username = username[1:]
+		if username[0] == '|':
+			username = username[1:]
+		if username[0] == '#':
+			username = username[1:]
+		if username[0] == '[' and ']' in username:
+			username = username[1:].replace(']', '')
+		if username[0] == '{' and '}' in username:
+			username = username[1:].replace('}', '')
+		if username[0] == '<' and '>' in username:
+			username = username[1:].replace('>', '')
+		if '@' in username:
+			username = username.split('@')[0]
+		if '#' in username:
+			username = username.split('#')[0]
+		if '(' in username:
+			username = username.split('(')[0]
+		if '[' in username:
+			username = username.split('[')[0]
+		if '{' in username:
+			username = username.split('{')[0]
+		if '|' in username:
+			username = username.split('|')[0]
+		username = username.strip()
+	except:
+		pass
+
+	preceding_words = ["Prod. by", "Prod. By", "prod. by", "prod by", "Prod by", "Prod By", "PROD. BY", "PROD BY", "Produced by", "ProducedBy", "produced by", "beat by", "Beat By", "Beat by", "Beat By"]
+	if username in songtitlefull:
+		for word in preceding_words:
+			if word + username in songtitlefull:
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	if '- ' in songtitlefull and not username in songtitlefull:
 		temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
 		username_list = username.split()
 		songtitle_list = songtitle.split()
@@ -603,59 +653,55 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 					break
 				i += 1
 
-	# else:
-	artistname = replace_all(artistname)
-	try:
-		artistname = artistname.split('(')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('[')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('/')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('|')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(',')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('&')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' x ')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' - ')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' ft')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' feat')[0]
-	except:
-		pass
+		artistname = replace_all(artistname)
+		try:
+			artistname = artistname.split('(')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split('[')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split('/')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split('|')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split(',')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split('&')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split(' x ')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split(' - ')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split(' ft')[0]
+		except:
+			pass
+		try:
+			artistname = artistname.split(' feat')[0]
+		except:
+			pass
 
-	if not songtitle[0] == '(':
-		try:
+	try:
+		if not songtitle[0] == '(':
 			songtitle = songtitle.split('(')[0]
-		except:
-			pass
-	if not songtitle[0] == "[":
-		try:
+		if not songtitle[0] == "[":
 			songtitle = songtitle.split('[')[0]
-		except:
-			pass
+	except:
+		pass
 	try:
 		songtitle = songtitle.split('Feat')[0]
 	except:
@@ -728,8 +774,11 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitle = songtitle.split('¨')[0]
 	except:
 		pass
-	if songtitle[0] == '#':
-		songtitle = ' '.join(songtitle.split()[1:])
+	try:
+		if songtitle[0] == '#':
+			songtitle = ' '.join(songtitle.split()[1:])
+	except:
+		pass
 	
 	src_str  = re.compile("freestyle", re.IGNORECASE)
 	songtitle  = src_str.sub('', songtitle)
@@ -765,8 +814,8 @@ def get_rapper_details():
 	filenameEmail = "Rappers with Email.csv"
 	filenameInstagram = "Rappers with Instagram.csv"
 
-	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
-	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
+	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-8')
+	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-8')
 
 	emailwriter = csv.writer(emailFile, delimiter='\t')
 	instawriter = csv.writer(instaFile, delimiter='\t')
@@ -799,8 +848,15 @@ def get_rapper_details():
 						rapper_profile_url_unique.remove(item.strip())
 						print(item.strip, "\tremoved for it appeared in permalinks.txt")
 
+			url_deletion_list = ['beat', 'repost', 'network', 'prod']
 			with open('rappers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
+					url_deletion_flag = False
+					for url_deletion_item in url_deletion_list:
+						if url_deletion_item in item:
+							url_deletion_flag = True
+					if url_deletion_flag:
+						continue
 					f.write("%s\n" % item.strip())
 
 		else:
