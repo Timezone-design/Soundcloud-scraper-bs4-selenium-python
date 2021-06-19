@@ -436,21 +436,20 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 		if instagram_username:
 
 			try:
-				instagram_username = instagram_username.attrs['href'].split(".com%2F")[1].split('&')[0] # split username from link
+				instagram_username = urllib.parse.unquote(instagram_username.attrs['href']).split(".com/")[1] # split username from link
+				if instagram_username[:2] == 'p/':
+					instagram_username = instagram_username[2:]
+				if '/' in instagram_username:
+					instagram_username = instagram_username.split('/')[0]
+				if '#' in instagram_username:
+					instagram_username = instagram_username.split('#')[0]
+				if '?' in instagram_username:
+					instagram_username = instagram_username.split('?')[0]
+				if '&' in instagram_username:
+					instagram_username = instagram_username.split('&')[0]
 	
 			except:
 				instagram_username = None
-				pass
-
-		if instagram_username: # if found, remove ascii characters from the string
-
-			if instagram_username[0] == "%":
-				instagram_username = instagram_username[3:]
-
-			try:
-				instagram_username = instagram_username.split("%")[0]
-
-			except:
 				pass
 
 
@@ -525,28 +524,28 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	fullname = user_object['full_name']
 	username = user_object['username']
 
-	track_search = json.loads(requests.get(track_search_api.format(urllib.parse.quote(songtitlefull))).content.decode('utf-8'))
-	track_object = track_search['collection']
+	# track_search = json.loads(requests.get(track_search_api.format(urllib.parse.quote(songtitlefull))).content.decode('utf-8'))
+	# track_object = track_search['collection']
 
-	flag = False
-	for item in track_object:
-		if permalink in item['permalink_url']:
-			track_object = item
-			flag = True
-			break
-	if not flag:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+	# flag = False
+	# for item in track_object:
+	# 	if permalink in item['permalink_url']:
+	# 		track_object = item
+	# 		flag = True
+	# 		break
+	# if not flag:
+	# 	return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
-	try:
-		artistname = track_object['publisher_metadata']['artist']
-	except:
-		artistname = None
-		pass
+	# try:
+	# 	artistname = track_object['publisher_metadata']['artist']
+	# except:
+	# 	artistname = None
+	# 	pass
 	
 	search_entity = []
 	search_entity.append(username)
 	search_entity.append(fullname)
-	search_entity.append(artistname)
+	# search_entity.append(artistname)
 	search_entity.append(songtitlefull)
 	title_excludes = get_title_excludes()
 	for entity in search_entity:
@@ -554,24 +553,24 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			if entity is not None and item in entity:
 				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
-	if not username:
-		username = track_object['user']['username']
-		fullname = track_object['user']['full_name']
+	# if not username:
+	# 	username = track_object['user']['username']
+	# 	fullname = track_object['user']['full_name']
 
 	if not fullname:
 		fullname = username
 
-	if not artistname:
-		artistname = username
+	# if not artistname:
+	artistname = username
 
-	if not location or not country:
-		try:
-			location = track_object['user']['city']
-			country = track_object['user']['country_code']
-		except:
-			location = ''
-			country = ''
-			pass
+	# if not location or not country:
+	# 	try:
+	# 		location = track_object['user']['city']
+	# 		country = track_object['user']['country_code']
+	# 	except:
+	# 		location = ''
+	# 		country = ''
+	# 		pass
 
 	songtitle = songtitlefull
 
@@ -612,13 +611,13 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 
-	preceding_words = ["Prod. by", "Prod. By", "prod. by", "prod by", "Prod by", "Prod By", "PROD. BY", "PROD BY", "Produced by", "ProducedBy", "produced by", "beat by", "Beat By", "Beat by", "Beat By"]
+	preceding_words = ["Prod. by", "Prod. By", "prod. by", "prod by", "Prod by", "Prod By", "PROD. BY", "PROD BY", "Produced by", "ProducedBy", "produced by", "beat by", "Beat By", "Beat by", "Beat By", "Prod", "prod"]
 	if username in songtitlefull:
 		for word in preceding_words:
-			if word + username in songtitlefull:
+			if word + username in songtitlefull or '-' + word in songtitlefull or '- ' + word in songtitlefull:
 				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
-	if '- ' in songtitlefull and not username in songtitlefull:
+	if '- ' in songtitlefull:
 		temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
 		username_list = username.split()
 		songtitle_list = songtitle.split()
@@ -653,47 +652,47 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 					break
 				i += 1
 
-		artistname = replace_all(artistname)
-		try:
-			artistname = artistname.split('(')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split('[')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split('/')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split('|')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split(',')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split('&')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split(' x ')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split(' - ')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split(' ft')[0]
-		except:
-			pass
-		try:
-			artistname = artistname.split(' feat')[0]
-		except:
-			pass
+		# artistname = replace_all(artistname)
+		# try:
+		# 	artistname = artistname.split('(')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split('[')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split('/')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split('|')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split(',')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split('&')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split(' x ')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split(' - ')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split(' ft')[0]
+		# except:
+		# 	pass
+		# try:
+		# 	artistname = artistname.split(' feat')[0]
+		# except:
+		# 	pass
 
 	try:
 		if not songtitle[0] == '(':
@@ -779,13 +778,17 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			songtitle = ' '.join(songtitle.split()[1:])
 	except:
 		pass
-	
+	try:
+		songtitle = songtitle.replace('"', '')
+		songtitle = songtitle.replace("'", "")
+	except:
+		pass
 	src_str  = re.compile("freestyle", re.IGNORECASE)
 	songtitle  = src_str.sub('', songtitle)
 
-	if artistname == '':
-		artistname = fullname.strip()
-
+	# if artistname == '':
+	# 	artistname = fullname.strip()
+	artistname = username
 	famous_rapper_excludes = get_famous_rapper_excludes()
 	for item in famous_rapper_excludes:
 		if item in artistname:
@@ -796,6 +799,8 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if songtitle:
 		songtitle = songtitle.encode("ascii", "ignore")
 		songtitle = songtitle.decode()
+	else:
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if artistname:
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
@@ -853,9 +858,10 @@ def get_rapper_details():
 				for item in rapper_profile_url_unique:
 					url_deletion_flag = False
 					for url_deletion_item in url_deletion_list:
-						if url_deletion_item in item:
+						if url_deletion_item in item.strip():
 							url_deletion_flag = True
 					if url_deletion_flag:
+						print(item.strip(), '\tis removed for it has a word in deletion list.')
 						continue
 					f.write("%s\n" % item.strip())
 
