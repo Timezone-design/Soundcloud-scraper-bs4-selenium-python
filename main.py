@@ -40,8 +40,8 @@ def remove_emoji(text):
 
 
 def clean_songtitle(songtitle):
-
-
+	songtitle = songtitle.title()
+	return songtitle
 
 def clean_artistname(artistname):
 	artistname = artistname.replace('$', 's')
@@ -54,13 +54,15 @@ def clean_artistname(artistname):
 	artistname = artistname.replace('?', '')
 
 	artistname = artistname.title()
-	words = artistname.split()
-	for word in words:
-		one_word = ""
-		for i, char in enumerate(word):
-			if i != 0:
-				one_word.append(char)
-			elif i > 1 and char.isupper() and word[i-1].islower() and word[i+1].islower():
+
+	return artistname
+	# words = artistname.split()
+	# for word in words:
+	# 	one_word = ""
+	# 	for i, char in enumerate(word):
+	# 		if i != 0:
+	# 			one_word.append(char)
+	# 		elif i > 1 and char.isupper() and word[i-1].islower() and word[i+1].islower():
 
 
 
@@ -831,10 +833,12 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
 
-	artistname = clean_artistname(artistname)
+	artistnamecleaned = clean_artistname(artistname)
+	print('cleaned artistname ', artistname)
 	songtitle = clean_songtitle(songtitle)
+	print('cleaned songtitle ', songtitle)
 
-	return username, fullname, artistname, location, country, songtitle, songtitlefull
+	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull
 
 
 def get_rapper_details():
@@ -856,10 +860,10 @@ def get_rapper_details():
 
 	if os.path.getsize(filenameEmail) == 0:
 		print("Writing a new file for Email")
-		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
+		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
 	if os.path.getsize(filenameInstagram) == 0:
 		print("Writing a new file for Instagram")
-		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
+		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
@@ -943,17 +947,17 @@ def get_rapper_details():
 		rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
 
 		if rapper_email or rapper_instagram_username:
-			username, fullname, artistname, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
-			if username == fullname == artistname == location == country == songtitle == songtitlefull == 'excluded':
+			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
+			if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
 				continue
 
 			if rapper_email:
-				emailwriter.writerow([rapper.strip(), username, fullname, artistname, location, country, rapper_email, songtitle, songtitlefull])
-				print('Email written as: ', [rapper.strip(), username, fullname, artistname, location, country, rapper_email, songtitle, songtitlefull])
+				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
+				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
 			
 			if rapper_instagram_username:
-				instawriter.writerow([rapper.strip(), username, fullname, artistname, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
-				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
 		
 
 	emailFile.close()
