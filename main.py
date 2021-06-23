@@ -10,7 +10,8 @@ import urllib.parse
 import csv
 import pandas as pd
 import emoji
-# import string
+import string
+import unicodedata
 
 
 options = Options()
@@ -40,22 +41,35 @@ def remove_emoji(text):
 
 
 def clean_songtitle(songtitle):
-	songtitle = songtitle.title()
+	songtitle = songtitle.strip()
+	songtitle = string.capwords(songtitle)
 	return songtitle
 
 def clean_artistname(artistname):
+	artistname = artistname.strip()
 	artistname = artistname.replace('$', 's')
 	artistname = artistname.replace('official', '')
 	artistname = artistname.replace('Official', '')
+	artistname = artistname.replace('OFFICIAL', '')
 	artistname = artistname.replace('"', '')
-	artistname = artistname.replace("'", '')
 	artistname = artistname.replace('_', ' ')
 	artistname = artistname.replace('!', '')
 	artistname = artistname.replace('?', '')
+	artistname = artistname.replace('*', ' ')
+	if len(artistname) > 2 and artistname[-2:] == '//':
+		artistname = artistname[:-2]
+	if len(artistname) > 1 and artistname[-1] == '.':
+		artistname = artistname[:-1]
+	if len(artistname) > 1 and artistname[-1] == '/':
+		artistname = artistname[:-1]
+	if len(artistname) > 1 and artistname[0] == "'":
+		artistname = artistname[1:]
+	if len(artistname) > 1 and artistname[-1] == "'":
+		artistname = artistname[:-1]
 
-	artistname = artistname.title()
+	artistname = string.capwords(artistname)
 
-	return artistname
+	return artistname.strip()
 	# words = artistname.split()
 	# for word in words:
 	# 	one_word = ""
@@ -146,49 +160,54 @@ def get_genre_includes():
 	return includes
 
 
-def get_proxies():
-	url = "https://free-proxy-list.net/"
-	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-	driver.set_page_load_timeout(10000)
+# def get_proxies():
+# 	url = "https://free-proxy-list.net/"
+# 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+# 	driver.set_page_load_timeout(10000)
+# 	driver.get(url)
+# 	time.sleep(2)
+# 	country_select = driver.find_element_by_xpath('//*[@id="proxylisttable"]/tfoot/tr/th[3]/select/option[text()="US"]')
+# 	country_select.click()
+# 	soup = BeautifulSoup(driver.page_source, "html.parser")
+# 	proxies = []
+# 	for row in soup.find("table", attrs={"id": "proxylisttable"}).find_all("tr")[1:]:
+# 		tds = row.find_all("td")
+# 		try:
+# 			ip = tds[0].text.strip()
+# 			port = tds[1].text.strip()
+# 			host = f"{ip}:{port}"
+# 			proxies.append(host)
+# 		except IndexError:
+# 			continue
+# 	return proxies
+
+
+# def get_session(proxies):
+# 	session = requests.Session()
+# 	proxy = random.choice(proxies)
+# 	session.proxies = {"http": proxy, "https": proxy}
+# 	return session, proxy
+
+# def get_new_driver_from_proxy_list(proxy_list):
+# 	s, p = get_session(proxy_list)
+# 	options.add_argument("proxy-server={}".format(p))
+# 	for i in range(25):
+# 		try:
+# 			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH, service_log_path="NULL")
+# 		except Exception as e:
+# 			print(e)
+# 			pass
+# 		if driver:
+# 			print("Proxy server changed to ", p)
+# 			return driver
+# 		elif i == 24:
+# 			print("Cannot create webdriver from proxies.")
+# 			exit(0)
+
+
+def generate_2nd_permalinks(driver):
+	url = driver.getCurrentUrl().rsplit('/', 1)[0] + '/likes'
 	driver.get(url)
-	time.sleep(2)
-	country_select = driver.find_element_by_xpath('//*[@id="proxylisttable"]/tfoot/tr/th[3]/select/option[text()="US"]')
-	country_select.click()
-	soup = BeautifulSoup(driver.page_source, "html.parser")
-	proxies = []
-	for row in soup.find("table", attrs={"id": "proxylisttable"}).find_all("tr")[1:]:
-		tds = row.find_all("td")
-		try:
-			ip = tds[0].text.strip()
-			port = tds[1].text.strip()
-			host = f"{ip}:{port}"
-			proxies.append(host)
-		except IndexError:
-			continue
-	return proxies
-
-
-def get_session(proxies):
-	session = requests.Session()
-	proxy = random.choice(proxies)
-	session.proxies = {"http": proxy, "https": proxy}
-	return session, proxy
-
-def get_new_driver_from_proxy_list(proxy_list):
-	s, p = get_session(proxy_list)
-	options.add_argument("proxy-server={}".format(p))
-	for i in range(25):
-		try:
-			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH, service_log_path="NULL")
-		except Exception as e:
-			print(e)
-			pass
-		if driver:
-			print("Proxy server changed to ", p)
-			return driver
-		elif i == 24:
-			print("Cannot create webdriver from proxies.")
-			exit(0)
 
 
 def replace_all(text):
@@ -332,7 +351,11 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
-		songtitle = songtitle.split(' Prod')[0]
+		songtitle = songtitle.split('-prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Prod')[0]
 	except:
 		pass
 	try:
@@ -367,7 +390,11 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 		songtitle = songtitle.split('*')[0]
 	except:
 		pass
-
+	try:
+		if songtitle[0] == '@':
+			songtitle = ' '.join(songtitle.split()[1:])
+	except:
+		pass
 	return artistname, songtitle
 
 
@@ -530,12 +557,12 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
 	except:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
 	if len(user_search['collection']) == 0:
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
 	if len(user_search['collection']) == 0:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	flag = False
 	for item in user_search['collection']:
@@ -544,13 +571,15 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	location = user_object['city']
 	country = user_object['country_code']
 	permalink = user_object['permalink']
 	fullname = user_object['full_name']
 	username = user_object['username']
+
+	songtitlefull = unicodedata.normalize('NFKC', songtitlefull)
 
 	# track_search = json.loads(requests.get(track_search_api.format(urllib.parse.quote(songtitlefull))).content.decode('utf-8'))
 	# track_object = track_search['collection']
@@ -562,7 +591,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	# 		flag = True
 	# 		break
 	# if not flag:
-	# 	return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+	# 	return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	# try:
 	# 	artistname = track_object['publisher_metadata']['artist']
@@ -579,7 +608,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	for entity in search_entity:
 		for item in title_excludes:
 			if entity is not None and item in entity:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	# if not username:
 	# 	username = track_object['user']['username']
@@ -643,7 +672,10 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if username in songtitlefull:
 		for word in preceding_words:
 			if word + username in songtitlefull or '-' + word in songtitlefull or '- ' + word in songtitlefull:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	# if re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull):
+	# 	print(re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull))
 
 	if '- ' in songtitlefull:
 		temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
@@ -828,7 +860,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitle = songtitle.encode("ascii", "ignore")
 		songtitle = songtitle.decode()
 	else:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if artistname:
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
@@ -852,8 +884,8 @@ def get_rapper_details():
 	filenameEmail = "Rappers with Email.csv"
 	filenameInstagram = "Rappers with Instagram.csv"
 
-	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-8')
-	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-8')
+	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
+	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
 
 	emailwriter = csv.writer(emailFile, delimiter='\t')
 	instawriter = csv.writer(instaFile, delimiter='\t')
@@ -930,6 +962,8 @@ def get_rapper_details():
 		time.sleep(1)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
+		
+		
 
 		if not bio:
 			continue
