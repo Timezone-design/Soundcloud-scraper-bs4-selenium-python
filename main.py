@@ -39,6 +39,32 @@ def remove_emoji(text):
 	return emoji.get_emoji_regexp().sub(u'', text)
 
 
+def clean_songtitle(songtitle):
+
+
+
+def clean_artistname(artistname):
+	artistname = artistname.replace('$', 's')
+	artistname = artistname.replace('official', '')
+	artistname = artistname.replace('Official', '')
+	artistname = artistname.replace('"', '')
+	artistname = artistname.replace("'", '')
+	artistname = artistname.replace('_', ' ')
+	artistname = artistname.replace('!', '')
+	artistname = artistname.replace('?', '')
+
+	artistname = artistname.title()
+	words = artistname.split()
+	for word in words:
+		one_word = ""
+		for i, char in enumerate(word):
+			if i != 0:
+				one_word.append(char)
+			elif i > 1 and char.isupper() and word[i-1].islower() and word[i+1].islower():
+
+
+
+
 def get_bio_excludes():
 	excludes = []
 	try:
@@ -804,6 +830,9 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if artistname:
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
+
+	artistname = clean_artistname(artistname)
+	songtitle = clean_songtitle(songtitle)
 
 	return username, fullname, artistname, location, country, songtitle, songtitlefull
 
