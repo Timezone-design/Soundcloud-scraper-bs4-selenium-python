@@ -66,6 +66,8 @@ def clean_artistname(artistname):
 		artistname = artistname[1:]
 	if len(artistname) > 1 and artistname[-1] == "'":
 		artistname = artistname[:-1]
+	if artistname[:4].lower() == 'user' and artistname[5:].isnumeric():
+		artistname = 'man'
 
 	artistname = string.capwords(artistname)
 
@@ -206,8 +208,45 @@ def get_genre_includes():
 
 
 def generate_2nd_permalinks(driver):
-	url = driver.getCurrentUrl().rsplit('/', 1)[0] + '/likes'
+	url = driver.current_url.rsplit('/', 1)[0] + '/likes'
+	driver.set_page_load_timeout(10000)
 	driver.get(url)
+	time.sleep(1)
+	scroll_threshold = 10
+	scroll_pause_time = 1.5
+	genre_includes = get_genre_includes()
+	print("Following genre will be included.")
+	print(genre_includes)
+
+	additional_rappers = []
+	i = 0
+	print('Now scrolling page...')
+	while True:
+		i += 1
+		last_height = driver.execute_script("return document.body.scrollHeight")
+		driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+		time.sleep(scroll_pause_time)
+		new_height = driver.execute_script("return document.body.scrollHeight")
+		print('{}th scroll made.'.format(i))
+
+		if last_height == new_height or i == scroll_threshold:
+			print("Scroll finished. Now scraping...")			
+			break
+
+	soup = BeautifulSoup(driver.page_source, "html.parser")
+	for rapper_profile in soup.find_all(class_="sound__header"):
+		for include in genre_includes:
+			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
+				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+				additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
+				break
+
+	with open('additional_permalink.txt', 'a') as additional_file:
+		for item in additional_rappers:
+			additional_file.write("%s\n" % item)
+	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+
 
 
 def replace_all(text):
@@ -963,7 +1002,7 @@ def get_rapper_details():
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
 		
-		
+		generate_2nd_permalinks(driver)
 
 		if not bio:
 			continue
