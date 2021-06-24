@@ -12,6 +12,7 @@ import pandas as pd
 import emoji
 import string
 import unicodedata
+import sys
 
 
 options = Options()
@@ -153,8 +154,22 @@ def get_genre_includes():
 	return includes
 
 
+def replace_all(text):
+	text = re.sub(r'\bOfficial\b', "", text)
+	text = re.sub(r'\bThe\b', "", text)
+	text = re.sub(r'\bthe\b', "", text)
+	text = re.sub(r'\bRapper\b', "", text)
+	text = re.sub(r'\brapper\b', "", text)
+	text = re.sub(r'\bda\b', "", text)
+	text = re.sub(r'\btha\b', "", text)
+	text = re.sub(r'\bmusic\b', "", text)
+	text = re.sub(r'\bFeat\b', "", text)
+
+	return text
+
+
 def generate_2nd_permalinks(driver):
-	url = driver.current_url.rsplit('/', 1)[0] + '/likes'
+	url = driver.current_url + '/likes'
 	driver.set_page_load_timeout(10000)
 	driver.get(url)
 	time.sleep(1)
@@ -193,20 +208,6 @@ def generate_2nd_permalinks(driver):
 			additional_file.write("%s\n" % item)
 	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
 
-
-
-def replace_all(text):
-	text = re.sub(r'\bOfficial\b', "", text)
-	text = re.sub(r'\bThe\b', "", text)
-	text = re.sub(r'\bthe\b', "", text)
-	text = re.sub(r'\bRapper\b', "", text)
-	text = re.sub(r'\brapper\b', "", text)
-	text = re.sub(r'\bda\b', "", text)
-	text = re.sub(r'\btha\b', "", text)
-	text = re.sub(r'\bmusic\b', "", text)
-	text = re.sub(r'\bFeat\b', "", text)
-
-	return text
 
 
 def song_title_and_artist_name(songtitlefull,index,index1):
@@ -400,18 +401,21 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			pass
 
 	scroll_threshold = int(scroll_threshold)
-
+	permalinks = pd.unique(permalinks).tolist()
+	permalinks = [i.strip() for i in permalinks]
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 
 	genre_includes = get_genre_includes()
 	print("Following genre will be included.")
 	print(genre_includes)
 	for permalink in permalinks:
+
 		rapper_urls = []
 		driver.set_page_load_timeout(10000)
 		driver.get(permalink + '/likes')
 		time.sleep(2)
 		scroll_pause_time = 1.5
+		# scroll_threshold = 10
 		i = 0
 		print('Now scrolling page...')
 		while True:
@@ -438,11 +442,11 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
-		with open('rappers.txt', 'a') as f:
+		with open('additional_rappers.txt', 'a') as f:
 			for item in rapper_urls:
 				f.write("%s\n" % item)
 
-		print("{} rapper profile URLs are written into file rappers.txt.".format(len(rapper_urls)))
+		print("{} rapper profile URLs are written into file additional_rappers.txt.".format(len(rapper_urls)))
 
 
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
@@ -645,6 +649,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 					break
 				i += 1
 
+
 	try:
 		if not songtitle[0] == '(':
 			songtitle = songtitle.split('(')[0]
@@ -737,6 +742,8 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	src_str  = re.compile("freestyle", re.IGNORECASE)
 	songtitle  = src_str.sub('', songtitle)
 
+	# if artistname == '':
+	# 	artistname = fullname.strip()
 	artistname = username
 	famous_rapper_excludes = get_famous_rapper_excludes()
 	for item in famous_rapper_excludes:
@@ -785,24 +792,18 @@ def get_rapper_details():
 	test_rapper_emails = []
 	test_rapper_instagrams = []
 
-	if not os.path.exists("rappers_unique.txt"): # check if unique series of data exists
+	if not os.path.exists("additional_rappers_unique.txt"): # check if unique series of data exists
 
-		if os.path.exists("rappers.txt"): # if not, to see if it can be created from duplicate series
-			with open('rappers.txt') as f:
+		if os.path.exists("additional_rappers.txt"): # if not, to see if it can be created from duplicate series
+			with open('additional_rappers.txt') as f:
 				for item in f:
 					rapper_profile_url.append(item)
 
 			rapper_profile_url_unique = pd.unique(rapper_profile_url).tolist()
 			rapper_profile_url_unique = [i.strip() for i in rapper_profile_url_unique]
 
-			with open('permalinks.txt') as f:
-				for item in f:
-					if item.strip() in rapper_profile_url_unique:
-						rapper_profile_url_unique.remove(item.strip())
-						print(item.strip, "\tremoved for it appeared in permalinks.txt")
-
 			url_deletion_list = ['beat', 'repost', 'network', 'prod']
-			with open('rappers_unique.txt', 'w') as f:
+			with open('additional_rappers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
 					url_deletion_flag = False
 					for url_deletion_item in url_deletion_list:
@@ -814,10 +815,11 @@ def get_rapper_details():
 					f.write("%s\n" % item.strip())
 
 		else:
-			print("Please make rappers.txt first!")
+			print("Please make additional_rappers.txt first!")
+			sys.exit()
 
 	else:
-		with open('rappers_unique.txt') as f:
+		with open('additional_rappers_unique.txt') as f:
 			for item in f:
 				rapper_profile_url_unique.append(item)
 
@@ -826,18 +828,14 @@ def get_rapper_details():
 	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 	driver.set_page_load_timeout(10000)
 
-	print('This will create a list of unique rappers and also look in /likes to get a boost in resuts number.')
-	print('Do you want to get only boost?')
-	flag = ''
-	while True:
-		flag = input("Y or N: ")
-		if isinstance(flag, str) and flag.lower() == 'y' or flag.lower() == 'n':
-			flag = flag.lower()
-			break
-		print("Please input Y or N.")
+	rappers_before = []
+	with open('rappers_unique.txt', 'r') as f:
+		for item in f:
+			rappers_before.append(item.strip())
 
 	for rapper in rapper_profile_url_unique:
-
+		if rapper.strip() in rappers_before:
+			continue
 		rapper_email = None
 		rapper_instagram_username = None
 		rapper_instagram_url = None
@@ -856,37 +854,33 @@ def get_rapper_details():
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
 		
-		if flag == 'y':
-			generate_2nd_permalinks(driver)
+		if not bio:
 			continue
-		else:
-			if not bio:
+
+		bio_excludes = get_bio_excludes()
+		bio_text = bio.text
+		for item in bio_excludes:
+			if item in bio_text:
 				continue
 
-			bio_excludes = get_bio_excludes()
-			bio_text = bio.text
-			for item in bio_excludes:
-				if item in bio_text:
-					continue
+		web_profiles = rapper_soup.find('div', class_="web-profiles")
 
-			web_profiles = rapper_soup.find('div', class_="web-profiles")
+		print('Searching {}th user as above url.'.format(rapper_profile_url_unique.index(rapper) + 1))
 
-			print('Searching {}th user as above url.'.format(rapper_profile_url_unique.index(rapper) + 1))
+		rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
 
-			rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
+		if rapper_email or rapper_instagram_username:
+			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
+			if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
+				continue
 
-			if rapper_email or rapper_instagram_username:
-				username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
-				if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
-					continue
-
-				if rapper_email:
-					emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
-					print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
-				
-				if rapper_instagram_username:
-					instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
-					print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+			if rapper_email:
+				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
+				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
+			
+			if rapper_instagram_username:
+				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
 		
 
 	emailFile.close()
@@ -896,80 +890,51 @@ def get_rapper_details():
 def main(): # Main workflow of SoundCloud Scraper
 
 	permalinks = []
-		
 
-	if not os.path.exists("permalinks.txt"): # Searches if permalinks to repost profiles are already made
-
-		print("Getting new permalinks...")
-
-		while True: # Gets user input for API connection quantity
-			
-			api_conn_count = input("How many requests do you want to send? ")
-
-			try:
-				int(api_conn_count)
-				break
-			except Exception as e:
-				print("Please input a valid integer.")
-			else:
-				pass
-			finally:
-				pass
-
-		repost_excludes = get_repost_excludes()
-		for x in range(int(api_conn_count)): # Send API request
-
-			url = init_url.format(x * 200)
-
-			api_response_object = json.loads(requests.get(url).content.decode('utf-8'))
-
-			print("{}th api is sent.".format(x))
-
-			if api_response_object["collection"] == []:
-
-				print("No more profiles found. Total permalinks are {}.".format(len(permalinks)))
-
-				break
-
-			for single_response_object in api_response_object["collection"]:
-				flag = False
-				search_entity = single_response_object['permalink'] + ' ' + single_response_object['username'] + ' ' + single_response_object['full_name']
-				for exclude_word in repost_excludes:
-					if exclude_word in search_entity:
-						flag = True
-						break
-
-				if flag:
-					print("Excluded repost profile:", single_response_object["permalink_url"])
-					continue
-
-				permalinks.append(single_response_object["permalink_url"])
-
-				print("{}th permalink added.".format(len(permalinks)))
-
-		# permalinks_unique = pd.unique(permalinks).tolist() # Get non-duplicating profiles
-
-		with open('permalinks.txt', 'w') as f: # Write permalinks of repost profiles to file
-
-			for item in permalinks:
-
-				f.write("%s\n" % item)
-
-	else: # If permalinks are already existing in file
-
-		with open('permalinks.txt') as f:
-
+	if not os.path.exists("additional_permalink.txt"): # Searches if permalinks to repost profiles are already made
+		print("additional_permalink not exist!")
+		unique_list = []
+		with open('rappers_unique.txt', 'r') as f:
 			for item in f:
-
+				unique_list.append(item.strip())
+		driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+		for item in unique_list:
+			driver.get(item)
+			generate_2nd_permalinks(driver)
+	else: # If permalinks are already existing in file
+		with open('additional_permalink.txt') as f:
+			for item in f:
 				permalinks.append(item)
 
-	print("\n\nOpening repost profiles to get rappers...")
+	if os.path.exists("rappers_unique.txt"):
+		print("It seems there are rappers_unique.txt in your folder. Do you want to make a search in their /likes to add more results?")
+		flag = ''
+		while True:
+			flag = input("Y or N: ")
+			if isinstance(flag, str) and flag.lower() == 'y' or flag.lower() == 'n':
+				flag = flag.lower()
+				break
+			print("Please input Y or N.")
+		if flag == 'y':
+			unique_list = []
+			with open('rappers_unique.txt', 'r') as f:
+				for item in f:
+					unique_list.append(item.strip())
+			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+			for item in unique_list:
+				driver.get(item)
+				generate_2nd_permalinks(driver)
 
-	if not os.path.exists("rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
-
+	if not os.path.exists("additional_rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
 		get_rapper_profile_urls_from_reposts(permalinks)
 
+	print("\n\nOpening additional repost profiles to get rappers...")
+
 	get_rapper_details()
+
+	
+
+
 
 
 main()
