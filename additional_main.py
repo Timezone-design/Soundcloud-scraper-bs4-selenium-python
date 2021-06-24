@@ -21,17 +21,50 @@ options.add_argument('--log-level=3')
 DRIVER_PATH = 'chromedriver.exe'
 # printable = set(string.printable)
 
-init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
+#VPS7 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
-track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+#VPS6 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
-profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+#VPS5 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
-# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
+#VPS4 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=20&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+#VPS3 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=20&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+#VPS2 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+
+#VPS1 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
+
+#Nikita Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+
+#Tom Client ID
+init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
+track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
 
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 
@@ -235,7 +268,43 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
-		artistname = artistname.split('prod')[index]
+		artistname = artistname.split('FEAT')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('ft')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('Ft')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('FT')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('featuring')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('Featuring')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split('FEATURING')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' prod')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' Prod')[0]
+	except:
+		pass
+	try:
+		artistname = artistname.split(' PROD')[0]
 	except:
 		pass
 	try:
@@ -796,6 +865,9 @@ def get_rapper_details():
 
 		if os.path.exists("additional_rappers.txt"): # if not, to see if it can be created from duplicate series
 			with open('additional_rappers.txt') as f:
+				for item in f:
+					rapper_profile_url.append(item)
+			with open('additional_permalink.txt') as f:
 				for item in f:
 					rapper_profile_url.append(item)
 
