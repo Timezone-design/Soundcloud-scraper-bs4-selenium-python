@@ -21,6 +21,41 @@ options.add_argument('--log-level=3')
 DRIVER_PATH = 'chromedriver.exe'
 # printable = set(string.printable)
 
+#VPS14 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=374055-868319-148378-438909&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=823653-254858-356082-610033&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=374055-868319-148378-438909&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS13 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=506656-214921-947718-308845&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=864563-351822-208584-426191&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=506656-214921-947718-308845&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS12 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=225221-581906-333282-235913&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=175086-459286-306569-656479&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=225221-581906-333282-235913&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS11 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=701279-440666-80283-875802&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=5790-421363-351543-605407&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=701279-440666-80283-875802&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS10 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=497234-797892-535463-757291&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=469817-885534-841096-316227&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=497234-797892-535463-757291&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS9 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=977037-489345-139741-290793&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=597296-764152-749432-143278&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=977037-489345-139741-290793&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
+#VPS8 Client ID
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=10600-120781-951139-20546&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset={}&linked_partitioning=1&app_version=1624617819&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=121245-10572-390322-318950&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=10600-120781-951139-20546&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
+
 #VPS7 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
 # track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
@@ -57,14 +92,14 @@ DRIVER_PATH = 'chromedriver.exe'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #Nikita Client ID
-# init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
+track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
 
 #Tom Client ID
-init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
-track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
-profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+# init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
+# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
+# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
 
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 
@@ -207,7 +242,7 @@ def generate_2nd_permalinks(driver):
 	driver.get(url)
 	time.sleep(1)
 	scroll_threshold = 10
-	scroll_pause_time = 1.5
+	scroll_pause_time = 2
 	genre_includes = get_genre_includes()
 	print("Following genre will be included.")
 	print(genre_includes)
@@ -215,31 +250,35 @@ def generate_2nd_permalinks(driver):
 	additional_rappers = []
 	i = 0
 	print('Now scrolling page...')
-	while True:
-		i += 1
-		last_height = driver.execute_script("return document.body.scrollHeight")
-		driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-		time.sleep(scroll_pause_time)
-		new_height = driver.execute_script("return document.body.scrollHeight")
-		print('{}th scroll made.'.format(i))
+	try:
+		while True:
+			i += 1
+			last_height = driver.execute_script("return document.body.scrollHeight")
+			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+			time.sleep(scroll_pause_time)
+			new_height = driver.execute_script("return document.body.scrollHeight")
+			print('{}th scroll made.'.format(i))
 
-		if last_height == new_height or i == scroll_threshold:
-			print("Scroll finished. Now scraping...")			
-			break
-
-	soup = BeautifulSoup(driver.page_source, "html.parser")
-	for rapper_profile in soup.find_all(class_="sound__header"):
-		for include in genre_includes:
-			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-				additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
+			if last_height == new_height or i == scroll_threshold:
+				print("Scroll finished. Now scraping...")			
 				break
 
-	with open('additional_permalink.txt', 'a') as additional_file:
-		for item in additional_rappers:
-			additional_file.write("%s\n" % item)
-	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+		soup = BeautifulSoup(driver.page_source, "html.parser")
+		for rapper_profile in soup.find_all(class_="sound__header"):
+			for include in genre_includes:
+				if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
+					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+					additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
+					break
+
+		with open('additional_permalink.txt', 'a') as additional_file:
+			for item in additional_rappers:
+				additional_file.write("%s\n" % item)
+		print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+	except:
+		print("error in getting data. Passing to next iteration")
+		pass
 
 
 
@@ -253,6 +292,10 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 		pass
 	try:
 		artistname = artistname.split('x ')[index]
+	except:
+		pass
+	try:
+		artistname = artistname.split('X ')[index]
 	except:
 		pass
 	try:
@@ -331,7 +374,7 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 		artistname = artistname.split('|')[index]
 	except:
 		pass
-	
+
 
 	try:
 		songtitle = songtitlefull.split('-')[index1] + songtitlefull.split('-')[2]
@@ -350,7 +393,23 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('feat.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('Feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT.')[0]
 	except:
 		pass
 	try:
@@ -370,6 +429,10 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split(' X ')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split(',')[0]
 	except:
 		pass
@@ -378,7 +441,15 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('ft.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('Ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft.')[0]
 	except:
 		pass
 	try:
@@ -386,7 +457,7 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
-		songtitle = songtitle.split('FEAT')[0]
+		songtitle = songtitle.split('FT.')[0]
 	except:
 		pass
 	try:
@@ -402,11 +473,47 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('-prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_PROD.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split(' prod')[0]
 	except:
 		pass
 	try:
-		songtitle = songtitle.split('-prod')[0]
+		songtitle = songtitle.split(' prod.')[0]
 	except:
 		pass
 	try:
@@ -414,7 +521,15 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('Prod.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD.')[0]
 	except:
 		pass
 	try:
@@ -478,44 +593,48 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 	print("Following genre will be included.")
 	print(genre_includes)
 	for permalink in permalinks:
+		try:
+			rapper_urls = []
+			driver.set_page_load_timeout(10000)
+			driver.get(permalink + '/likes')
+			time.sleep(2)
+			scroll_pause_time = 2
+			# scroll_threshold = 10
+			i = 0
+			print('Now scrolling page...')
+			while True:
+				i += 1
+				last_height = driver.execute_script("return document.body.scrollHeight")
+				driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+				time.sleep(scroll_pause_time)
+				new_height = driver.execute_script("return document.body.scrollHeight")
+				print('{}th scroll made.'.format(i))
 
-		rapper_urls = []
-		driver.set_page_load_timeout(10000)
-		driver.get(permalink + '/likes')
-		time.sleep(2)
-		scroll_pause_time = 1.5
-		# scroll_threshold = 10
-		i = 0
-		print('Now scrolling page...')
-		while True:
-			i += 1
-			last_height = driver.execute_script("return document.body.scrollHeight")
-			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-			time.sleep(scroll_pause_time)
-			new_height = driver.execute_script("return document.body.scrollHeight")
-			print('{}th scroll made.'.format(i))
-
-			if last_height == new_height or i == scroll_threshold:
-				print("Scroll finished. Now scraping...")			
-				break
-
-		soup = BeautifulSoup(driver.page_source, "html.parser")
-
-		for rapper_profile in soup.find_all(class_="sound__header"):
-			for include in genre_includes:
-				if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-					rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
+				if last_height == new_height or i == scroll_threshold:
+					print("Scroll finished. Now scraping...")			
 					break
 
-		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
+			soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		with open('additional_rappers.txt', 'a') as f:
-			for item in rapper_urls:
-				f.write("%s\n" % item)
+			for rapper_profile in soup.find_all(class_="sound__header"):
+				for include in genre_includes:
+					if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
+						rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+						rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+						print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
+						break
 
-		print("{} rapper profile URLs are written into file additional_rappers.txt.".format(len(rapper_urls)))
+			print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
+
+			with open('additional_rappers.txt', 'a') as f:
+				for item in rapper_urls:
+					f.write("%s\n" % item)
+
+			print("{} rapper profile URLs are written into file additional_rappers.txt.".format(len(rapper_urls)))
+		except:
+			pass
+
+	driver.close()
 
 
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
@@ -601,7 +720,10 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
 	if len(user_search['collection']) == 0:
-		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
+		try:
+			user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
+		except:
+			return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if len(user_search['collection']) == 0:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
@@ -731,7 +853,23 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('Feat.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT.')[0]
 	except:
 		pass
 	try:
@@ -739,11 +877,31 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split(' X ')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('ft')[0]
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('ft.')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('Ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FT.')[0]
 	except:
 		pass
 	try:
@@ -783,6 +941,70 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
+		songtitle = songtitle.split('-prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD')[0]
+	except:
+		pass
+	try:
 		songtitle = songtitle.split('PROD.')[0]
 	except:
 		pass
@@ -791,7 +1013,31 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
-		songtitle = songtitle.split('prod.')[0]
+		songtitle = songtitle.split('Produced by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Produced By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PRODUCED')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('beat by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Beat by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Beat By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('BEAT BY')[0]
 	except:
 		pass
 	try:
@@ -953,6 +1199,8 @@ def get_rapper_details():
 			if rapper_instagram_username:
 				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
 				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+
+	driver.close()
 		
 
 	emailFile.close()
@@ -973,6 +1221,7 @@ def main(): # Main workflow of SoundCloud Scraper
 		for item in unique_list:
 			driver.get(item)
 			generate_2nd_permalinks(driver)
+		driver.close()
 	else: # If permalinks are already existing in file
 		with open('additional_permalink.txt') as f:
 			for item in f:
@@ -996,6 +1245,7 @@ def main(): # Main workflow of SoundCloud Scraper
 			for item in unique_list:
 				driver.get(item)
 				generate_2nd_permalinks(driver)
+			driver.close()
 
 	if not os.path.exists("additional_rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
 		get_rapper_profile_urls_from_reposts(permalinks)
