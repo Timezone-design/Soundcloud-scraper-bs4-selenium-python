@@ -202,35 +202,36 @@ def generate_2nd_permalinks(driver):
 	additional_rappers = []
 	i = 0
 	print('Now scrolling page...')
-	try:
-		while True:
-			i += 1
+	while True:
+		i += 1
+		try:
 			last_height = driver.execute_script("return document.body.scrollHeight")
 			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 			time.sleep(scroll_pause_time)
 			new_height = driver.execute_script("return document.body.scrollHeight")
 			print('{}th scroll made.'.format(i))
+		except:
+			print("error in getting data. Passing to next iteration 12")
+			return
 
-			if last_height == new_height or i == scroll_threshold:
-				print("Scroll finished. Now scraping...")			
+		if last_height == new_height or i == scroll_threshold:
+			print("Scroll finished. Now scraping... 12")			
+			break
+
+	soup = BeautifulSoup(driver.page_source, "html.parser")
+	for rapper_profile in soup.find_all(class_="sound__header"):
+		for include in genre_includes:
+			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
+				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+				additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
 				break
 
-		soup = BeautifulSoup(driver.page_source, "html.parser")
-		for rapper_profile in soup.find_all(class_="sound__header"):
-			for include in genre_includes:
-				if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-					additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
-					break
-
-		with open('additional_permalink.txt', 'a') as additional_file:
-			for item in additional_rappers:
-				additional_file.write("%s\n" % item)
-		print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
-	except:
-		print("error in getting data. Passing to next iteration")
-		pass
+	with open('additional_permalink.txt', 'a') as additional_file:
+		for item in additional_rappers:
+			additional_file.write("%s\n" % item)
+	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+	
 
 
 
@@ -574,7 +575,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			print('{}th scroll made.'.format(i))
 
 			if last_height == new_height or i == scroll_threshold:
-				print("Scroll finished. Now scraping...")			
+				print("Scroll finished. Now scraping... 11")			
 				break
 
 		soup = BeautifulSoup(driver.page_source, "html.parser")
