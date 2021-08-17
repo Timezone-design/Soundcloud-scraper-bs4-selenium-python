@@ -92,9 +92,9 @@ DRIVER_PATH = 'chromedriver.exe'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #Nikita Client ID
-init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=J5Kk2YkB25TPuha9TgkuGg1VyIwz242r&limit=200&offset={}&linked_partitioning=1&app_version=1622628482&app_locale=en"
-track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
-profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=930653-653278-774956-260140&client_id=6JcMSl6wQUuPYeBzmXIOpxpp2VlPrIXE&limit=200&offset=0&linked_partitioning=1&app_version=1622710435&app_locale=en'
+init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=212832-727922-185643-279192&client_id=bhdPp0QME8kXmKrbDc4gARDVv1v8JNQ3&limit=200&offset={}&linked_partitioning=1&app_version=1627651107&app_locale=en"
+track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=212832-727922-185643-279192&client_id=bhdPp0QME8kXmKrbDc4gARDVv1v8JNQ3&limit=200&offset=0&linked_partitioning=1&app_version=1627651107&app_locale=en'
+profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=212832-727922-185643-279192&client_id=bhdPp0QME8kXmKrbDc4gARDVv1v8JNQ3&limit=200&offset=0&linked_partitioning=1&app_version=1627651107&app_locale=en'
 
 #Tom Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
@@ -714,20 +714,25 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 
 def get_other_info_of_rapper(rapper_soup, permalink):
+	print('1')
 	try:
 		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
 	except:
+		print('2')
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
 	if len(user_search['collection']) == 0:
+		print('2')
+
 		try:
 			user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
 		except:
 			return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if len(user_search['collection']) == 0:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+	print('1')
 
 	flag = False
 	for item in user_search['collection']:
@@ -737,6 +742,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			break
 	if not flag:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+	print('1')
 
 	location = user_object['city']
 	country = user_object['country_code']
@@ -745,6 +751,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	username = user_object['username']
 
 	songtitlefull = unicodedata.normalize('NFKC', songtitlefull)
+	print('1')
 	
 	search_entity = []
 	search_entity.append(username)
