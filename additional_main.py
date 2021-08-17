@@ -241,7 +241,7 @@ def generate_2nd_permalinks(driver):
 	driver.set_page_load_timeout(10000)
 	driver.get(url)
 	time.sleep(1)
-	scroll_threshold = 10
+	scroll_threshold = 500
 	scroll_pause_time = 2
 	genre_includes = get_genre_includes()
 	print("Following genre will be included.")
@@ -714,25 +714,20 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 
 def get_other_info_of_rapper(rapper_soup, permalink):
-	print('1')
 	try:
 		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
 	except:
-		print('2')
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	
 	if len(user_search['collection']) == 0:
-		print('2')
-
 		try:
 			user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
 		except:
 			return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if len(user_search['collection']) == 0:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
-	print('1')
 
 	flag = False
 	for item in user_search['collection']:
@@ -742,7 +737,6 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			break
 	if not flag:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
-	print('1')
 
 	location = user_object['city']
 	country = user_object['country_code']
@@ -751,7 +745,6 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	username = user_object['username']
 
 	songtitlefull = unicodedata.normalize('NFKC', songtitlefull)
-	print('1')
 	
 	search_entity = []
 	search_entity.append(username)

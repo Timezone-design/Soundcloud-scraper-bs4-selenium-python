@@ -193,7 +193,7 @@ def generate_2nd_permalinks(driver):
 	driver.set_page_load_timeout(10000)
 	driver.get(url)
 	time.sleep(1)
-	scroll_threshold = 10
+	scroll_threshold = 500
 	scroll_pause_time = 2
 	genre_includes = get_genre_includes()
 	print("Following genre will be included.")
@@ -231,6 +231,8 @@ def generate_2nd_permalinks(driver):
 		for item in additional_rappers:
 			additional_file.write("%s\n" % item)
 	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+	driver.delete_all_cookies()
+
 	
 
 
@@ -1139,7 +1141,6 @@ def get_rapper_details():
 		
 		if flag == 'y':
 			generate_2nd_permalinks(driver)
-			driver.delete_all_cookies()
 			continue
 		else:
 			if not bio:
