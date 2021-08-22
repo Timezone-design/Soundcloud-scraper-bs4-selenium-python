@@ -190,8 +190,9 @@ def get_genre_includes():
 
 def generate_2nd_permalinks(driver):
 	url = driver.current_url.rsplit('/', 1)[0] + '/likes'
-	driver.set_page_load_timeout(10000)
-	driver.get(url)
+	tempdriver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	tempdriver.set_page_load_timeout(10000)
+	tempdriver.get(url)
 	time.sleep(1)
 	scroll_threshold = 500
 	scroll_pause_time = 2
@@ -205,10 +206,10 @@ def generate_2nd_permalinks(driver):
 	while True:
 		i += 1
 		try:
-			last_height = driver.execute_script("return document.body.scrollHeight")
-			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+			last_height = tempdriver.execute_script("return document.body.scrollHeight")
+			tempdriver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 			time.sleep(scroll_pause_time)
-			new_height = driver.execute_script("return document.body.scrollHeight")
+			new_height = tempdriver.execute_script("return document.body.scrollHeight")
 			print('{}th scroll made.'.format(i))
 		except:
 			print("error in getting data. Passing to next iteration 12")
@@ -218,7 +219,7 @@ def generate_2nd_permalinks(driver):
 			print("Scroll finished. Now scraping... 12")			
 			break
 
-	soup = BeautifulSoup(driver.page_source, "html.parser")
+	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
 	for rapper_profile in soup.find_all(class_="sound__header"):
 		for include in genre_includes:
 			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
@@ -231,6 +232,7 @@ def generate_2nd_permalinks(driver):
 		for item in additional_rappers:
 			additional_file.write("%s\n" % item)
 	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
+	tempdriver.close()
 	driver.delete_all_cookies()
 
 	
@@ -554,13 +556,11 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			pass
 
 	scroll_threshold = int(scroll_threshold)
-
-	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-
 	genre_includes = get_genre_includes()
 	print("Following genre will be included.")
 	print(genre_includes)
 	for permalink in permalinks:
+		driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 		rapper_urls = []
 		driver.set_page_load_timeout(10000)
 		driver.get(permalink + '/likes')
@@ -590,6 +590,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
 					break
 
+		driver.close()
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
 		with open('rappers.txt', 'a') as f:
@@ -598,7 +599,6 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 
 		print("{} rapper profile URLs are written into file rappers.txt.".format(len(rapper_urls)))
 
-	driver.close()
 
 
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
