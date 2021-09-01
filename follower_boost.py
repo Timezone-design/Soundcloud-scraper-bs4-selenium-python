@@ -222,20 +222,6 @@ def get_genre_includes():
 	return includes
 
 
-def replace_all(text):
-	text = re.sub(r'\bOfficial\b', "", text)
-	text = re.sub(r'\bThe\b', "", text)
-	text = re.sub(r'\bthe\b', "", text)
-	text = re.sub(r'\bRapper\b', "", text)
-	text = re.sub(r'\brapper\b', "", text)
-	text = re.sub(r'\bda\b', "", text)
-	text = re.sub(r'\btha\b', "", text)
-	text = re.sub(r'\bmusic\b', "", text)
-	text = re.sub(r'\bFeat\b', "", text)
-
-	return text
-
-
 def generate_follower_permalinks(url):
 	url = url + '/following'
 	tempdriver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
@@ -270,7 +256,7 @@ def generate_follower_permalinks(url):
 	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
 
 	for following_profile in soup.find_all(class_="userBadgeListItem__image"):
-		additional_rappers.append('https://soundcloud.com/' + following_profile.attrs['href'])
+		additional_rappers.append('https://soundcloud.com' + following_profile.attrs['href'])
 		print(following_profile.attrs['href'], "\tis added by following boost.")
 
 	with open('following_permalink.txt', 'a') as f:
