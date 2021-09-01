@@ -722,15 +722,24 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	try:
 		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
-		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
 	except:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
-	
+
+	try:
+		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
+	except:
+		print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
+		print("Consider updating your API.")
+		sys.exit()
+
 	if len(user_search['collection']) == 0:
 		try:
 			user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(username))).content.decode('utf-8'))
 		except:
-			return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+			print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
+			print("Consider updating your API.")
+			sys.exit()
+			
 	if len(user_search['collection']) == 0:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
@@ -1111,8 +1120,6 @@ def get_rapper_details():
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
-	test_rapper_emails = []
-	test_rapper_instagrams = []
 
 	if not os.path.exists("additional_rappers_unique.txt"): # check if unique series of data exists
 
@@ -1160,6 +1167,7 @@ def get_rapper_details():
 
 	for rapper in rapper_profile_url_unique:
 		if rapper.strip() in rappers_before:
+			print(rapper.strip() + "/tracks is excluded for it is already scanned in rappers_unique.txt.")
 			continue
 		rapper_email = None
 		rapper_instagram_username = None
@@ -1180,13 +1188,20 @@ def get_rapper_details():
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
 		
 		if not bio:
+			print(rapper.strip() + "/tracks is excluded for there are no bio data.")
 			continue
-
+		
+		bio_flag = 1
 		bio_excludes = get_bio_excludes()
 		bio_text = bio.text
 		for item in bio_excludes:
 			if item in bio_text:
+				bio_flag = 0
 				continue
+		
+		if bio_flag == 0:
+			print(rapper.strip() + "/tracks is excluded for their bio is not matching.")
+			continue
 
 		web_profiles = rapper_soup.find('div', class_="web-profiles")
 
