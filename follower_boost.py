@@ -236,6 +236,7 @@ def generate_follower_permalinks(url):
 
 	additional_rappers = []
 	i = 0
+	print('Searching following in \t' + url + '\n')
 	print('Now scrolling page...')
 	while True:
 		i += 1
@@ -246,7 +247,7 @@ def generate_follower_permalinks(url):
 			new_height = tempdriver.execute_script("return document.body.scrollHeight")
 			print('{}th scroll made.'.format(i))
 		except:
-			print("error in getting data. Passing to next iteration 12")
+			print("error in getting data. Passing to next iteration 3")
 			return
 
 		if last_height == new_height or i == scroll_threshold:
