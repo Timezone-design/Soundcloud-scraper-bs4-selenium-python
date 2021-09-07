@@ -13,6 +13,7 @@ import emoji
 import string
 import unicodedata
 import sys
+from datetime import datetime
 
 
 options = Options()
@@ -237,7 +238,10 @@ def generate_follower_permalinks(url):
 	additional_rappers = []
 	i = 0
 	print('Searching following in \t' + url + '\n')
-	print('Now scrolling page...')
+	with open('position_of_rappers_unique_for_following_permalink.txt', 'a') as f:
+		f.write("%s\n" % datetime.now())
+		f.write("%s\n\n" % url)
+	print('Position saved to position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
 	while True:
 		i += 1
 		try:
@@ -1219,24 +1223,23 @@ def main(): # Main workflow of SoundCloud Scraper
 	permalinks = []
 
 
-	if os.path.exists("rappers_unique.txt") and not os.path.exists("following_permalink.txt"):
-		print("rappers_unique.txt detected. Perform following boost.")
+	if os.path.exists("rappers_unique.txt") or not os.path.exists("following_permalink.txt"):
+		print("rappers_unique.txt detected. Perform following boost?")
 
-		# flag = ''
-		# while True:
-		# 	flag = input("Y or N: ")
-		# 	if isinstance(flag, str) and flag.lower() == 'y' or flag.lower() == 'n':
-		# 		flag = flag.lower()
-		# 		break
-		# 	print("Please input Y or N.")
-		# if flag == 'y':
-
-		unique_list = []
-		with open('rappers_unique.txt', 'r') as f:
-			for item in f:
-				unique_list.append(item.strip())
-		for item in unique_list:
-			generate_follower_permalinks(item)
+		flag = ''
+		while True:
+			flag = input("Y or N: ")
+			if isinstance(flag, str) and flag.lower() == 'y' or flag.lower() == 'n':
+				flag = flag.lower()
+				break
+			print("Please input Y or N.")
+		if flag == 'y':
+			unique_list = []
+			with open('rappers_unique.txt', 'r') as f:
+				for item in f:
+					unique_list.append(item.strip())
+			for item in unique_list:
+				generate_follower_permalinks(item)
 
 	# if os.path.exists("following_permalink.txt"):
 	# 	with open('following_permalink.txt') as f:

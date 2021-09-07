@@ -13,6 +13,7 @@ import emoji
 import string
 import unicodedata
 import sys
+from datetime import datetime
 
 
 options = Options()
@@ -250,7 +251,10 @@ def generate_2nd_permalinks(driver):
 
 	additional_rappers = []
 	i = 0
-	print('Now scrolling page...')
+	with open('position_of_rappers_unique_for_additional_permalink.txt', 'a') as f:
+		f.write("%s\n" % datetime.now())
+		f.write("%s\n\n" % url)
+	print('Position saved to position_of_rappers_unique_for_additional_permalink.txt. Now scrolling page...')
 	while True:
 		i += 1
 		try:
