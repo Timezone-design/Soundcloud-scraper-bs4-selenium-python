@@ -13,6 +13,7 @@ import emoji
 import string
 import unicodedata
 import sys
+from datetime import datetime
 
 
 options = Options()
@@ -226,7 +227,10 @@ def generate_2nd_permalinks(driver):
 
 	additional_rappers = []
 	i = 0
-	print('Now scrolling page...')
+	with open('position_of_rappers_unique_for_additional_permalink_from_main.txt', 'a') as f:
+		f.write("%s\n" % datetime.now())
+		f.write("%s\n\n" % url)
+	print('Position saved to position_of_rappers_unique_for_additional_permalink_from_main.txt. Now scrolling page...')
 	while True:
 		i += 1
 		try:
@@ -1093,8 +1097,6 @@ def get_rapper_details():
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
-	test_rapper_emails = []
-	test_rapper_instagrams = []
 
 	if not os.path.exists("rappers_unique.txt"): # check if unique series of data exists
 

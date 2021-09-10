@@ -104,8 +104,6 @@ profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_id
 
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 
-proxy_list = []
-
 def remove_emoji(text):
 	return emoji.get_emoji_regexp().sub(u'', text)
 
@@ -223,6 +221,30 @@ def get_genre_includes():
 	return includes
 
 
+def get_manager_bio_detect():
+	includes = []
+	try:
+		if os.path.exists('managerbiodetect.json'):
+			with open('managerbiodetect.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print(ex)
+	return includes
+
+
+def get_manager_mail_detect():
+	includes = []
+	try:
+		if os.path.exists('managermaildetect.json'):
+			with open('managermaildetect.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print(ex)
+	return includes
 def generate_follower_permalinks(url):
 	url = url + '/following'
 	tempdriver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
@@ -561,63 +583,6 @@ def song_title_and_artist_name(songtitlefull,index,index1):
 	return artistname, songtitle
 
 
-# def get_rapper_profile_urls_from_reposts(permalinks):
-
-	scroll_threshold = 500
-
-	permalinks = pd.unique(permalinks).tolist()
-	permalinks = [i.strip() for i in permalinks]
-
-	genre_includes = get_genre_includes()
-	print("Following genre will be included.")
-	print(genre_includes)
-	for permalink in permalinks:
-		try:
-			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-			rapper_urls = []
-			driver.set_page_load_timeout(10000)
-			driver.get(permalink + '/likes')
-			time.sleep(2)
-			scroll_pause_time = 2
-			# scroll_threshold = 10
-			i = 0
-			print('Now scrolling page...')
-			while True:
-				i += 1
-				last_height = driver.execute_script("return document.body.scrollHeight")
-				driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-				time.sleep(scroll_pause_time)
-				new_height = driver.execute_script("return document.body.scrollHeight")
-				print('{}th scroll made.'.format(i))
-
-				if last_height == new_height or i == scroll_threshold:
-					print("Scroll finished. Now scraping... 22")			
-					break
-
-			soup = BeautifulSoup(driver.page_source, "html.parser")
-
-			for rapper_profile in soup.find_all(class_="sound__header"):
-				for include in genre_includes:
-					if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-						rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-						rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-						print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
-						break
-
-			driver.close()
-			print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
-
-			with open('additional_rappers.txt', 'a') as f:
-				for item in rapper_urls:
-					f.write("%s\n" % item)
-
-			print("{} rapper profile URLs are written into file additional_rappers.txt.".format(len(rapper_urls)))
-		except:
-			driver.close()
-			return
-
-	
-
 
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
@@ -698,7 +663,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
 	except:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	try:
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
@@ -716,7 +681,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			sys.exit()
 			
 	if len(user_search['collection']) == 0:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	flag = False
 	for item in user_search['collection']:
@@ -725,8 +690,20 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
+	followers = user_object['followers_count']
+	popularity = 'unknown'
+	if followers >= 10000:
+		popularity = 'trending'
+	if followers >= 50000:
+		popularity = 'hot'
+	if followers >= 100000:
+		popularity = 'popular'
+	if followers >= 250000:
+		popularity = 'famous'
+	if followers >= 500000:
+		popularity = 'infamous'
 	location = user_object['city']
 	country = user_object['country_code']
 	permalink = user_object['permalink']
@@ -744,7 +721,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	for entity in search_entity:
 		for item in title_excludes:
 			if entity is not None and item in entity:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if not fullname:
 		fullname = username
@@ -791,7 +768,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if username in songtitlefull:
 		for word in preceding_words:
 			if word + username in songtitlefull or '-' + word in songtitlefull or '- ' + word in songtitlefull:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	# if re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull):
 	# 	print(re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull))
@@ -1048,8 +1025,6 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	src_str  = re.compile("freestyle", re.IGNORECASE)
 	songtitle  = src_str.sub('', songtitle)
 
-	# if artistname == '':
-	# 	artistname = fullname.strip()
 	artistname = username
 	famous_rapper_excludes = get_famous_rapper_excludes()
 	for item in famous_rapper_excludes:
@@ -1062,7 +1037,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitle = songtitle.encode("ascii", "ignore")
 		songtitle = songtitle.decode()
 	else:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if artistname:
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
@@ -1072,13 +1047,13 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	songtitle = clean_songtitle(songtitle)
 	print('cleaned songtitle ', songtitle)
 
-	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull
+	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity
 
 
 def get_rapper_details():
 
-	filenameEmail = "Rappers with Email.csv"
-	filenameInstagram = "Rappers with Instagram.csv"
+	filenameEmail = "Rappers with Email updated.csv"
+	filenameInstagram = "Rappers with Instagram updated.csv"
 
 	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
 	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
@@ -1088,10 +1063,10 @@ def get_rapper_details():
 
 	if os.path.getsize(filenameEmail) == 0:
 		print("Writing a new file for Email")
-		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'SongTitle', 'SongTitleFull'])
+		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity'])
 	if os.path.getsize(filenameInstagram) == 0:
 		print("Writing a new file for Instagram")
-		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull'])
+		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity'])
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
@@ -1174,22 +1149,31 @@ def get_rapper_details():
 
 
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
-		
+		genre = ''
+		role = 'Artist'
+
+
 		if not bio:
 			print(rapper.strip() + "/tracks is excluded for there are no bio data.")
 			continue
-
-		bio_flag = 1
+		if rapper_soup.find(class_='sc-tagContent'):
+			genre = rapper_soup.find(class_='sc-tagContent').get_text()
 		bio_excludes = get_bio_excludes()
 		bio_text = bio.text
+
+		flag = 0
 		for item in bio_excludes:
 			if item in bio_text:
-				bio_flag = 0
-				continue
-		
-		if bio_flag == 0:
-			print(rapper.strip() + "/tracks is excluded for their bio is not matching.")
+				flag = 1
+				break
+		if flag == 1:
+			print('Bio includes exeption word. Passing to next url.')
 			continue
+		
+		manager_bio = get_manager_bio_detect()
+		for item in manager_bio:
+			if item in bio:
+				role = 'Manager'
 
 		web_profiles = rapper_soup.find('div', class_="web-profiles")
 
@@ -1198,18 +1182,18 @@ def get_rapper_details():
 		rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
 
 		if rapper_email or rapper_instagram_username:
-			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
+			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
 			if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
 				print(rapper.strip() + "/tracks is excluded for its artist or track data is not matching.")
 				continue
 
 			if rapper_email:
-				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
-				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, songtitle, songtitlefull])
-			
+				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
+				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
+				
 			if rapper_instagram_username:
-				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
-				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull])
+				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
+				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
 
 	driver.close()
 		
