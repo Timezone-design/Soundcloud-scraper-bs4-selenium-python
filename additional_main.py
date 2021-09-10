@@ -223,18 +223,30 @@ def get_genre_includes():
 	return includes
 
 
-def replace_all(text):
-	text = re.sub(r'\bOfficial\b', "", text)
-	text = re.sub(r'\bThe\b', "", text)
-	text = re.sub(r'\bthe\b', "", text)
-	text = re.sub(r'\bRapper\b', "", text)
-	text = re.sub(r'\brapper\b', "", text)
-	text = re.sub(r'\bda\b', "", text)
-	text = re.sub(r'\btha\b', "", text)
-	text = re.sub(r'\bmusic\b', "", text)
-	text = re.sub(r'\bFeat\b', "", text)
+def get_manager_bio_detect():
+	includes = []
+	try:
+		if os.path.exists('managerbiodetect.json'):
+			with open('managerbiodetect.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print(ex)
+	return includes
 
-	return text
+
+def get_manager_mail_detect():
+	includes = []
+	try:
+		if os.path.exists('managermaildetect.json'):
+			with open('managermaildetect.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print(ex)
+	return includes
 
 
 def generate_2nd_permalinks(driver):
