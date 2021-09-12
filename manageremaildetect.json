@@ -1,4 +1,3 @@
 {
-    "includes": ["manager", "management", "mgmt", "artists", "talent", "agency"]
+    "includes": ["manager", "Manager", "MANAGER", "management", "Management", "MANAGEMENT", "mgmt", "MGMT", "Mgmt", "artists", "Artists", "ARTISTS", "unitedtalent", "turnfirst", "paradigmagency", "talent", "Talent", "TALENT", "agency", "Agency", "AGENCY", "entertainment", "Entertainment", "ENTERTAINMENT"]
 }
-

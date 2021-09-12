@@ -151,6 +151,7 @@ def get_bio_excludes():
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
+		print("JSON reading failed for bio.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -165,6 +166,7 @@ def get_title_excludes():
 				# print("title excludes returned: ", excludes)
 				return excludes
 	except Exception as ex:
+		print("JSON reading failed for title.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -178,6 +180,7 @@ def get_famous_rapper_excludes():
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
+		print("JSON reading failed for famous_rapper.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -191,6 +194,7 @@ def get_email_excludes():
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
+		print("JSON reading failed for email.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -204,6 +208,7 @@ def get_repost_excludes():
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
+		print("JSON reading failed for repost.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -217,6 +222,7 @@ def get_genre_includes():
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
+		print("JSON reading failed for genre.include.json.")
 		print(ex)
 	return includes
 
@@ -230,11 +236,12 @@ def get_manager_bio_detect():
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
+		print("JSON reading failed for managerbiodetect.json.")
 		print(ex)
 	return includes
 
 
-def get_manager_mail_detect():
+def get_manager_email_detect():
 	includes = []
 	try:
 		if os.path.exists('managermaildetect.json'):
@@ -243,6 +250,7 @@ def get_manager_mail_detect():
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
+		print("JSON reading failed for managermaildetect.json.")
 		print(ex)
 	return includes
 def generate_follower_permalinks(url):
@@ -1130,7 +1138,7 @@ def get_rapper_details():
 		print('\n\nRapper url: ', rapper.strip() + "/tracks")
 
 		driver.get(rapper.strip() + "/tracks")
-		time.sleep(1)
+		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
 		genre_flag = 0
@@ -1172,7 +1180,7 @@ def get_rapper_details():
 		
 		manager_bio = get_manager_bio_detect()
 		for item in manager_bio:
-			if item in bio:
+			if item in bio_text:
 				role = 'Manager'
 
 		web_profiles = rapper_soup.find('div', class_="web-profiles")
@@ -1188,6 +1196,10 @@ def get_rapper_details():
 				continue
 
 			if rapper_email:
+				manager_email = get_manager_email_detect()
+				for item in manager_email:
+					if item in rapper_email:
+						role = 'Manager'
 				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
 				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
 				
