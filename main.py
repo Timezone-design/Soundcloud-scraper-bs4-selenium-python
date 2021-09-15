@@ -13,7 +13,8 @@ import emoji
 import string
 import unicodedata
 import sys
-from datetime import datetime
+from datetime import datetime, date
+import random
 
 
 options = Options()
@@ -24,47 +25,38 @@ DRIVER_PATH = 'chromedriver.exe'
 
 #VPS7 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS6 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS5 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS4 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS3 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS2 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #VPS1 Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset={}&linked_partitioning=1&app_version=1623409080&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&variant_ids=&facet=genre&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
 
 #Nikita Client ID
 init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=212832-727922-185643-279192&client_id=bhdPp0QME8kXmKrbDc4gARDVv1v8JNQ3&limit=200&offset={}&linked_partitioning=1&app_version=1627651107&app_locale=en"
-track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=genre&user_id=212832-727922-185643-279192&client_id=bhdPp0QME8kXmKrbDc4gARDVv1v8JNQ3&limit=200&offset=0&linked_partitioning=1&app_version=1627651107&app_locale=en'
 profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=339301-954310-146236-973280&client_id=2FBT7dRlnJnnGKXjivkUCFLmzLG80Rur&limit=200&offset=0&linked_partitioning=1&app_version=1630392657&app_locale=en'
 
 #Tom Client ID
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset={}&linked_partitioning=1&app_version=1623250371&app_locale=en"
-# track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=genre&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
 
 instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
@@ -219,6 +211,15 @@ def get_manager_email_detect():
 		print("JSON reading failed for managermaildetect.json.")
 		print(ex)
 	return includes
+
+
+def generate_password(size=10):
+	chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
+	return ''.join(random.choice(chars) for _ in range(size))
+
+
+def months(d1, d2):
+	return d1.month - d2.month + 12*(d1.year - d2.year)
 
 
 def generate_2nd_permalinks(driver):
@@ -1098,10 +1099,10 @@ def get_rapper_details():
 
 	if os.path.getsize(filenameEmail) == 0:
 		print("Writing a new file for Email")
-		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity'])
+		emailwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState'])
 	if os.path.getsize(filenameInstagram) == 0:
 		print("Writing a new file for Instagram")
-		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity'])
+		instawriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState'])
 
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
@@ -1179,6 +1180,7 @@ def get_rapper_details():
 		genre = ''
 		role = 'Artist'
 
+
 		if flag == 'y':
 			generate_2nd_permalinks(driver)
 			continue
@@ -1197,13 +1199,14 @@ def get_rapper_details():
 					flag = 1
 					break
 			if flag == 1:
-				print('Bio includes exeption word. Passing to next url.')
+				print('Bio includes exception word. Passing to next url.')
 				continue
 			
 			manager_bio = get_manager_bio_detect()
 			for item in manager_bio:
 				if item in bio_text:
 					role = 'Manager'
+
 
 			web_profiles = rapper_soup.find('div', class_="web-profiles")
 
@@ -1216,18 +1219,36 @@ def get_rapper_details():
 				if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
 					print('User info includes exception words. Passing to next url')
 					continue
+				
+				couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
+				couponcode = generate_password(10)
+				songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
+				print('Recent song play: {}'.format(songplays))
+				uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
+				print('Recent song upload: {}'.format(uploaddate))
+				uploaddateobj = datetime.fromisoformat(uploaddate)
+				uploadedmonth = months(datetime.today(), uploaddateobj)
+				print('Recent song upload was {} months ago'.format(uploadedmonth))
+
+				popularityadjusted = 'True'
+				if ((followers >= 200000 and int(songplays) < 8000) or (followers < 200000 and followers > 100000 and int(songplays) < 3000)) and uploadedmonth > 5:
+					popularityadjusted = 'Fake'
+
+				activestatus = 'Active'
+				if uploadedmonth > 11:
+					activestatus = 'Inactive'
 
 				if rapper_email:
 					manager_email = get_manager_email_detect()
 					for item in manager_email:
 						if item in rapper_email:
 							role = 'Manager'
-					emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
-					print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
+					emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
+					print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
 				
 				if rapper_instagram_username:
-					instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
-					print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity])
+					instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
+					print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
 
 	driver.close()
 		
