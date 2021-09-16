@@ -231,7 +231,32 @@ def generate_password(size=10):
 
 def months(d1, d2):
 	return d1.month - d2.month + 12*(d1.year - d2.year)
-	
+
+
+def get_popularity(soup, followers):
+	for index, item in enumerate(soup.find_all(class_='sound__body')):
+		uploaddate = item.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
+		uploaddateobj = datetime.fromisoformat(uploaddate)
+		uploadedmonth = months(datetime.today(), uploaddateobj)
+		if uploadedmonth >= 2:
+			print('{}th upload is selected for popularity verification.'.format(index + 1))
+			try:
+				songplay = int(item.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', ''))
+			except:
+				songplay = 0
+				pass
+
+			try:
+				comments = int(item.find('a', class_='sc-ministats-comments').find_all('span')[1].text.split()[0].replace(',', ''))
+			except:
+				comments = 0
+				pass
+			
+			if songplay / followers < 0.04 or comments < 5:
+				return 'fake'
+			else:
+				return 'True'
+
 	
 def generate_2nd_permalinks(url):
 	url = url + '/likes'
@@ -1242,9 +1267,9 @@ def get_rapper_details():
 			uploaddateobj = datetime.fromisoformat(uploaddate)
 			uploadedmonth = months(datetime.today(), uploaddateobj)
 			print('Recent song upload was {} months ago'.format(uploadedmonth))
-			popularityadjusted = 'True'
-			if ((followers >= 200000 and int(songplays) < 8000) or (followers < 200000 and followers > 100000 and int(songplays) < 3000)) and uploadedmonth > 5:
-				popularityadjusted = 'Fake'
+			popularityadjusted = get_popularity(rapper_soup, followers)
+			if popularityadjusted == 'True':
+				popularityadjusted = popularity
 			activestatus = 'Active'
 			if uploadedmonth > 11:
 				activestatus = 'Inactive'
