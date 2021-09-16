@@ -236,12 +236,12 @@ def get_popularity(soup, followers):
 				pass
 
 			try:
-				comments = int(item.find('a', class_='sc-ministats-comments').find_all('span')[1].text.split()[0].replace(',', ''))
+				comments = int(item.find_all('li', class_='sc-ministats-item')[1]['title'].split()[0].replace(',', ''))
 			except:
 				comments = 0
 				pass
 			
-			if songplay / followers < 0.04 or comments < 5:
+			if songplay / followers < 0.04 and comments < 5:
 				return 'fake'
 			else:
 				return 'True'
@@ -608,7 +608,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
 		rapper_urls = []
 		driver.set_page_load_timeout(10000)
-		driver.get(permalink + '/likes')
+		driver.get(permalink + '/tracks')
 		time.sleep(2)
 		scroll_pause_time = 2
 		i = 0
@@ -1255,9 +1255,11 @@ def get_rapper_details():
 				uploadedmonth = months(datetime.today(), uploaddateobj)
 				print('Recent song upload was {} months ago'.format(uploadedmonth))
 
-				popularityadjusted = get_popularity(rapper_soup, followers)
-				if popularityadjusted == 'True':
-					popularityadjusted = popularity
+				popularityadjusted = popularity
+				if popularity != 'unknown':
+					temp = get_popularity(rapper_soup, followers)
+					if temp == 'fake':
+						popularityadjusted = temp
 
 				activestatus = 'Active'
 				if uploadedmonth > 11:
