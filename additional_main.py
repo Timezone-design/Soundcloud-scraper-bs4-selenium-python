@@ -235,6 +235,10 @@ def months(d1, d2):
 
 def get_popularity(soup, followers):
 	for index, item in enumerate(soup.find_all(class_='sound__body')):
+		goplus = item.find(class_='tierIndicator__smallGoPlus')
+		if not 'sc-hidden' in goplus['class']:
+			print('A track skipped as it is a GO+.')
+			continue
 		uploaddate = item.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
 		uploaddateobj = datetime.fromisoformat(uploaddate)
 		uploadedmonth = months(datetime.today(), uploaddateobj)
