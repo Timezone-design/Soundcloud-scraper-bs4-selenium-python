@@ -3,7 +3,7 @@ import string
 import json
 import os
 import random
-import datetime
+from datetime import datetime
 import re
 import urllib.parse
 import requests
@@ -176,6 +176,8 @@ def months(d1, d2):
 def get_popularity(soup, followers):
 	for index, item in enumerate(soup.find_all(class_='sound__body')):
 		goplus = item.find(class_='tierIndicator__smallGoPlus')
+		if not goplus:
+			continue
 		if not 'sc-hidden' in goplus['class']:
 			print('A track skipped as it is a GO+.')
 			continue

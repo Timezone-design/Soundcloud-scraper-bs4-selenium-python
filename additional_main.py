@@ -331,10 +331,6 @@ def main(): # Main workflow of SoundCloud Scraper
 
 	get_rapper_details()
 
-	
-
-
-
 
 main()
 		
