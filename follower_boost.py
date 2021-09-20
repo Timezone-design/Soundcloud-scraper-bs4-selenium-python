@@ -61,8 +61,8 @@ def generate_follower_permalinks(url):
 
 def get_rapper_details():
 
-	filenameEmail = "Rappers with Email updated.csv"
-	filenameInstagram = "Rappers with Instagram updated.csv"
+	filenameEmail = "csv/Rappers with Email updated.csv"
+	filenameInstagram = "csv/Rappers with Instagram updated.csv"
 
 	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
 	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
