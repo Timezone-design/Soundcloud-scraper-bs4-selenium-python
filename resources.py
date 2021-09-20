@@ -3,6 +3,8 @@ import string
 import json
 import os
 import random
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 from datetime import datetime
 import re
 import urllib.parse
@@ -10,6 +12,10 @@ import requests
 import unicodedata
 import sys
 from constants import *
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -1025,3 +1031,35 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	print('cleaned songtitle ', songtitle)
 
 	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity
+
+
+def take_screenshot(url, username, title):
+	print("Opening driver for screenshot...")
+	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+	try:
+		driver.set_page_load_timeout(10000)
+		driver.get(url + '/tracks')
+		link = driver.find_element_by_class_name('soundTitle__title').get_attribute('href')
+		driver.get(link)
+		time.sleep(2)
+
+		print('Driver opened. Now moving cursor...')
+		target = driver.find_element_by_class_name('playbackTimeline__progressBar')
+		bar = driver.find_element_by_class_name('listenContext')
+		action = ActionChains(driver)
+		# action.move_to_element_with_offset(WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'playbackTimeline__progressBar'))), 100, 0).click().perform()
+		action.move_to_element_with_offset(target, 100, 0).click().perform()
+		action.move_to_element_with_offset(bar, 10, 10).perform()
+		print('Cursor moved. Now taking screenshot...')
+		driver.save_screenshot(os.path.join('screenshots', '{}.{}.png'.format(username, title)))
+		driver.close()
+		print('Screenshot saved in the name of {}.{}.png'.format(username, title))
+		print('\n')
+	except:
+		print('screenshot failed to be created.')
+		pass
+
+	try:
+		driver.close()
+	except:
+		pass
