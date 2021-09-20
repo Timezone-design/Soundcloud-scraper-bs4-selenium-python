@@ -26,10 +26,10 @@ def generate_2nd_permalinks(driver):
 
 	additional_rappers = []
 	i = 0
-	with open('position_of_rappers_unique_for_additional_permalink_from_main.txt', 'a') as f:
+	with open('additional_main_txt/position_of_rappers_unique_for_additional_permalink_from_main.txt', 'a') as f:
 		f.write("%s\n" % datetime.now())
 		f.write("%s\n\n" % url)
-	print('Position saved to position_of_rappers_unique_for_additional_permalink_from_main.txt. Now scrolling page...')
+	print('Position saved to additional_main_txt/position_of_rappers_unique_for_additional_permalink_from_main.txt. Now scrolling page...')
 	while True:
 		i += 1
 		try:
@@ -52,10 +52,10 @@ def generate_2nd_permalinks(driver):
 			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
 				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 				additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional permalink.txt")
+				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional_main_txt/additional permalink.txt")
 				break
 
-	with open('additional_permalink.txt', 'a') as additional_file:
+	with open('additional_main_txt/additional_permalink.txt', 'a') as additional_file:
 		for item in additional_rappers:
 			additional_file.write("%s\n" % item)
 	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
@@ -119,18 +119,18 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		driver.close()
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
-		with open('rappers.txt', 'a') as f:
+		with open('main_txt/rappers.txt', 'a') as f:
 			for item in rapper_urls:
 				f.write("%s\n" % item)
 
-		print("{} rapper profile URLs are written into file rappers.txt.".format(len(rapper_urls)))
+		print("{} rapper profile URLs are written into file main_txt/rappers.txt.".format(len(rapper_urls)))
 
 
 
 def get_rapper_details():
 
-	filenameEmail = "Rappers with Email updated.csv"
-	filenameInstagram = "Rappers with Instagram updated.csv"
+	filenameEmail = "csv/Rappers with Email updated.csv"
+	filenameInstagram = "csv/Rappers with Instagram updated.csv"
 
 	emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
 	instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
@@ -148,24 +148,24 @@ def get_rapper_details():
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
 
-	if not os.path.exists("rappers_unique.txt"): # check if unique series of data exists
+	if not os.path.exists("main_txt/rappers_unique.txt"): # check if unique series of data exists
 
-		if os.path.exists("rappers.txt"): # if not, to see if it can be created from duplicate series
-			with open('rappers.txt') as f:
+		if os.path.exists("main_txt/rappers.txt"): # if not, to see if it can be created from duplicate series
+			with open('main_txt/rappers.txt') as f:
 				for item in f:
 					rapper_profile_url.append(item)
 
 			rapper_profile_url_unique = pd.unique(rapper_profile_url).tolist()
 			rapper_profile_url_unique = [i.strip() for i in rapper_profile_url_unique]
 
-			with open('permalinks.txt') as f:
+			with open('main_txt/permalinks.txt') as f:
 				for item in f:
 					if item.strip() in rapper_profile_url_unique:
 						rapper_profile_url_unique.remove(item.strip())
 						print(item.strip, "\tremoved for it appeared in permalinks.txt")
 
 			url_deletion_list = ['beat', 'repost', 'network', 'prod']
-			with open('rappers_unique.txt', 'w') as f:
+			with open('main_txt/rappers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
 					url_deletion_flag = False
 					for url_deletion_item in url_deletion_list:
@@ -177,10 +177,10 @@ def get_rapper_details():
 					f.write("%s\n" % item.strip())
 
 		else:
-			print("Please make rappers.txt first!")
+			print("Please make main_txt/rappers.txt first!")
 
 	else:
-		with open('rappers_unique.txt') as f:
+		with open('main_txt/rappers_unique.txt') as f:
 			for item in f:
 				rapper_profile_url_unique.append(item)
 
@@ -305,7 +305,7 @@ def main(): # Main workflow of SoundCloud Scraper
 	permalinks = []
 		
 
-	if not os.path.exists("permalinks.txt"): # Searches if permalinks to repost profiles are already made
+	if not os.path.exists("main_txt/permalinks.txt"): # Searches if permalinks to repost profiles are already made
 
 		print("Getting new permalinks...")
 
@@ -356,7 +356,7 @@ def main(): # Main workflow of SoundCloud Scraper
 
 		# permalinks_unique = pd.unique(permalinks).tolist() # Get non-duplicating profiles
 
-		with open('permalinks.txt', 'w') as f: # Write permalinks of repost profiles to file
+		with open('main_txt/permalinks.txt', 'w') as f: # Write permalinks of repost profiles to file
 
 			for item in permalinks:
 
@@ -364,7 +364,7 @@ def main(): # Main workflow of SoundCloud Scraper
 
 	else: # If permalinks are already existing in file
 
-		with open('permalinks.txt') as f:
+		with open('main_txt/permalinks.txt') as f:
 
 			for item in f:
 
@@ -372,7 +372,7 @@ def main(): # Main workflow of SoundCloud Scraper
 
 	print("\n\nOpening repost profiles to get rappers...")
 
-	if not os.path.exists("rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
+	if not os.path.exists("main_txt/rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
 
 		get_rapper_profile_urls_from_reposts(permalinks)
 

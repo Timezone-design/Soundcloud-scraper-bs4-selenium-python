@@ -54,13 +54,13 @@ def clean_artistname(artistname):
 def get_bio_excludes():
 	excludes = []
 	try:
-		if os.path.exists('bio.exclude.json'):
-			with open('bio.exclude.json') as fd:
+		if os.path.exists('json/bio.exclude.json'):
+			with open('json/bio.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
-		print("JSON reading failed for bio.exclude.json.")
+		print("JSON reading failed for json/bio.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -68,14 +68,14 @@ def get_bio_excludes():
 def get_title_excludes():
 	excludes = []
 	try:
-		if os.path.exists('title.exclude.json'):
-			with open('title.exclude.json') as fd:
+		if os.path.exists('json/title.exclude.json'):
+			with open('json/title.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				# print("title excludes returned: ", excludes)
 				return excludes
 	except Exception as ex:
-		print("JSON reading failed for title.exclude.json.")
+		print("JSON reading failed for json/title.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -83,13 +83,13 @@ def get_title_excludes():
 def get_famous_rapper_excludes():
 	excludes = []
 	try:
-		if os.path.exists('famous_rapper.exclude.json'):
-			with open('famous_rapper.exclude.json') as fd:
+		if os.path.exists('json/famous_rapper.exclude.json'):
+			with open('json/famous_rapper.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
-		print("JSON reading failed for famous_rapper.exclude.json.")
+		print("JSON reading failed for json/famous_rapper.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -97,13 +97,13 @@ def get_famous_rapper_excludes():
 def get_email_excludes():
 	excludes = []
 	try:
-		if os.path.exists('email.exclude.json'):
-			with open('email.exclude.json') as fd:
+		if os.path.exists('json/email.exclude.json'):
+			with open('json/email.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
-		print("JSON reading failed for email.exclude.json.")
+		print("JSON reading failed for json/email.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -111,13 +111,13 @@ def get_email_excludes():
 def get_repost_excludes():
 	excludes = []
 	try:
-		if os.path.exists('repost.exclude.json'):
-			with open('repost.exclude.json') as fd:
+		if os.path.exists('json/repost.exclude.json'):
+			with open('json/repost.exclude.json') as fd:
 				obj = json.loads(fd.read())
 				excludes = obj['excludes']
 				return excludes
 	except Exception as ex:
-		print("JSON reading failed for repost.exclude.json.")
+		print("JSON reading failed for json/repost.exclude.json.")
 		print(ex)
 	return excludes
 
@@ -125,13 +125,13 @@ def get_repost_excludes():
 def get_genre_includes():
 	includes = []
 	try:
-		if os.path.exists('genre.include.json'):
-			with open('genre.include.json') as fd:
+		if os.path.exists('json/genre.include.json'):
+			with open('json/genre.include.json') as fd:
 				obj = json.loads(fd.read())
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
-		print("JSON reading failed for genre.include.json.")
+		print("JSON reading failed for json/genre.include.json.")
 		print(ex)
 	return includes
 
@@ -139,13 +139,13 @@ def get_genre_includes():
 def get_manager_bio_detect():
 	includes = []
 	try:
-		if os.path.exists('managerbiodetect.json'):
-			with open('managerbiodetect.json') as fd:
+		if os.path.exists('json/managerbiodetect.json'):
+			with open('json/managerbiodetect.json') as fd:
 				obj = json.loads(fd.read())
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
-		print("JSON reading failed for managerbiodetect.json.")
+		print("JSON reading failed for json/managerbiodetect.json.")
 		print(ex)
 	return includes
 
@@ -153,13 +153,13 @@ def get_manager_bio_detect():
 def get_manager_email_detect():
 	includes = []
 	try:
-		if os.path.exists('managermaildetect.json'):
-			with open('managermaildetect.json') as fd:
+		if os.path.exists('json/managermaildetect.json'):
+			with open('json/managermaildetect.json') as fd:
 				obj = json.loads(fd.read())
 				includes = obj['includes']
 				return includes
 	except Exception as ex:
-		print("JSON reading failed for managermaildetect.json.")
+		print("JSON reading failed for json/managermaildetect.json.")
 		print(ex)
 	return includes
 

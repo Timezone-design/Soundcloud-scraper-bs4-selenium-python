@@ -25,10 +25,10 @@ def generate_follower_permalinks(url):
 	additional_rappers = []
 	i = 0
 	print('Searching following in \t' + url + '\n')
-	with open('position_of_rappers_unique_for_following_permalink.txt', 'a') as f:
+	with open('follower_boost_txt/position_of_rappers_unique_for_following_permalink.txt', 'a') as f:
 		f.write("%s\n" % datetime.now())
 		f.write("%s\n\n" % url)
-	print('Position saved to position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
+	print('Position saved to follower_boost_txt/position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
 	while True:
 		i += 1
 		try:
@@ -51,7 +51,7 @@ def generate_follower_permalinks(url):
 		additional_rappers.append('https://soundcloud.com' + following_profile.attrs['href'])
 		print(following_profile.attrs['href'], "\tis added by following boost.")
 
-	with open('following_permalink.txt', 'a') as f:
+	with open('follower_boost_txt/following_permalink.txt', 'a') as f:
 		for item in additional_rappers:
 			f.write("%s\n" % item)
 	print("\n{} follower urls are added.\n".format(len(additional_rappers)))
@@ -80,10 +80,10 @@ def get_rapper_details():
 	rapper_profile_url = []
 	rapper_profile_url_unique = []
 
-	if not os.path.exists("following_rappers_unique.txt"): # check if unique series of data exists
+	if not os.path.exists("follower_boost_txt/following_rappers_unique.txt"): # check if unique series of data exists
 
-		if os.path.exists("following_permalink.txt"): # if not, to see if it can be created from duplicate series
-			with open('following_permalink.txt') as f:
+		if os.path.exists("follower_boost_txt/following_permalink.txt"): # if not, to see if it can be created from duplicate series
+			with open('follower_boost_txt/following_permalink.txt') as f:
 				for item in f:
 					rapper_profile_url.append(item)
 
@@ -91,7 +91,7 @@ def get_rapper_details():
 			rapper_profile_url_unique = [i.strip() for i in rapper_profile_url_unique]
 
 			url_deletion_list = ['beat', 'repost', 'network', 'prod']
-			with open('following_rappers_unique.txt', 'w') as f:
+			with open('follower_boost_txt/following_rappers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
 					url_deletion_flag = False
 					for url_deletion_item in url_deletion_list:
@@ -103,11 +103,11 @@ def get_rapper_details():
 					f.write("%s\n" % item.strip())
 
 		else:
-			print("Please make following_permalink.txt first!")
+			print("Please make follower_boost_txt/following_permalink.txt first!")
 			sys.exit()
 
 	else:
-		with open('following_rappers_unique.txt') as f:
+		with open('follower_boost_txt/following_rappers_unique.txt') as f:
 			for item in f:
 				rapper_profile_url_unique.append(item)
 
@@ -117,13 +117,13 @@ def get_rapper_details():
 	driver.set_page_load_timeout(10000)
 
 	rappers_before = []
-	with open('rappers_unique.txt', 'r') as f:
+	with open('main_txt/rappers_unique.txt', 'r') as f:
 		for item in f:
 			rappers_before.append(item.strip())
 
 	for rapper in rapper_profile_url_unique:
 		if rapper.strip() in rappers_before:
-			print(rapper.strip() + "/tracks is excluded for it is already scanned in rappers_unique.txt.")
+			print(rapper.strip() + "/tracks is excluded for it is already scanned in main_txt/rappers_unique.txt.")
 			continue
 		rapper_email = None
 		rapper_instagram_username = None
@@ -238,8 +238,8 @@ def main(): # Main workflow of SoundCloud Scraper
 	permalinks = []
 
 
-	if os.path.exists("rappers_unique.txt") or not os.path.exists("following_permalink.txt"):
-		print("rappers_unique.txt detected. Perform following boost?")
+	if os.path.exists("main_txt/rappers_unique.txt") or not os.path.exists("follower_boost_txt/following_permalink.txt"):
+		print("main_txt/rappers_unique.txt detected. Perform following boost?")
 
 		flag = ''
 		while True:
@@ -250,21 +250,12 @@ def main(): # Main workflow of SoundCloud Scraper
 			print("Please input Y or N.")
 		if flag == 'y':
 			unique_list = []
-			with open('rappers_unique.txt', 'r') as f:
+			with open('main_txt/rappers_unique.txt', 'r') as f:
 				for item in f:
 					unique_list.append(item.strip())
 			for item in unique_list:
 				generate_follower_permalinks(item)
 
-	# if os.path.exists("following_permalink.txt"):
-	# 	with open('following_permalink.txt') as f:
-	# 		for item in f:
-	# 			permalinks.append(item)
-
-	# if not os.path.exists("following_rappers.txt"): # If rappers' profile urls are not scraped from repost profiles
-	# 	get_rapper_profile_urls_from_reposts(permalinks)
-
-	# print("\n\nOpening additional repost profiles to get rappers...")
 
 	get_rapper_details()
 
