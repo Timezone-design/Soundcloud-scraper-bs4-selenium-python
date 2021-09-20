@@ -1,6 +1,5 @@
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -9,262 +8,16 @@ import re
 import urllib.parse
 import csv
 import pandas as pd
-import emoji
-import string
 import unicodedata
 import sys
-from datetime import datetime, date
-import random
-
-
-options = Options()
-options.headless = True
-options.add_argument('--log-level=3')
-DRIVER_PATH = 'chromedriver.exe'
-# printable = set(string.printable)
-
-#VPS14 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=374055-868319-148378-438909&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS13 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=506656-214921-947718-308845&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS12 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=225221-581906-333282-235913&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS11 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=701279-440666-80283-875802&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS10 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=497234-797892-535463-757291&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS9 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=977037-489345-139741-290793&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS8 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=10600-120781-951139-20546&client_id=gYkVE2E1CDaIAQpIpP1FfmFt427RgSsv&limit=200&offset=0&linked_partitioning=1&app_version=1624617819&app_locale=en'
-
-#VPS7 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=434708-293573-67871-677944&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS6 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=629348-114058-775559-561393&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS5 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=43605-488002-732889-712556&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS4 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=793243-845133-680818-351036&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS3 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=716706-30782-53008-419962&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS2 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=993249-877589-480335-264294&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#VPS1 Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=517948-175441-226179-487079&client_id=Gef7Kyef9qUHLjDFrmLfJTGqXRS9QT3l&limit=200&offset=0&linked_partitioning=1&app_version=1623409080&app_locale=en'
-
-#Nikita Client ID
-profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_ids=&facet=place&user_id=339301-954310-146236-973280&client_id=2FBT7dRlnJnnGKXjivkUCFLmzLG80Rur&limit=200&offset=0&linked_partitioning=1&app_version=1630392657&app_locale=en'
-
-#Tom Client ID
-# profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=&facet=place&user_id=894984-656968-329615-449581&client_id=EQalBjJSm7usfAMYNXh3cHafam0VmNrw&limit=200&offset=0&linked_partitioning=1&app_version=1623250371&app_locale=en'
-
-instagram_username_regex = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
-
-def remove_emoji(text):
-	return emoji.get_emoji_regexp().sub(u'', text)
-
-
-def clean_songtitle(songtitle):
-	songtitle = songtitle.strip()
-	songtitle = string.capwords(songtitle)
-	return songtitle
-
-def clean_artistname(artistname):
-	artistname = artistname.strip()
-	artistname = artistname.replace('$', 's')
-	artistname = artistname.replace('official', '')
-	artistname = artistname.replace('Official', '')
-	artistname = artistname.replace('OFFICIAL', '')
-	artistname = artistname.replace('"', '')
-	artistname = artistname.replace('_', ' ')
-	artistname = artistname.replace('!', '')
-	artistname = artistname.replace('?', '')
-	artistname = artistname.replace('*', ' ')
-	if len(artistname) > 2 and artistname[-2:] == '//':
-		artistname = artistname[:-2]
-	if len(artistname) > 1 and artistname[-1] == '.':
-		artistname = artistname[:-1]
-	if len(artistname) > 1 and artistname[-1] == '/':
-		artistname = artistname[:-1]
-	if len(artistname) > 1 and artistname[0] == "'":
-		artistname = artistname[1:]
-	if len(artistname) > 1 and artistname[-1] == "'":
-		artistname = artistname[:-1]
-	if artistname[:4].lower() == 'user' and artistname[5:].isnumeric():
-		artistname = 'man'
-
-	artistname = string.capwords(artistname)
-
-	return artistname.strip()
-
-
-def get_bio_excludes():
-	excludes = []
-	try:
-		if os.path.exists('bio.exclude.json'):
-			with open('bio.exclude.json') as fd:
-				obj = json.loads(fd.read())
-				excludes = obj['excludes']
-				return excludes
-	except Exception as ex:
-		print("JSON reading failed for bio.exclude.json.")
-		print(ex)
-	return excludes
-
-
-def get_title_excludes():
-	excludes = []
-	try:
-		if os.path.exists('title.exclude.json'):
-			with open('title.exclude.json') as fd:
-				obj = json.loads(fd.read())
-				excludes = obj['excludes']
-				# print("title excludes returned: ", excludes)
-				return excludes
-	except Exception as ex:
-		print("JSON reading failed for title.exclude.json.")
-		print(ex)
-	return excludes
-
-
-def get_famous_rapper_excludes():
-	excludes = []
-	try:
-		if os.path.exists('famous_rapper.exclude.json'):
-			with open('famous_rapper.exclude.json') as fd:
-				obj = json.loads(fd.read())
-				excludes = obj['excludes']
-				return excludes
-	except Exception as ex:
-		print("JSON reading failed for famous_rapper.exclude.json.")
-		print(ex)
-	return excludes
-
-
-def get_email_excludes():
-	excludes = []
-	try:
-		if os.path.exists('email.exclude.json'):
-			with open('email.exclude.json') as fd:
-				obj = json.loads(fd.read())
-				excludes = obj['excludes']
-				return excludes
-	except Exception as ex:
-		print("JSON reading failed for email.exclude.json.")
-		print(ex)
-	return excludes
-
-
-def get_repost_excludes():
-	excludes = []
-	try:
-		if os.path.exists('repost.exclude.json'):
-			with open('repost.exclude.json') as fd:
-				obj = json.loads(fd.read())
-				excludes = obj['excludes']
-				return excludes
-	except Exception as ex:
-		print("JSON reading failed for repost.exclude.json.")
-		print(ex)
-	return excludes
-
-
-def get_genre_includes():
-	includes = []
-	try:
-		if os.path.exists('genre.include.json'):
-			with open('genre.include.json') as fd:
-				obj = json.loads(fd.read())
-				includes = obj['includes']
-				return includes
-	except Exception as ex:
-		print("JSON reading failed for genre.include.json.")
-		print(ex)
-	return includes
-
-
-def get_manager_bio_detect():
-	includes = []
-	try:
-		if os.path.exists('managerbiodetect.json'):
-			with open('managerbiodetect.json') as fd:
-				obj = json.loads(fd.read())
-				includes = obj['includes']
-				return includes
-	except Exception as ex:
-		print("JSON reading failed for managerbiodetect.json.")
-		print(ex)
-	return includes
-
-
-def get_manager_email_detect():
-	includes = []
-	try:
-		if os.path.exists('managermaildetect.json'):
-			with open('managermaildetect.json') as fd:
-				obj = json.loads(fd.read())
-				includes = obj['includes']
-				return includes
-	except Exception as ex:
-		print("JSON reading failed for managermaildetect.json.")
-		print(ex)
-	return includes
-
-
-def generate_password(size=10):
-	chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
-	return ''.join(random.choice(chars) for _ in range(size))
-
-
-def months(d1, d2):
-	return d1.month - d2.month + 12*(d1.year - d2.year)
-
-
-def get_popularity(soup, followers):
-	for index, item in enumerate(soup.find_all(class_='sound__body')):
-		goplus = item.find(class_='tierIndicator__smallGoPlus')
-		if not 'sc-hidden' in goplus['class']:
-			print('A track skipped as it is a GO+.')
-			continue
-		uploaddate = item.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
-		uploaddateobj = datetime.fromisoformat(uploaddate)
-		uploadedmonth = months(datetime.today(), uploaddateobj)
-		if uploadedmonth >= 2:
-			print('{}th upload is selected for popularity verification.'.format(index + 1))
-			try:
-				songplay = int(item.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', ''))
-			except:
-				songplay = 0
-				pass
-
-			try:
-				comments = int(item.find_all('li', class_='sc-ministats-item')[1]['title'].split()[0].replace(',', ''))
-			except:
-				comments = 0
-				pass
-			
-			if songplay / followers < 0.04 and comments < 5:
-				return 'fake'
-			else:
-				return 'True'
+from datetime import datetime
+from constants import *
+from resources import get_genre_includes, get_famous_rapper_excludes, get_bio_excludes, get_email_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, get_repost_excludes, get_title_excludes, remove_emoji, clean_artistname, clean_songtitle, months
 
 	
 def generate_2nd_permalinks(url):
 	url = url + '/likes'
-	tempdriver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	tempdriver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	tempdriver.set_page_load_timeout(10000)
 	tempdriver.get(url)
 	time.sleep(1)
@@ -626,7 +379,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 	print(genre_includes)
 	for permalink in permalinks:
 		try:
-			driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+			driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 			rapper_urls = []
 			driver.set_page_load_timeout(10000)
 			driver.get(permalink + '/likes')
@@ -719,7 +472,7 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 				email = email.group(0)
 
 		if instagram_username == None:
-			searched = instagram_username_regex.search(bio) # if instagram_username is not found in web_profiles
+			searched = INSTAGRAM_USERNAME_REGEX.search(bio) # if instagram_username is not found in web_profiles
 
 			if searched:
 				instagram_username = searched.group(2)
@@ -1195,7 +948,7 @@ def get_rapper_details():
 
 	print("{} unique rapper URLs detected.".format(len(rapper_profile_url_unique)))
 
-	driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	driver.set_page_load_timeout(10000)
 
 	rappers_before = []
