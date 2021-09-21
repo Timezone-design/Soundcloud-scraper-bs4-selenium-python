@@ -35,7 +35,9 @@ print('Data extracted from Email csv')
 
 newlines = emaildf[~emaildf['CouponCode'].isin(coupondf['CouponCode'])].dropna(how = 'all')
 newurls = newlines[['SoundCloudURL', 'ArtistNameCleaned', 'SongTitle']].copy()
-newlines = newlines[['CouponCodeName', 'CouponCode']].copy()
+newlines = newlines[['ArtistNameCleaned', 'CouponCode']].copy()
+newlines['ArtistNameCleaned'] = newlines['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
+newlines.rename(columns={'ArtistNameCleaned': 'CouponCodeName'}, inplace=True)
 newlines['DiscountAmount'] = dollaramount
 newlines['DiscountType'] = 'flat'
 newlines['Uses'] = '0/1'
