@@ -1,3 +1,4 @@
+import enum
 import emoji
 import string
 import json
@@ -177,6 +178,18 @@ def generate_password(size=10):
 
 def months(d1, d2):
 	return d1.month - d2.month + 12*(d1.year - d2.year)
+
+
+def get_non_GO_track_link(soup):
+	for index, item in enumerate(soup.find_all(class_='sound__body')):
+		goplus = item.find(class_='tierIndicator__smallGoPlus')
+		if not goplus:
+			continue
+		if not 'sc-hidden' in goplus['class']:
+			print('A track skipped as it is a GO+.')
+			continue
+		return item.find(class_="soundTitle__title").attrs['href'], item.find(class_="soundTitle__title").get_text().strip()
+	return "none", "none"
 
 
 def get_popularity(soup, followers):
@@ -643,10 +656,13 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 def get_other_info_of_rapper(rapper_soup, permalink):
 	try:
-		songtitlefull = rapper_soup.find(class_='soundTitle__title').get_text().strip()
+		songlink, songtitlefull = get_non_GO_track_link(rapper_soup)
 		username = rapper_soup.find(class_='profileHeaderInfo__userName').get_text().strip()
 	except:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	if songlink == "none":
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	try:
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
@@ -664,7 +680,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			sys.exit()
 			
 	if len(user_search['collection']) == 0:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	flag = False
 	for item in user_search['collection']:
@@ -673,7 +689,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			flag = True
 			break
 	if not flag:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	followers = user_object['followers_count']
 	popularity = 'unknown'
@@ -704,7 +720,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	for entity in search_entity:
 		for item in title_excludes:
 			if entity is not None and item in entity:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if not fullname:
 		fullname = username
@@ -751,7 +767,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if username in songtitlefull:
 		for word in preceding_words:
 			if word + username in songtitlefull or '-' + word in songtitlefull or '- ' + word in songtitlefull:
-				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	# if re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull):
 	# 	print(re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull))
@@ -1020,7 +1036,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		songtitle = songtitle.encode("ascii", "ignore")
 		songtitle = songtitle.decode()
 	else:
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 	if artistname:
 		artistname = artistname.encode("ascii", "ignore")
 		artistname = artistname.decode()
@@ -1030,7 +1046,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	songtitle = clean_songtitle(songtitle)
 	print('cleaned songtitle ', songtitle)
 
-	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity
+	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink
 
 
 def take_screenshot(url, username, title):

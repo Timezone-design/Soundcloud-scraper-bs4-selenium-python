@@ -1,9 +1,7 @@
 import csv
-from numpy import e
 import pandas as pd
 from os import path
 from resources import take_screenshot
-from bs4 import BeautifulSoup
 
 
 filenameEmail = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers with Email updated.csv')
@@ -33,9 +31,9 @@ emailextract = emaildf[['CouponCodeName', 'CouponCode']].copy()
 couponextract = coupondf[['CouponCodeName', 'CouponCode']].copy()
 print('Data extracted from Email csv')
 
-newlines = emaildf[~emaildf['CouponCode'].isin(coupondf['CouponCode'])].dropna(how = 'all')
-newurls = newlines[['SoundCloudURL', 'ArtistNameCleaned', 'SongTitle']].copy()
-newlines = newlines[['ArtistNameCleaned', 'CouponCode']].copy()
+newlines_all = emaildf[~emaildf['CouponCode'].isin(coupondf['CouponCode'])].dropna(how = 'all')
+newurls = newlines_all[['SoundCloudURL', 'ArtistNameCleaned', 'SongTitle']].copy()
+newlines = newlines_all[['ArtistNameCleaned', 'CouponCode']].copy()
 newlines['ArtistNameCleaned'] = newlines['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
 newlines.rename(columns={'ArtistNameCleaned': 'CouponCodeName'}, inplace=True)
 newlines['DiscountAmount'] = dollaramount
@@ -56,10 +54,12 @@ if len(newlines.index) > 0:
   print('The last entry is {}.'.format(newlines.iloc[-1]['CouponCodeName']))
 print('New lines are ready to be appended. Now merging...')
 newlines.to_csv(filenameCoupon, mode='a', header=False, encoding='utf-16', sep='\t', index=False)
-
-print('Merge finished.')
+print('Merge finished and Coupon Codes.csv updated.')
 
 if len(newlines.index) > 0:
-  print('Now taking screenshots...')
+  print('\nNow taking screenshots...')
+  print('...........................')
+  print('Moving to final csv')
+  
   for index, url in enumerate(newurls['SoundCloudURL']):
     take_screenshot(url, newurls.iloc[index]['ArtistNameCleaned'], newurls.iloc[index]['SongTitle'])
