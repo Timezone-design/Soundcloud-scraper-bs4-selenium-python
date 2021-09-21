@@ -2,16 +2,25 @@ import csv
 import pandas as pd
 from os import path
 from resources import take_screenshot
+from constants import SCREENSHOT_UPLOAD_URL
 
 
 filenameEmail = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers with Email updated.csv')
 filenameCoupon = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Coupon Codes.csv')
+filenameFinal = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers with Email final.csv')
 
 if path.exists(filenameCoupon) == 0:
   print('Writing a new file for Coupon Code.')
   couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
   couponwriter = csv.writer(couponFile, delimiter='\t')
   couponwriter.writerow(['CouponCodeName', 'CouponCode', 'DiscountAmount', 'DiscountType', 'Uses', 'MaxUses', 'SingeUse', 'StartDate', 'Expiration', 'DiscountStatus', 'ProductCondition', 'ProductRequirements', 'IsItOnlyForSelectProducts', 'MinimumPurchasePrice'])
+  couponFile.close()
+
+if path.exists(filenameFinal) == 0:
+  print('Writing a new file for final csv.')
+  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
+  couponwriter = csv.writer(couponFile, delimiter='\t')
+  couponwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL'])
   couponFile.close()
 
 emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
@@ -32,7 +41,6 @@ couponextract = coupondf[['CouponCodeName', 'CouponCode']].copy()
 print('Data extracted from Email csv')
 
 newlines_all = emaildf[~emaildf['CouponCode'].isin(coupondf['CouponCode'])].dropna(how = 'all')
-newurls = newlines_all[['SoundCloudURL', 'ArtistNameCleaned', 'SongTitle']].copy()
 newlines = newlines_all[['ArtistNameCleaned', 'CouponCode']].copy()
 newlines['ArtistNameCleaned'] = newlines['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
 newlines.rename(columns={'ArtistNameCleaned': 'CouponCodeName'}, inplace=True)
@@ -58,8 +66,14 @@ print('Merge finished and Coupon Codes.csv updated.')
 
 if len(newlines.index) > 0:
   print('\nNow taking screenshots...')
-  print('...........................')
+  for index, url in enumerate(newlines_all['SongLink']):
+    filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], newlines_all.iloc[index]['SongTitle'].rsplit()[0], newlines_all.iloc[index]['GO+'])
+    if filename != 'None':
+      newlines_all.iloc[index]['ScreenshotFileName'] = filename
+      newlines_all.iloc[index]['ScreenshotURL'] = SCREENSHOT_UPLOAD_URL + filename
+    else:
+      newlines_all.iloc[index]['ScreenshotFileName'] = 'N/A'
+      newlines_all.iloc[index]['ScreenshotURL'] = 'N/A'
+
   print('Moving to final csv')
-  
-  for index, url in enumerate(newurls['SoundCloudURL']):
-    take_screenshot(url, newurls.iloc[index]['ArtistNameCleaned'], newurls.iloc[index]['SongTitle'])
+  newlines_all.to_csv(filenameFinal, mode='a', header=False, encoding='utf-16', sep='\t', index=False)

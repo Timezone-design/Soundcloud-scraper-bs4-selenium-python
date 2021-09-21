@@ -661,9 +661,6 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
-	if songlink == "none":
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
-
 	try:
 		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
 	except:
@@ -1049,28 +1046,30 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink
 
 
-def take_screenshot(url, username, title):
+def take_screenshot(url, username, title, gostatus):
 	print("Opening driver for screenshot...")
 	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	try:
 		driver.set_page_load_timeout(10000)
-		driver.get(url + '/tracks')
-		link = driver.find_element_by_class_name('soundTitle__title').get_attribute('href')
-		driver.get(link)
+		driver.get(url)
 		time.sleep(2)
 
-		print('Driver opened. Now moving cursor...')
-		target = driver.find_element_by_class_name('playbackTimeline__progressBar')
-		bar = driver.find_element_by_class_name('listenContext')
-		action = ActionChains(driver)
-		# action.move_to_element_with_offset(WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'playbackTimeline__progressBar'))), 100, 0).click().perform()
-		action.move_to_element_with_offset(target, 100, 0).click().perform()
-		action.move_to_element_with_offset(bar, 10, 10).perform()
-		print('Cursor moved. Now taking screenshot...')
-		driver.save_screenshot(os.path.join('screenshots', '{}.{}.png'.format(username, title)))
+		if gostatus == 'No':
+			print('Driver opened. Now moving cursor...')
+			target = driver.find_element_by_class_name('playbackTimeline__progressBar')
+			bar = driver.find_element_by_class_name('listenContext')
+			action = ActionChains(driver)
+			# action.move_to_element_with_offset(WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'playbackTimeline__progressBar'))), 100, 0).click().perform()
+			action.move_to_element_with_offset(target, 100, 0).click().perform()
+			action.move_to_element_with_offset(bar, 10, 10).perform()
+			print('Cursor moved. Now taking screenshot...')
+		else:
+			print('All the tracks are GO+, taking screenshot of main page.')
+		driver.save_screenshot(os.path.join('screenshots', '{}_{}.png'.format(username, title)))
 		driver.close()
 		print('Screenshot saved in the name of {}.{}.png'.format(username, title))
 		print('\n')
+		return '{}.{}.png'.format(username, title)
 	except:
 		print('screenshot failed to be created.')
 		pass
@@ -1079,3 +1078,4 @@ def take_screenshot(url, username, title):
 		driver.close()
 	except:
 		pass
+	return 'None'
