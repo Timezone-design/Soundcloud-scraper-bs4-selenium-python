@@ -261,29 +261,31 @@ def get_rapper_details():
 					print('User info includes exception words. Passing to next url')
 					continue
 				
-				couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
-				couponcode = generate_password(10)
-				songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
-				print('Recent song play: {}'.format(songplays))
-				uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
-				print('Recent song upload: {}'.format(uploaddate))
-				uploaddateobj = datetime.fromisoformat(uploaddate)
-				uploadedmonth = months(datetime.today(), uploaddateobj)
-				print('Recent song upload was {} months ago'.format(uploadedmonth))
-
-				popularityadjusted = popularity
-				if popularity != 'unknown':
-					temp = get_popularity(rapper_soup, followers)
-					if temp == 'fake':
-						popularityadjusted = temp
-
-				activestatus = 'Active'
-				if uploadedmonth > 11:
-					activestatus = 'Inactive'
-				gostatus = 'No'
-				if songlink == 'none':
-					gostatus = 'Yes'
-					songlink = rapper.strip()
+				try:
+					couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
+					couponcode = generate_password(10)
+					songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
+					print('Recent song play: {}'.format(songplays))
+					uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
+					print('Recent song upload: {}'.format(uploaddate))
+					uploaddateobj = datetime.fromisoformat(uploaddate)
+					uploadedmonth = months(datetime.today(), uploaddateobj)
+					print('Recent song upload was {} months ago'.format(uploadedmonth))
+					popularityadjusted = popularity
+					if popularity != 'unknown':
+						temp = get_popularity(rapper_soup, followers)
+						if temp == 'fake':
+							popularityadjusted = temp
+					activestatus = 'Active'
+					if uploadedmonth > 11:
+						activestatus = 'Inactive'
+					gostatus = 'No'
+					if songlink == 'none':
+						gostatus = 'Yes'
+						songlink = rapper.strip()
+				except:
+					continue
+					pass
 
 				if rapper_email:
 					manager_email = get_manager_email_detect()

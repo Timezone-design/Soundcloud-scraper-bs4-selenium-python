@@ -1067,9 +1067,9 @@ def take_screenshot(url, username, title, gostatus):
 			print('All the tracks are GO+, taking screenshot of main page.')
 		driver.save_screenshot(os.path.join('screenshots', '{}_{}.png'.format(username, title)))
 		driver.close()
-		print('Screenshot saved in the name of {}.{}.png'.format(username, title))
+		print('Screenshot saved in the name of {}_{}.png'.format(username, title))
 		print('\n')
-		return '{}.{}.png'.format(username, title)
+		return '{}_{}.png'.format(username, title)
 	except:
 		print('screenshot failed to be created.')
 		pass

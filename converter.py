@@ -9,14 +9,14 @@ filenameEmail = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers 
 filenameCoupon = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Coupon Codes.csv')
 filenameFinal = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers with Email final.csv')
 
-if path.exists(filenameCoupon) == 0:
+if not path.exists(filenameCoupon):
   print('Writing a new file for Coupon Code.')
   couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
   couponwriter = csv.writer(couponFile, delimiter='\t')
   couponwriter.writerow(['CouponCodeName', 'CouponCode', 'DiscountAmount', 'DiscountType', 'Uses', 'MaxUses', 'SingeUse', 'StartDate', 'Expiration', 'DiscountStatus', 'ProductCondition', 'ProductRequirements', 'IsItOnlyForSelectProducts', 'MinimumPurchasePrice'])
   couponFile.close()
 
-if path.exists(filenameFinal) == 0:
+if not path.exists(filenameFinal):
   print('Writing a new file for final csv.')
   couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
   couponwriter = csv.writer(couponFile, delimiter='\t')
@@ -66,14 +66,17 @@ print('Merge finished and Coupon Codes.csv updated.')
 
 if len(newlines.index) > 0:
   print('\nNow taking screenshots...')
+  newlines_all['ScreenshotFileName'] = ''
+  newlines_all['ScreenshotURL'] = ''
+
   for index, url in enumerate(newlines_all['SongLink']):
     filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], newlines_all.iloc[index]['SongTitle'].rsplit()[0], newlines_all.iloc[index]['GO+'])
     if filename != 'None':
-      newlines_all.iloc[index]['ScreenshotFileName'] = filename
-      newlines_all.iloc[index]['ScreenshotURL'] = SCREENSHOT_UPLOAD_URL + filename
+      newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = filename
+      newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = SCREENSHOT_UPLOAD_URL + filename
     else:
-      newlines_all.iloc[index]['ScreenshotFileName'] = 'N/A'
-      newlines_all.iloc[index]['ScreenshotURL'] = 'N/A'
+      newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = 'N/A'
+      newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = 'N/A'
 
   print('Moving to final csv')
   newlines_all.to_csv(filenameFinal, mode='a', header=False, encoding='utf-16', sep='\t', index=False)
