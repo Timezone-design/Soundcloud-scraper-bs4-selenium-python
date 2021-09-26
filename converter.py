@@ -11,26 +11,26 @@ filenameFinal = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers 
 
 if not path.exists(filenameCoupon):
   print('Writing a new file for Coupon Code.')
-  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
-  couponwriter = csv.writer(couponFile, delimiter='\t')
+  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-8')
+  couponwriter = csv.writer(couponFile, delimiter=',')
   couponwriter.writerow(['CouponCodeName', 'CouponCode', 'DiscountAmount', 'DiscountType', 'Uses', 'MaxUses', 'SingeUse', 'StartDate', 'Expiration', 'DiscountStatus', 'ProductCondition', 'ProductRequirements', 'IsItOnlyForSelectProducts', 'MinimumPurchasePrice'])
   couponFile.close()
 
 if not path.exists(filenameFinal):
   print('Writing a new file for final csv.')
-  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-16')
-  couponwriter = csv.writer(couponFile, delimiter='\t')
-  couponwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL'])
-  couponFile.close()
+  finalFile = open(filenameFinal, 'w', newline='', encoding='utf-16')
+  finalwriter = csv.writer(finalFile, delimiter='\t')
+  finalwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL'])
+  finalFile.close()
 
 emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
-coupondf = pd.read_csv(filenameCoupon, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
+coupondf = pd.read_csv(filenameCoupon, encoding='utf-8', header=0, error_bad_lines=False, sep=',')
 
 # print(list(emaildf.columns))
 
-startdate = input('Start Date: ')
-expiredate = input('Expiry Date: ')
-dollaramount = input('Dollar Amount: ')
+startdate = input('Start Date in the following format YYYY-MM-DD : ')
+expiredate = input('Expiry Date in the following format YYYY-MM-DD : ')
+dollaramount = input('Dollar Amount : ')
 
 # print(emaildf['CouponCodeName'])
 
@@ -46,9 +46,9 @@ newlines['ArtistNameCleaned'] = newlines['ArtistNameCleaned'].apply(lambda x: f'
 newlines.rename(columns={'ArtistNameCleaned': 'CouponCodeName'}, inplace=True)
 newlines['DiscountAmount'] = dollaramount
 newlines['DiscountType'] = 'flat'
-newlines['Uses'] = '0/1'
+newlines['Uses'] = '0'
 newlines['MaxUses'] = 1
-newlines['SingeUse'] = 1
+newlines['SingleUse'] = 0
 newlines['StartDate'] = startdate
 newlines['Expiration'] = expiredate
 newlines['DiscountStatus'] = 'active'
@@ -61,7 +61,7 @@ if len(newlines.index) > 0:
   print('The first entry is {}.'.format(newlines.iloc[0]['CouponCodeName']))
   print('The last entry is {}.'.format(newlines.iloc[-1]['CouponCodeName']))
 print('New lines are ready to be appended. Now merging...')
-newlines.to_csv(filenameCoupon, mode='a', header=False, encoding='utf-16', sep='\t', index=False)
+newlines.to_csv(filenameCoupon, mode='a', header=False, encoding='utf-8', sep=',', index=False)
 print('Merge finished and Coupon Codes.csv updated.')
 
 if len(newlines.index) > 0:
