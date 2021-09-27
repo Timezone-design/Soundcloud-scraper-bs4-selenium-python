@@ -219,6 +219,7 @@ def get_rapper_details():
 					gostatus = 'Yes'
 					songlink = rapper.strip()
 			except:
+				print('Error parsing couponcodes and popularity information. Moving to next iteration.')
 				continue
 				pass
 				

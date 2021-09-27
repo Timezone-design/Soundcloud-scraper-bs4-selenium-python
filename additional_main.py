@@ -124,7 +124,8 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 					f.write("%s\n" % item)
 
 			print("{} rapper profile URLs are written into file additional_main_txt/additional_rappers.txt.".format(len(rapper_urls)))
-		except:
+		except: 
+			print('Getting permalinks from /likes failed. Returning...')
 			driver.close()
 			return
 
@@ -214,6 +215,21 @@ def get_rapper_details():
 		driver.get(rapper.strip() + "/tracks")
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+
+		genre_flag = 0
+		if rapper_soup.find(class_='sc-tagContent'):
+			genre_includes = get_genre_includes()
+			genre_first = rapper_soup.find(class_='sc-tagContent').get_text()
+
+			for item in genre_includes:
+				if item in genre_first:
+					genre_flag = 1
+					break
+			
+		if genre_flag == 0:
+			print(rapper.strip() + "/tracks is excluded for its genre is not matching.")
+			continue
+
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
 		genre = ''
 		role = 'Artist'
@@ -276,6 +292,7 @@ def get_rapper_details():
 					gostatus = 'Yes'
 					songlink = rapper.strip()
 			except:
+				print('Error parsing couponcodes and popularity information. Moving to next iteration.')
 				continue
 				pass
 				
