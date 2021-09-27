@@ -23,7 +23,11 @@ if not path.exists(filenameFinal):
   finalwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL'])
   finalFile.close()
 
-emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
+try:
+  emaildf = pd.read_csv(filenameEmail, encoding='utf-8', header=0, error_bad_lines=False, sep=',')
+except:
+  emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
+  pass
 coupondf = pd.read_csv(filenameCoupon, encoding='utf-8', header=0, error_bad_lines=False, sep=',')
 
 # print(list(emaildf.columns))
@@ -68,6 +72,7 @@ if len(newlines.index) > 0:
   print('\nNow taking screenshots...')
   newlines_all['ScreenshotFileName'] = ''
   newlines_all['ScreenshotURL'] = ''
+  newlines_all.drop('index', axis=1, inplace=True)
 
   for index, url in enumerate(newlines_all['SongLink']):
     filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], newlines_all.iloc[index]['SongTitle'].rsplit()[0], newlines_all.iloc[index]['GO+'])

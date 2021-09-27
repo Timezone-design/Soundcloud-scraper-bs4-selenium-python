@@ -1,4 +1,3 @@
-import enum
 import emoji
 import string
 import json
@@ -14,10 +13,19 @@ import unicodedata
 import sys
 from constants import *
 import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
+def slugify(value, allow_unicode=False):
+    """
+    Normalizes string, converts to lowercase, removes non-alpha characters,
+    and converts spaces to hyphens.
+    """
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize('NFKC', value)
+    else:
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value.lower())
+    return re.sub(r'[-\s]+', '-', value).strip('-_')
 
 
 def remove_emoji(text):
@@ -1065,11 +1073,12 @@ def take_screenshot(url, username, title, gostatus):
 			print('Cursor moved. Now taking screenshot...')
 		else:
 			print('All the tracks are GO+, taking screenshot of main page.')
-		driver.save_screenshot(os.path.join('screenshots', '{}_{}.png'.format(username, title)))
+		filename = '{}_{}.png'.format(slugify(username), slugify(title)).lower()
+		driver.save_screenshot(os.path.join('screenshots', filename))
 		driver.close()
-		print('Screenshot saved in the name of {}_{}.png'.format(username, title))
+		print('Screenshot saved in the name of {}'.format(filename))
 		print('\n')
-		return '{}_{}.png'.format(username, title)
+		return filename
 	except:
 		print('screenshot failed to be created.')
 		pass
