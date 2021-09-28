@@ -11,7 +11,7 @@ filenameFinal = path.join(path.dirname(path.abspath(__file__)), 'csv', 'Rappers 
 
 if not path.exists(filenameCoupon):
   print('Writing a new file for Coupon Code.')
-  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-8')
+  couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-8-sig')
   couponwriter = csv.writer(couponFile, delimiter=',')
   couponwriter.writerow(['CouponCodeName', 'CouponCode', 'DiscountAmount', 'DiscountType', 'Uses', 'MaxUses', 'SingeUse', 'StartDate', 'Expiration', 'DiscountStatus', 'ProductCondition', 'ProductRequirements', 'IsItOnlyForSelectProducts', 'MinimumPurchasePrice'])
   couponFile.close()
@@ -28,7 +28,7 @@ try:
 except:
   emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
   pass
-coupondf = pd.read_csv(filenameCoupon, encoding='utf-8', header=0, error_bad_lines=False, sep=',')
+coupondf = pd.read_csv(filenameCoupon, encoding='utf-8-sig', header=0, error_bad_lines=False, sep=',')
 
 # print(list(emaildf.columns))
 

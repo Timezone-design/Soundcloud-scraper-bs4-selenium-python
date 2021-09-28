@@ -273,6 +273,8 @@ def get_rapper_details():
 				couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
 				couponcode = generate_password(10)
 				songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
+				if songplays == "View":
+					songplays = "0"
 				print('Recent song play: {}'.format(songplays))
 				uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
 				print('Recent song upload: {}'.format(uploaddate))
@@ -301,6 +303,9 @@ def get_rapper_details():
 				for item in manager_email:
 					if item in rapper_email:
 						role = 'Manager'
+				has_instagram = 'No'
+				if rapper_instagram_username:
+					has_instagram = 'Yes'
 				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
 				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus])
 			

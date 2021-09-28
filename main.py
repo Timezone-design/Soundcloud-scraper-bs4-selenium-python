@@ -280,6 +280,8 @@ def get_rapper_details():
 					couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
 					couponcode = generate_password(10)
 					songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
+					if songplays == "View":
+						songplays = "0"
 					print('Recent song play: {}'.format(songplays))
 					uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
 					print('Recent song upload: {}'.format(uploaddate))
