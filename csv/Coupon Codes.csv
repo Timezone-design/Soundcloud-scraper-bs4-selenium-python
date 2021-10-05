@@ -1,1 +1,314 @@
-﻿CouponCodeName,CouponCode,DiscountAmount,DiscountType,Uses,MaxUses,SingeUse,StartDate,Expiration,DiscountStatus,ProductCondition,ProductRequirements,IsItOnlyForSelectProducts,MinimumPurchasePrice
+﻿Edd Discount Name,Edd Discount Code,Edd Discount Amount,Edd Discount Type,Edd Discount Uses,Edd Discount Max Uses,Edd Discount Is Single Use,Edd Discount Start,Edd Discount Expiration,Edd Discount Status,Edd Discount Product Condition,Edd Discount Is Not Global,Edd Discount Min Price,Edd Discount Product Reqs,Title,URL Slug,Date,Modified Date,Status,Edd Discount Excluded Products,Post type
+Discount -$3 for mp3 lease for Jaclyn Gee,4yNlrbN1Cq,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Perry@GoodFridayEnt.com,JaclynGee_addicted,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jay Tha King,Uh1trrmymV,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Jaydeecus@gmail.com,JayThaKing_your,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Loon E Lou,311vayhzIO,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Loonelou831@gmail.com,LoonELou_clusterfu,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dee Wp,If9bEV6PPe,3,flat,,1,,3 00:00,3 23:59,active,all,,,,deewpmusic@gmail.com,DEEWP_all,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Chris Mller,HklkSdqMzl,3,flat,,1,,3 00:00,3 23:59,active,all,,,,chrismullerofficial@gmail.com,ChrisMller_mas,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nipsey Hussle,2uAAavxlxL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,press@themarathonagency.com,NipseyHussle_racks,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Casper Ghost,oMR5njCJky,3,flat,,1,,3 00:00,3 23:59,active,all,,,,casperghost4400@gmail.com,CASPERGHOST_backwoods,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yungtop,iSrp0jyv8o,3,flat,,1,,3 00:00,3 23:59,active,all,,,,trichbiz@gmail.com,yungtop_rollin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tame The Waivs,B2gGhHEEy8,3,flat,,1,,3 00:00,3 23:59,active,all,,,,waivsfrfr@gmail.com,TametheWaivs_floral,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Naskarmoney,pIu4SSqNHh,3,flat,,1,,3 00:00,3 23:59,active,all,,,,juggmanebb@icloud.com,nakarmoney_yes,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Original Hotboyturk,kXbyYGNARN,3,flat,,1,,3 00:00,3 23:59,active,all,,,,BOOKHOTBOYTURK@GMAIL.COM,OriginalHotBoyTurk_the,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dazdanky,P2tpBJkdg4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,dazdankyofficial@yahoo.com,DazDanky_h2hk,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Savvymike,6KN7Tdor3u,3,flat,,1,,3 00:00,3 23:59,active,all,,,,savvymike96@gmail.com,savvymike_gods,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dripwitduhfit,J2Vbxqefue,3,flat,,1,,3 00:00,3 23:59,active,all,,,,StupeKids@gmail.com,DripWitDuhFit_up,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ty Writer,BRTASXEp0J,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ty.writer.music@gmail.com,TyWriter_numbers,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for L Phantom,imVxqIsS6P,3,flat,,1,,3 00:00,3 23:59,active,all,,,,mawilso15@gmail.com,LPHANTOM_why,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Supraslime,HT2Spj6k3J,3,flat,,1,,3 00:00,3 23:59,active,all,,,,itswillyesko@gmail.com,supraslime_moneybagg,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Bishop Montana,vISWasujHY,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Kingshal1997@gmail.com,BISHOPMONTANA_misfits,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zeke&zoid,B8aPqttb9l,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Zekenzoid@gmail.com,ZEKEZOID_booty,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zaymatic,1Alt4iMXm1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,-Hazyzay@gmail.com,Zaymatic_contagious,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yungsurfgod,l47uiwjDsS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Yungsurfgod@gmail.com,Yungsurfgod_run,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mc'lain,99gWPliPLA,3,flat,,1,,3 00:00,3 23:59,active,all,,,,mclaintag@gmail.com,McLain_the,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Chris Patrick,bA40HTjNMI,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Crxssroadsmusic@gmail.com,ChrisPatrick_gang,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Merlyn Wood,FPDhPe0GXt,3,flat,,1,,3 00:00,3 23:59,active,all,,,,merlynwoodmusic@gmail.com,MerlynWood_tv,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dannyswavy,WetoixwHKF,3,flat,,1,,3 00:00,3 23:59,active,all,,,,email-Dannyswavy23@gmail.com,DannysWavy_float,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Muskogee Blak Aka Ghost,sQJmwEfhsD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,murdermusic.llc@gmail.com,MuskogeeBlakakaGhost_thin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Pbrstreetgang,dJ8sXcUXTE,3,flat,,1,,3 00:00,3 23:59,active,all,,,,pbrstreetgang96@gmail.com,PBRSTREETGANG_williams,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jaguar Mf Raw,0wescSkvMd,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rawstar100@gmail.com,JaguarMFRaw_san,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nattyyboh,XwtTqEQ2WV,3,flat,,1,,3 00:00,3 23:59,active,all,,,,NC_Panthers41@yahoo.com,NattyyBoh_bag,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Prettyboideva,KTe80WBybz,3,flat,,1,,3 00:00,3 23:59,active,all,,,,mfdevon@gmail.com,PrettyBoiDeva_feine3,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Therealyoungfadez,YxFKHS3DM9,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kinggooninallday@gmail.com,TheRealYoungFadez_young,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for J~black,fGw2Ie48Ys,3,flat,,1,,3 00:00,3 23:59,active,all,,,,KovuuKing18@Icloud.com,JBlack_move,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Otg Quan Da Don,RTeTf5kelL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Cooleybaby1996@gmail.com,OTGQuanDaDon_wrong,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for S.o.r,V7Rw18vQOo,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ssabir18@yahoo.com,SOR_the,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Estee Kd,bomPHONn50,3,flat,,1,,3 00:00,3 23:59,active,all,,,,esteedaprince@gmail.com,EsteeKd_jack,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Eternally Risen,0NPrC0rkI1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,infin8souls@gmail.com,EternallyRisen_applying,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lilhaddy,gaqkUBrL5L,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Lilhaddy063@gmail.com,Lilhaddy_lil,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Numba3witdatheat,OX4hX1hrMo,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Numba3witdatheat@gmail.com,numba3witdatheat_momolandcrazy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sayless Moe,VX6OFFo6uZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,10.kmoeski@gmail.com,SaylessMoe_talkmyshitm4a,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Saucebossa,LVj5do3cXW,3,flat,,1,,3 00:00,3 23:59,active,all,,,,YouTube@Y.B.W,SauceBossa_demons,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Akrshome Foe,tpgcluYWl7,3,flat,,1,,3 00:00,3 23:59,active,all,,,,AK2DA4@gmail.com,AkrsHomeFOE_dope,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yunn Fashion,P7MUH8kw4i,3,flat,,1,,3 00:00,3 23:59,active,all,,,,yunnfashion@gmail.com,YunnFashion_81,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Str8cash,GFyJCLMMME,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Str8Cash615@gmail.com,Str8Cash_d,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Will.0ne,BAzVqavfTa,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Natewillone@gmail.com,WILL0NE_triumph,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Charm Ncrxwd,goYW6jsyjD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,NCRXWDCHARM@GMAIL.COM,CharmNcrXwd_per,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dextters,9Abkt6yX6f,3,flat,,1,,3 00:00,3 23:59,active,all,,,,dextters2020@gmail.com,Dexttersofficial_mood_wave,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Circle-a,Qvu4pZTrSF,3,flat,,1,,3 00:00,3 23:59,active,all,,,,circle-a@riseup.net,CircleA_oberschicht,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tay Hundreds,08NzVoN3tp,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookingtayhundreds@gmail.com,TayHundreds_gretzky,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 5150committee,GE0Im3l5Ir,3,flat,,1,,3 00:00,3 23:59,active,all,,,,5150committee@gmail.com,5150Committee_5150,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Moon,vs1MO7kwpG,3,flat,,1,,3 00:00,3 23:59,active,all,,,,MoonMngmnt@gmail.com,MOON_so,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tracehoe,lJmP0vllOE,3,flat,,1,,3 00:00,3 23:59,active,all,,,,tracehoemusic@gmail.com,tracehoe_bad,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Getmoneycope,RA2oZJIv3y,3,flat,,1,,3 00:00,3 23:59,active,all,,,,dijcope400@gmail.com,GetmoneyCope_first,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dee Da Realist,hwjGLAMnYL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,israeliteswoken2015@gmail.com,DeeDaRealist_straight,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Eye Knives,dDXau4rC5h,3,flat,,1,,3 00:00,3 23:59,active,all,,,,eyeknives@gmail.com,eyeknives_m,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kazie,S3xIyc6rf1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,OfficialKAZIE@gmail.com,Kazie_hawaii,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for J. Luck,ph0U2wndQ3,3,flat,,1,,3 00:00,3 23:59,active,all,,,,CEO@jluckselfmadealbum.link,JLUCK_youknowwhatitis,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 4tb Honcho,FUPBYxkarC,3,flat,,1,,3 00:00,3 23:59,active,all,,,,QuiseHoncho@gmail.com,4TBHoncho_neighborhood,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Goldieawkword,vZCuwiG1X1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,taycoop1496@gmail.com,GoldieAwkword_impatient,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Young Savage Gang,ajZEhIiC2N,3,flat,,1,,3 00:00,3 23:59,active,all,,,,tjrm124@gmail.com,YoungavageGang_meatboy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Wavvyfm,laJffxjPu5,3,flat,,1,,3 00:00,3 23:59,active,all,,,,wavvyfm@gmail.com,WavvyFM_adot,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ace Versace,yXm1utqgsY,3,flat,,1,,3 00:00,3 23:59,active,all,,,,aceversvce@gmail.com,AceVERACE_life,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kibalenciaga,D7X8QbG6Eu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kibalenciagafrom21st@gmail.com,Kibalenciaga_scholar,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zurou,DX8BSo8ruI,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lordzurou@gmail.com,zurou_dreamz,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Drewskiii,p1OyvrEoif,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Drewskicleareyeview@gmail.com,Drewskiii_r,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rico Playboy,CEClfpKJDC,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Youngjesus07@gmail.com,RicoPlayboy_thriller,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Princeamgn,gQrqWSUL9e,3,flat,,1,,3 00:00,3 23:59,active,all,,,,amgn.work@gmail.com,PRINCEAMGN_november,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nizzle Dandy,jodt5pmrXr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nizzledandy@gmail.com,NizzleDandy__goin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yay Won,RirzV1a9G7,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Wonforevermgmt@gmail.com,YAYWON_mood,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Honcho Hendrixxx,KEOWQdPSx2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Ajone33343@gmail.com,HonchoHendrixxx_intro,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ghostdrops,6wK7BaUQTe,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ghostrdropsofficial@gmail.com,GHOSTDROPS_halloween,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Contakz,bSfdj844Vj,3,flat,,1,,3 00:00,3 23:59,active,all,,,,realcontakz@gmail.com,ContakZ_dont,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Fruit,GzFAMpUQTu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,TrapFruit@hotmail.com,Fruit_alright,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 7lagoon,TGmfPLzl9K,3,flat,,1,,3 00:00,3 23:59,active,all,,,,7LagoonPBZ@gmail.com,7LAGOON_trackstar,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kyng Cole,qc2FgMdbKP,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kingcole99.kc@gmail.com,KYNGCOLE_mevsme,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Theorn,jFhkUPEtGT,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Bosstoppken23@gmail.com,TheOfficialORN_bosstopp,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ceerob,Wct2gaT9d2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ceerobundefinedlyricist@gmail.com,CeeRob_have,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 8 Piece,0yMnrNkLbc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,8PIECESPICOLI@GMAIL.COM,8PIECE_cause,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for R Manny Tate Quieto,N3maKvEOD0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,manny120391@gmail.com,RMannyTateQuieto_lov3,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Melo White,DDtlMFhg8n,3,flat,,1,,3 00:00,3 23:59,active,all,,,,SILSUR95@GMAIL.COM,MELOWHITE_manigoat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rdvsin,6W775JF469,3,flat,,1,,3 00:00,3 23:59,active,all,,,,officialrdvsin@gmail.com,RDVSin_cap,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Accidentalspillage,WkTKnYthnj,3,flat,,1,,3 00:00,3 23:59,active,all,,,,irwynklaaste@gmail.com,AccidentalSpillage_drop,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Xan Helsing,3tKRmWh4PE,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lil300unknown@gmail.com,XanHelsing_effects,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Boofboy,yoLEWsdCP2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,B4daboat@gmail.com,BOOFBOY_plug,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Young Stro,AanQVggAfD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Playboilawson@gmail.com,YoungStro_dreamin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Botis,77fiPKG2UP,3,flat,,1,,3 00:00,3 23:59,active,all,,,,botis9991@gmail.com,Botis_malboro,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nate Hollow,d8v14r92ef,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nathasyt@gmail.com,NateHollow_murakami,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ghostie,e51bzaDdRx,3,flat,,1,,3 00:00,3 23:59,active,all,,,,CONTACTGHOSTIE@GMAIL.COM,Ghostie_f,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 3k.freddy,0ni586LZV5,3,flat,,1,,3 00:00,3 23:59,active,all,,,,3kfreddy@gmail.com,3kFreddy_controlling,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for <3 Break Warfare,uycpQmmRna,3,flat,,1,,3 00:00,3 23:59,active,all,,,,catsoapmusic@gmail.com,3BreakWarfare_freh,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jahdawn,SRtyVJNQC0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,shehatesdawn@gmail.com,jahdawn_minute,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Blakk Danel,B2UUOVMlFm,3,flat,,1,,3 00:00,3 23:59,active,all,,,,blakkdaniel178@gmail.com,BLAKKDANEL_daniel,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Donguwap,M9qafdRrtm,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ebkdonbusiness@gmail.com,DonGuwap_5,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cotton Candy Caleb,golbQ3SMXR,3,flat,,1,,3 00:00,3 23:59,active,all,,,,cottoncandycaleb@gmail.com,CottonCandyCaleb_rowdy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for K Treez,kCcslhmFcM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,welliktreez@gmail.com,KTREEZ_flowick,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Glockky,IAmaY70POM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,glockkybidness@gmail.com,glockky_revenge,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for D.scholl,RvPsXUioAo,3,flat,,1,,3 00:00,3 23:59,active,all,,,,deandre.scholl@gmail.com,DSCHOLL_a,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Xoxoscar<3,Gz1NAlvdA4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,xoxoscar333@gmail.com,xoxoscar3_xosolavish,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Fvckdreamo,a6032BjQys,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Imeaniguessilltry@gmail.com,fvckdreamo_floatin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Geminiraps,XYPmY4JOrM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,geminiraps4ever@gmail.com,GeminiRaps_catch,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ice Berg Slim,CFflUc5Ous,3,flat,,1,,3 00:00,3 23:59,active,all,,,,info.icebergslim@gmail.com,IceBergSlim_28,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yung Eternal Flowz,lrUao1lvAh,3,flat,,1,,3 00:00,3 23:59,active,all,,,,eternalflowz01@gmail.com,YungEternalFlowz_outta,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Thatboydomain,I7G4REmxYx,3,flat,,1,,3 00:00,3 23:59,active,all,,,,macddomain@gmail.com,thatboydomain_ybn,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lodiesel,gO2XnZpRj4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,1atlantamusic@gmail.com,OfficialLoDiesel_drippin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ycb Kenyondon,YfXytirrD2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ycb4lkd@gmail.com,YCB_KenyonDon_bjack,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mr. Vission,TZyT1a1PyM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jjlowkey15@gmail.com,MrViion_bigbagboy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Al J,3L49vHlVWn,3,flat,,1,,3 00:00,3 23:59,active,all,,,,soundsbyhillside@gmail.com,ALJ_l,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nessly,p5nRVLGp3x,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jeremy@blackwax.com,nessly_true,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Draamatic,2MjSCsVywf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,klvrstatus@gmail.com,draamatic_cheat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Pariyah,Y0hJ5byRZD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,pryh757@yahoo.com,Pariyah_booted,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sterlin9,GziLbavx3Q,3,flat,,1,,3 00:00,3 23:59,active,all,,,,earthboundbychoice@gmail.com,Sterlin9_get,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Prince Neeko,kOGQheG5Ko,3,flat,,1,,3 00:00,3 23:59,active,all,,,,pedrozanick27@gmail.com,PRINCENEEKO_repeat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Og Crae,ejfnPY96Wz,3,flat,,1,,3 00:00,3 23:59,active,all,,,,craexog@gmail.com,OGCrae_all,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Gerrymess,TCvq6oF86q,3,flat,,1,,3 00:00,3 23:59,active,all,,,,gerrymessmusic@gmail.com,GerryMess_big,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Siniguales Gang,krikTikw6N,3,flat,,1,,3 00:00,3 23:59,active,all,,,,sinigualesgang@gmail.com,SinigualesGang_01,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Karriencash,3o2snThJqv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,karriencbw2000@gmail.com,KarrienCah_exclusive,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Pleasure Ny,DRzJWVBHuc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ntshembopleasure4@gmail.com,PleasureNY__,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sentall Mathis,bv0zSkfvF7,3,flat,,1,,3 00:00,3 23:59,active,all,,,,sentmathis@outlook.com,SentallMathis_chances,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jawos Toke Emcee,UCWSR4Gq9X,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jawosmusic@gmail.com,JAWOStokeemcee_fuck,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for K U R O U,EqDquLIpD5,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kimcrow.cr@gmail.com,KUROU_n,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Txemandega Rapper,zVUOB1CILm,3,flat,,1,,3 00:00,3 23:59,active,all,,,,caetanoedson550@gmail.com,Txemandegarapper_blood,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ch3ntah,06eKwkr63Y,3,flat,,1,,3 00:00,3 23:59,active,all,,,,chentahsatataiwillem@gmail.com,Ch3NTAH_opzone,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Worldcorp Enterprises,HkOaPxOu1W,3,flat,,1,,3 00:00,3 23:59,active,all,,,,worldcorpent@gmail.com,WorldcorpEnterprises_relbestmp3,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kash Jordan,IItCDPMTCE,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Kashxmusic@gmail.com,KashJordan_young,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ducksauce Dotkom,t12T4Zbb2C,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookak5@gmail.com,DucksauceDotkom_guapo,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vaguest,IgFarpVCy0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Vaguestmanagement@gmail.com,Vaguest_mako,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nbgchopjr./dakid5hunit/moebounxe,8E76gETSxi,3,flat,,1,,3 00:00,3 23:59,active,all,,,,chopjr44@gmail.com,NBGChopJrDaKid5hunitMoeBounxe_chopjr,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 2 Nasty,WyfmWLiXwM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,2nasty411@gmail.com,2Nasty_swiper,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Titanium G,nWpxaZMest,3,flat,,1,,3 00:00,3 23:59,active,all,,,,sibongilesbo12@gmail.com,TitaniumG_ngi,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for T-raw,DSQPULMXPl,3,flat,,1,,3 00:00,3 23:59,active,all,,,,216traw@gmail.com,TRAW_taegudda,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Notgillani,cXBAyHrbwJ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,vltgillani@gmail.com,NotGillani_str8,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kfour,wu8UWoI4ZO,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ybskfour@gmail.com,Kfour_ybs,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Fyahboss876,B0DcMbM1gL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,fyahbossintl@gmail.com,FYAHBOSS876_breaktime,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Innanet James,vL2bvJ27gu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,info@threesixeight.co,innanetjames_covid19,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sakinbdmg,KWUCm5bHiw,3,flat,,1,,3 00:00,3 23:59,active,all,,,,sakinbdmg@yahoo.com,SakiNBDMG_rule,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Short Fuze,Dkm9rU0XRN,3,flat,,1,,3 00:00,3 23:59,active,all,,,,shortfuze062@gmail.com,ShortFuze_push,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Quita,NCwxsvE4Qm,3,flat,,1,,3 00:00,3 23:59,active,all,,,,quita101mgmt@gmail.com,quita_kid,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Joo Sg,8WHwZexNUP,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kingjooski@gmail.com,JooG_lovely,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sngz,8OSvggm3MT,3,flat,,1,,3 00:00,3 23:59,active,all,,,,gmnsounds@gmail.com,SNGz_sedated,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kil,33UkF3VB23,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kilmgmt@gmail.com,KIL_etc,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rz,VrCJBD3BN1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,zrosado0719@gmail.com,RZ_on,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cotton Weary,xb0JrAempG,3,flat,,1,,3 00:00,3 23:59,active,all,,,,CottonWeary@me.com,CottonWeary_boat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kasper,mlmviZTTtP,3,flat,,1,,3 00:00,3 23:59,active,all,,,,newwavedookie1996@yahoo.com,Kaper_soon,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for C.i.g,neScYaD2qH,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Email@garcia.cristian,CIG_drive,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Taido,O6CUTlByKd,3,flat,,1,,3 00:00,3 23:59,active,all,,,,taidoupnext@gmail.com,Taido_blitz,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cam14k,joAwzMQjbR,3,flat,,1,,3 00:00,3 23:59,active,all,,,,cameronlyles16@gmail.com,CAM14K_chitchat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mdf Zayvin,c4gd1vYR8D,3,flat,,1,,3 00:00,3 23:59,active,all,,,,zayvinmusic@gmail.com,MDFZayvin_smoke2much,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Esper Jake,q9vwjCGOyO,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jacobcardarellimusic@gmail.com,eSperjake_precursor,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Steezymvnee,BCaq9uqd8s,3,flat,,1,,3 00:00,3 23:59,active,all,,,,steezymane420@gmail.com,SteezyMvnee_cod,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for K-penn,5XADpygxuM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kylepenn930@gmail.com,KPenn_nasty,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rah Swish,siA9965dB6,3,flat,,1,,3 00:00,3 23:59,active,all,,,,RahSwishBookings@gmail.com,RahSwish_trending,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kay Rillo,rduPXdQouS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,KayRillo@yahoo.com,KayRillo_bells,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Krptik,y1ULteWF2V,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kriptik305@gmail.com,KrpTik_r6m6x,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Susurrar,PBnutfe7Yv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nickstice8@gmail.com,susurrar_disowned,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dare Toran,sSfUGCv2jH,3,flat,,1,,3 00:00,3 23:59,active,all,,,,daretoran@gmail.com,DareToran_hardbody,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Savage Storms,q3PDXHocSf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Savagestormsbookings@gmail.com,SavageStorms_disobey,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Weedo,67GRByz1mw,3,flat,,1,,3 00:00,3 23:59,active,all,,,,weedowrld@gmail.com,weedo_jalil,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tony Cero,PHrMG5amiO,3,flat,,1,,3 00:00,3 23:59,active,all,,,,tonycero03@gmail.com,TonyCero_nothings,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vyse,Qen4NNK1Kf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookvyse@gmail.com,VYE_no,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Joey Melrose,1kzlYmbE7V,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Joeymelrosemgmt@gmail.com,JoeyMelrose_kk,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mo-holley,HpngVACc5R,3,flat,,1,,3 00:00,3 23:59,active,all,,,,MHolley205@Gmail.com,Moholley_racks,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Michvel Angelo,Y49BlfrlOz,3,flat,,1,,3 00:00,3 23:59,active,all,,,,michvelangelo@gmail.com,michvelangelo_prayed,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Hstreetraps,iC3U2c5IbR,3,flat,,1,,3 00:00,3 23:59,active,all,,,,hstreetyt@gmail.com,HStreetRaps_monter,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Richy Collins,zv7Tjpbjqp,3,flat,,1,,3 00:00,3 23:59,active,all,,,,richycollinsmusic@gmail.com,RichyCollins_number,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Flipzworld,BAGskJB9TU,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Bboyflipz89@gmail.com,FlipzWorld_pain,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Court,zyapAPmPDk,3,flat,,1,,3 00:00,3 23:59,active,all,,,,courtlandblack@icloud.com,Court_slow,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Young Yuck,OHCHZ4thuS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,yucknut27@gmail.com,YoungYuck_fiddler,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Young Leaf,UpYIxdChZB,3,flat,,1,,3 00:00,3 23:59,active,all,,,,smithkhalid852@gmail.com,YoungLeaf_all,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Fcg Heem,3C3IIM4Iwh,3,flat,,1,,3 00:00,3 23:59,active,all,,,,FCGHeemBooking@gmail.com,FCGHEEM_ball,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Re3el,kJZWo755pO,3,flat,,1,,3 00:00,3 23:59,active,all,,,,DevinAlvey864@gmail.com,RE3EL_the,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Chief Dee,HTTjLARNk9,3,flat,,1,,3 00:00,3 23:59,active,all,,,,DeezusAlmighty@outlook.com,ChiefDee_dirty,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Keymoney,GZl7n4kWe4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,keymoney007@gmail.com,KeyMoney_dont,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for G Herbo,Mo5dnjqMI4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,elarsen@paradigmagency.com,GHerbo_about,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nku Rondo,qGzAJg2etd,3,flat,,1,,3 00:00,3 23:59,active,all,,,,RonaldAlexis19@icloud.com,Nku_Rondo_fl,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lil E,zrnERuI1vI,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Erickw773@icloud.com,LilE_in,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Aj Go Get Em,dzRwShFyoZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ajgogetem@gmail.com,AJGoGetEm_too,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mar Lux,Cmo12VZY4G,3,flat,,1,,3 00:00,3 23:59,active,all,,,,MarLuxMusic@gmail.com,MarLux_pain,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Fed Monie,C93kMtggCX,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Geraldcollins2017@gmail.com,FEDMONIE_made,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zoelifecj,KiI30XMLjI,3,flat,,1,,3 00:00,3 23:59,active,all,,,,LoveInUtopiaMgmt@gmail.com,ZoeLifeCJ_level,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Gwap,Ky9GVAUspg,3,flat,,1,,3 00:00,3 23:59,active,all,,,,LilEstie@gmail.com,Gwap_bogota,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lil Sil,UmKsHEOLhd,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lilsilmanagement@gmail.com,LilSil_too,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Baby Jungle,RJFbjr88ch,3,flat,,1,,3 00:00,3 23:59,active,all,,,,StandingRoomOnlyMgmt@gmail.com,BabyJungle_all,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Solesky,r8JIfScWud,3,flat,,1,,3 00:00,3 23:59,active,all,,,,soleskydied@gmail.com,Solesky_lovesick,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Orrin,JtvY6kuCnN,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookings@realorrin.com,Orrin_karma,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Highcal,o9nl06LaDf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,contact@beigemusic.com,HIGHcal_keeping,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mir Fontane,2s8u8N8QLK,3,flat,,1,,3 00:00,3 23:59,active,all,,,,business@mirfontane.com,MirFontane_before,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Spittygray,agoKIWLULt,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Chrisgray004@gmail.com,SpittyGray_shmoke,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for M.t. Lebowski,mZej9oAFT0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,MTLebowski97@gmail.com,MTLebowki_moonlight,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Thee Jae,ZzMupsfuLC,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jaeworld97@gmail.com,theeJAE_fearless,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cash Gotti,9WJp8QPuBa,3,flat,,1,,3 00:00,3 23:59,active,all,,,,cashgottimgmt@gmail.com,CashGotti_what,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Pyrex Pryce,MU3xTJ2wOl,3,flat,,1,,3 00:00,3 23:59,active,all,,,,biz@pyrexpryce.com,PyrexPryce_not,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Deewattson,Zwi0wOmVzW,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Deewattsonasb@gmail.com,DeeWattson_tug,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Souly D,RpAhEs7d7Y,3,flat,,1,,3 00:00,3 23:59,active,all,,,,soulyd20@gmail.com,SoulyD_my,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yungdynamicboy11,Uyn378JLY3,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jjdynamic11@yahoo.com,yungdynamicboy11_ducked,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Peejay,yFdWQv2UEA,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ericjones3081@gmail.com,PeeJay_ctm,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vicious Reaction,93cq5HKwz5,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rizzy9903@icloud.com,VICIOUSREACTION_brain,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nigel Roxbury,iF9vUndpWZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nigelroxbury@gmail.com,NigelRoxbury_time,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jkaintplayin,bov6kztuWV,3,flat,,1,,3 00:00,3 23:59,active,all,,,,JKaintplayin@gmail.com,JKaintplayin_twilight,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Baccendzzz,sApiH8ahOi,3,flat,,1,,3 00:00,3 23:59,active,all,,,,features-ybsmicah21@gmail.com,baccendzzz_talk,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Baby Ikey,GGz47TR6OS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Babyikeybooking@gmail.com,Babyikey_another,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Pay Day & Lil Jack,GWEt1Up8Z6,3,flat,,1,,3 00:00,3 23:59,active,all,,,,paydayinquiries@gmail.com,PayDayLilJack_outer,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Max The Good Son,RXCqFX9bOQ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,goodsonbusiness@gmail.com,MaxtheGoodSon_hell,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lost Love,LSjUfebHOe,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lostlovemgmt@gmail.com,LostLove_couture,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Catvlyst,0JzL5R5Yde,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rsligar@protonmail.com,CATVLYST_swept,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Niit Niit,2D0JjPjPp0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,niitmare14@gmail.com,NiiTNiiT_at,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ysg Ot,mJtcS53G1U,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rsabogal26@gmail.com,YGOT_slugfest,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kid Exquisite,k7IKrm2gHf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,DoubleUpSquiz@gmail.com,KidExquisite_get,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Strawhat Zero,67cbk57nBZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Strawhatzero4@gmail.com,StrawhatZero_yeah,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Solut1on,caQ8e2KbnM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,solut1ontherapper@gmail.com,Solut1on_legacy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tdh Cash,HEQcgNDFvD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nexuskidd9@gmail.com,TDHCash_firing,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sickosoicy,b23fkZTBIr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,soicymgnt@gmail.com,SICKOSOICY_blame,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for T.i.e,4GUjgwZBvS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,icantakeiteasy@gmail.com,TIE_kyros,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sharpdressedray,cyISK2Yfg1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Raycarter90@gmail.com,Sharpdressedray_wishful,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lio Pard,3vIROuskle,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Contact.liopard@gmail.com,LioPard_ep,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vnci,FEavWIPZar,3,flat,,1,,3 00:00,3 23:59,active,all,,,,officialmarklaw@gmail.com,VNCI_hit,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Yung Rich Broker,d9HEbT1hhx,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rpierre321x@gmail.com,YungRichBroker_spending,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jcartervibes,cSUjRG42Zr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Toflyjay24@gmail.com,Jcartervibes_rudeboy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Noza Jordan,ssCpDAHvSc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nozajordan@gmail.com,NOZAJORDAN_wake,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sam M,0nJOUGk4n9,3,flat,,1,,3 00:00,3 23:59,active,all,,,,musicsamm@gmail.com,SamM_more,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for The White Flame,rfk4eq6sPT,3,flat,,1,,3 00:00,3 23:59,active,all,,,,BurntWhiteBreadTWF@gmail.com,TheWhiteFlame_bad,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+"Discount -$3 for mp3 lease for Ned, The Koala",61ApzAIeM2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,solomonwilson64@gmail.com,NedTheKoala_marmalade,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Slapaholics,ql9jIR6VQr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kingslapaholic@gmail.com,Slapaholics_millions,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for The Lil Hazy,Jjx2VfD9d0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Lilhazymusicofficial@gmail.com,TheLilHazy_say,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Saint Calvin,oFrjbLujl2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,thesaintcalvin@gmail.com,SaintCalvin_final,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Blaccboijuice,nS5Jd9THOt,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Realliljuice@gmail.com,BlaccBoiJuice_we,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vlone Kai,sTEB3AbcrZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kaivlone97@gmail.com,VloneKai_story,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Triy,Kv8VvbgOvk,3,flat,,1,,3 00:00,3 23:59,active,all,,,,triybookings@gmail.com,Triy_spaceships,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Diablo,EpEPTHH8OD,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Diablobenz66@gmail.com,DIABLO_redlights,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Chk Dave,f9UXLaf2wp,3,flat,,1,,3 00:00,3 23:59,active,all,,,,B1gchk42@gmail.com,CHKDave_love,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Trulove,LU7mqvFMTl,3,flat,,1,,3 00:00,3 23:59,active,all,,,,truloveshawty@gmail.com,Trulove_s4,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Alexander,H5hRdv7OEv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Alexanderphantom91@gmail.com,Alexander_still,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kay Krewe,CCdcU8bJ8f,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kayyjayinquires@gmail.com,KayKrewe_poppin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ajay,7LUbkZvnFF,3,flat,,1,,3 00:00,3 23:59,active,all,,,,adenjo27@gmail.com,ajay_blame,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Callmejosh,Un7xQ6GOAk,3,flat,,1,,3 00:00,3 23:59,active,all,,,,CallmeJosh25@gmail.com,CallmeJosh_romantic,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Hellcatpriime,xEUqAarb83,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Info@TUBLifeEntertainment.com,HellcatPRiiMe_hellcat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Seanburnz,g0rhNDO1sM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Seanburnz7@gmail.com,Seanburnz_m,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nadir Nineteen,whjz8g5xlL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nadirnineteen9@gmail.com,NadirNineteen_you,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Twnty Svn,a2WOABqChv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,warren@loyaltyoverroyaltyrecords.com,TWNTYSVN_reasons,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ritchi,YH2q6ufqCT,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ritchimusic@gmail.com,Ritchi_nothing,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zar,tsub7Rz8wA,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kizarmir25@gmail.com,ZAR_bitcoin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mel3much,MwNy0mjoUX,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jahgar123@gmail.com,Mel3Much_no,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kalin,9TMomkvEMC,3,flat,,1,,3 00:00,3 23:59,active,all,,,,KalinMusicOfficial@gmail.com,Kalin_white,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Obasi Jackson,mF6c1GDK18,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Innervibrationsentertainment@gmail.com,ObasiJackson_flossy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Jon Bartley,0raVMRopMu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jonbartleymusic@gmail.com,JonBartley_back,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Wild Lyles,Y70SI8ljSr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,wildlyles777@gmail.com,WildLyles_like,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sway,09YUiAvz5h,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lilswazzy888@gmail.com,way_watchu,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+"Discount -$3 for mp3 lease for Logan Carnes, Flashbang304",hDHWTV3mLc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,logan.music95@gmail.com,LOGANCARNEFLAHBANG304_4what,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sonjay Kapri,Y7A58RAe7J,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Joshuaminnis247@gmail.com,SonjayKapri_fwb,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for J-sly,R4MR4qK660,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jsly.music@gmail.com,JSlyOfficial_j,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Hwdconnect,hMioSty6Vc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,hwdconnect@gmail.com,hwdconnect_kevv,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kydo Chill,BuhEB2yqxv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kydochill@gmail.com,KydoChill_living,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Wait Till Friday,nfJTizy4Hc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,itsfridaymgmt@gmail.com,WaitTillFriday_save,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kieroko,ZsMZApWBTx,3,flat,,1,,3 00:00,3 23:59,active,all,,,,karmasrevengemusic@outlook.com,KIEROKO_come,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Taywetemup,uT1pT4heQu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Jaxbro77@gmail.com,TayWetEmUp_dta,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Foolish Ty,lrfHinLNp7,3,flat,,1,,3 00:00,3 23:59,active,all,,,,FoolishTyMusic@gmail.com,FoolishTy_sum,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Azmuh,pQjMcAsqSz,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nickavila524@gmail.com,AZMUH_earskeepringing,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for 8matiklogan,KM8V8drMjl,3,flat,,1,,3 00:00,3 23:59,active,all,,,,1636logan@gmail.com,8MATIKLOGAN_we,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Leo Rambos,tXSnulNyr0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Leorambos@yahoo.com,LeoRambos_swervin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Bloodrich Jayt,wATz0gbnMB,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Bloodrichrec@gmail.com,BloodrichJayT_letter,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Wise Ii,ibPb0qvjDQ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,contactme@wisethesecond.com,WiseII_ballin,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Naii,6zOWKGnLgf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,sanaedesimone97@gmail.com,Naii_coco,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Reign Supreme,rZM0krn4e3,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookingreignsupreme@gmail.com,Reignupreme_r4w,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Will Hendrixx,btsYL65XSz,3,flat,,1,,3 00:00,3 23:59,active,all,,,,willhendrixx.mgmt@gmail.com,WillHendrixx_toppp,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Leeroy Jelks,C90HPCC6zp,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jellyfilled98@gmail.com,LeeroyJelks_smoothie,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Evan Nash,aveHuoTwsT,3,flat,,1,,3 00:00,3 23:59,active,all,,,,evannashmusic@gmail.com,EvanNashOfficial_universe,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Vocaliz,tDr6GgVfP4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,vocalizmusic@gmail.com,Vocaliz_one,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ch1ddy,1DynBVqCmL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,chiddy7933@gmail.com,Ch1ddy_slide,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nu Davinci,m18PRjpetv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,musicgvo@gmail.com,NuDavinci_i,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Persia Grai,LbDoKNM0QY,3,flat,,1,,3 00:00,3 23:59,active,all,,,,grai@persiagrai.com,PersiaGrai_20k,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Daekreon,pprqJqodKM,3,flat,,1,,3 00:00,3 23:59,active,all,,,,daekreon@gmail.com,Daekreon_hundred,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Lil Euro Vamp,BK8qc2ASo3,3,flat,,1,,3 00:00,3 23:59,active,all,,,,lileurovamp@gmail.com,LILEUROVAMP_no,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Section 808,ClLygku6XZ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,avizimmermann@gmail.com,Section808_jah,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Haf Mafia,mY7VDU54kw,3,flat,,1,,3 00:00,3 23:59,active,all,,,,HAFMAFIA@YAHOO.COM,HAFMafia_fleetboy,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Aftrparty,NjYxObU5fc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,aftrpartymusic@gmail.com,Aftrparty_hold,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for G-rex Vip,kxOvYibzai,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Grexofficial@gmail.com,GREXVIP_dna,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Naivs,BlDAX9x3BA,3,flat,,1,,3 00:00,3 23:59,active,all,,,,hello@iamnaivs.com,Naivs_a,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for My Instagram Is,PcfGP0ewdS,3,flat,,1,,3 00:00,3 23:59,active,all,,,,imchristyson@gmail.com,MyInstagramis_no,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Caption,kEdYNfZdOu,3,flat,,1,,3 00:00,3 23:59,active,all,,,,captiontherapper@gmail.com,caption_give,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Azide,vWvvwhl06v,3,flat,,1,,3 00:00,3 23:59,active,all,,,,azideofficial@hotmail.com,Azide_turn,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for New-hits-daily,LVEvEoPToe,3,flat,,1,,3 00:00,3 23:59,active,all,,,,SubmitNHD@gmail.com,NewHitsDaily_jedi,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Smoke Ao,l3ZYEYQpPG,3,flat,,1,,3 00:00,3 23:59,active,all,,,,smokeaobooking@gmail.com,SmokeAO_cinos,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Gio Martin,CDoYXv3NF0,3,flat,,1,,3 00:00,3 23:59,active,all,,,,GioMartinMusic@gmail.com,GioMartin_lit,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Break & Enter Society,t95kQtdjFV,3,flat,,1,,3 00:00,3 23:59,active,all,,,,break.enter.society@gmail.com,BreakEnterSociety_aadysi,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dax,yZXwd3kqpi,3,flat,,1,,3 00:00,3 23:59,active,all,,,,bookdax@gmail.com,DAX_propaganda,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Elex's Right Hand,w29tvCJsBc,3,flat,,1,,3 00:00,3 23:59,active,all,,,,elex_music@icloud.com,ELEXsrighthand_mothica,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Elex,xrhyfaf7Vb,3,flat,,1,,3 00:00,3 23:59,active,all,,,,elex_music@icloud.com,ELEX_fakir,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rookie2x,OcGh1yNBVX,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rookiemusicxx@gmail.com,Rookie2x_sun,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for K0zukewityoho,aE9JzBtUxb,3,flat,,1,,3 00:00,3 23:59,active,all,,,,contaktk0zuke@gmail.com,K0ZUkEwityoho_pain,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Top Shelf,kJwMw3VSde,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ogtopshelf@gmail.com,TOPHELF_piledriver,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Mik Motus,GJXEMU3mnP,3,flat,,1,,3 00:00,3 23:59,active,all,,,,mikmotusbusiness@gmail.com,MikMotus_the,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Hyperclap,AMnVg6t1e4,3,flat,,1,,3 00:00,3 23:59,active,all,,,,hyperclapmusic@gmail.com,Hyperclap_i,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ekke,2TEEfX9hGf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,ekke.music.gh@gmail.com,ekke_deadlok,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for B. Cole,2SABa9K6nC,3,flat,,1,,3 00:00,3 23:59,active,all,,,,BColebooking@gmail.com,BCole_cherry,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kadence Musik,pM8YCBvw6b,3,flat,,1,,3 00:00,3 23:59,active,all,,,,craigofthecrop@gmail.com,KadenceMusik_still,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Zen Theory,oEU93zYuuQ,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Zentheorymusic@gmail.com,ZENTHEORY_really,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Badrapper,3AZLcqlvQy,3,flat,,1,,3 00:00,3 23:59,active,all,,,,gabe@cloak-ent.com,Badrapper_versace,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+"Discount -$3 for mp3 lease for Kylor Sparks, Skipper, Yung Ky",a1mmXtQQwf,3,flat,,1,,3 00:00,3 23:59,active,all,,,,kylorsparks@gmail.com,KylorSparksSkipperYungKy_money,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ray Dawn,jn0k456zEa,3,flat,,1,,3 00:00,3 23:59,active,all,,,,info@raydawn.co,RayDawn_plush,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Ric Da Vinci,vnUtlqmJKN,3,flat,,1,,3 00:00,3 23:59,active,all,,,,davincimusic610@gmail.com,RicDaVinci_intro,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cooper,H0g0cs7vgt,3,flat,,1,,3 00:00,3 23:59,active,all,,,,finallyimnew@gmail.com,Cooper_wind,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Cub-j,m3TlZjKiJo,3,flat,,1,,3 00:00,3 23:59,active,all,,,,cubj.management@gmail.com,CubJ_cat,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Sef,08RYaVKZJi,3,flat,,1,,3 00:00,3 23:59,active,all,,,,seftunes@gmail.com,Sef_round,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Xinclair,h0IRchcARY,3,flat,,1,,3 00:00,3 23:59,active,all,,,,xinclairmgmt@gmail.com,XINCLAIR_o,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Kam James,d3S7WXvbW9,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Kamjamesinfo@gmail.com,KamJames_all,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Killuav,I03a8Ad9l8,3,flat,,1,,3 00:00,3 23:59,active,all,,,,fvkthestate@gmail.com,KilluaV_clark,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Nate Good,QuwJ11oohv,3,flat,,1,,3 00:00,3 23:59,active,all,,,,nategoodmusic@gmail.com,NateGood_no,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for G.o,9liEneKrq2,3,flat,,1,,3 00:00,3 23:59,active,all,,,,g.ohmusik@gmail.com,GO_paranoid,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Malik Patrick,SRRWFPhQdr,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Mcpatrick13@gmail.com,MalikPatrick_same,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Overload,GxoCQEjDHN,3,flat,,1,,3 00:00,3 23:59,active,all,,,,weareoverload28@gmail.com,Overload_act,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Tae Groove,yqrYXLHpm9,3,flat,,1,,3 00:00,3 23:59,active,all,,,,taegrooove@gmail.com,TaeGrOOve_roll,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Edephus,ppuGqUcbl1,3,flat,,1,,3 00:00,3 23:59,active,all,,,,officialedephus@gmail.com,Edephus_bad,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Dash Flash,5oHEcNSErs,3,flat,,1,,3 00:00,3 23:59,active,all,,,,Dvshflvsh@gmail.com,DashFlash_earned,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Rize,AYrzGP6jY7,3,flat,,1,,3 00:00,3 23:59,active,all,,,,rizetharebellion@gmail.com,Rize_smile,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount
+Discount -$3 for mp3 lease for Wicked J 303,CeHPgm8yRL,3,flat,,1,,3 00:00,3 23:59,active,all,,,,jrubio883@gmail.com,WickedJ303_i,21-10-05 18:49:47,21-10-05 18:49:47,active,,edd_discount

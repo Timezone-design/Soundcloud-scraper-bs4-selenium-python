@@ -9,6 +9,8 @@ DRIVER_OPTIONS.add_argument('--log-level=3')
 DRIVER_OPTIONS.add_argument("--window-size=1920x1080")
 INSTAGRAM_USERNAME_REGEX = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 SCREENSHOT_UPLOAD_URL = 'https://example.com/images/'
+SLUG_FILTER_PATTERN = re.compile('\W+')
+
 
 # Nikita Client ID
 init_url = "https://api-v2.soundcloud.com/search/users?q=hip-hop%20rap%20repost&sc_a_id=9b54e44da7a0d8107ba6a6a02735786f3e030fb6&variant_ids=&facet=place&user_id=212832-727922-185643-279192&client_id=Qko88gRysyjPMG8KyysDmeQ9UWZ64twz&limit=200&offset={}&linked_partitioning=1&app_version=1627651107&app_locale=en"
