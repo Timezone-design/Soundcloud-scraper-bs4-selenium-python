@@ -234,288 +234,288 @@ def get_popularity(soup, followers):
 
 # def song_title_and_artist_name(songtitlefull,index,index1):
 
-	print('songtitlefull: ', songtitlefull)
-	artistname = songtitlefull
-	try:
-		artistname = artistname.split('-')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('x ')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('X ')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split(',')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('feat')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('Feat')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('FEAT')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('ft')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('Ft')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('FT')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('featuring')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('Featuring')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('FEATURING')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' prod')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' Prod')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split(' PROD')[0]
-	except:
-		pass
-	try:
-		artistname = artistname.split('(')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('and')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('&')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('+')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('[')[index]
-	except:
-		pass
-	try:
-		artistname = artistname.split('|')[index]
-	except:
-		pass
+	# print('songtitlefull: ', songtitlefull)
+	# artistname = songtitlefull
+	# try:
+	# 	artistname = artistname.split('-')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('x ')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('X ')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split(',')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('feat')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('Feat')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('FEAT')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('ft')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('Ft')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('FT')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('featuring')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('Featuring')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('FEATURING')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split(' prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split(' Prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split(' PROD')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('(')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('and')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('&')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('+')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('[')[index]
+	# except:
+	# 	pass
+	# try:
+	# 	artistname = artistname.split('|')[index]
+	# except:
+	# 	pass
 
 
-	try:
-		songtitle = songtitlefull.split('-')[index1] + songtitlefull.split('-')[2]
-	except:
-		songtitle = songtitlefull.split('-')[index1]
-	try:
-		songtitle = songtitle.split('(')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('[')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('feat')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('feat.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Feat')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Feat.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('FEAT')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('FEAT.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(':')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('@')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('#')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' x ')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' X ')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(',')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('ft')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('ft.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Ft')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Ft.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('FT')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('FT.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('featuring')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Featuring')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('FEATURING')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('-prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('-prod.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('-Prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('-Prod.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('_prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('_Prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('_Prod.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('_PROD')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('_PROD.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' prod.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Prod')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('Prod.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('PROD')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('PROD.')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' pro')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' Pro')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' by')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split(' By')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('-')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('+')[0]
-	except:
-		pass
-	try:
-		songtitle = songtitle.split('*')[0]
-	except:
-		pass
-	try:
-		if songtitle[0] == '@':
-			songtitle = ' '.join(songtitle.split()[1:])
-	except:
-		pass
-	return artistname, songtitle
+	# try:
+	# 	songtitle = songtitlefull.split('-')[index1] + songtitlefull.split('-')[2]
+	# except:
+	# 	songtitle = songtitlefull.split('-')[index1]
+	# try:
+	# 	songtitle = songtitle.split('(')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('[')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('feat')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('feat.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Feat')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Feat.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('FEAT')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('FEAT.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(':')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('@')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('#')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' x ')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' X ')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(',')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('ft')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('ft.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Ft')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Ft.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('FT')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('FT.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('featuring')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Featuring')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('FEATURING')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('-prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('-prod.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('-Prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('-Prod.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('_prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('_Prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('_Prod.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('_PROD')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('_PROD.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' prod.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Prod')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('Prod.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('PROD')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('PROD.')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' pro')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' Pro')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' by')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split(' By')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('-')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('+')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	songtitle = songtitle.split('*')[0]
+	# except:
+	# 	pass
+	# try:
+	# 	if songtitle[0] == '@':
+	# 		songtitle = ' '.join(songtitle.split()[1:])
+	# except:
+	# 	pass
+	# return artistname, songtitle
 
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
