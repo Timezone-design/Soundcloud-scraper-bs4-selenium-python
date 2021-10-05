@@ -13,6 +13,7 @@ import unicodedata
 import sys
 from constants import *
 import time
+from difflib import SequenceMatcher
 
 def slugify(value, allow_unicode=False):
     """
@@ -231,7 +232,7 @@ def get_popularity(soup, followers):
 				return 'True'
 
 
-def song_title_and_artist_name(songtitlefull,index,index1):
+# def song_title_and_artist_name(songtitlefull,index,index1):
 
 	print('songtitlefull: ', songtitlefull)
 	artistname = songtitlefull
@@ -776,43 +777,102 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 
 	# if re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull):
 	# 	print(re.search(r'\(([^)]+)-([^)]+)\)', songtitlefull))
+	username_list = username.split()
+	artistname_list = artistname.split()
+	songtitle = re.sub("[\{].*[\}]", "", songtitle)
+	songtitle = re.sub("[\(].*[\)]", "", songtitle)
+	songtitle = re.sub("[\[].*[\]]", "", songtitle)
+	songtitle = re.sub("[\*].*[\*]", "", songtitle)
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('#'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('@'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('*'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('['))
 
-	if '- ' in songtitlefull:
-		temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
-		username_list = username.split()
+	if '-' in songtitle:
+		candidates = songtitle.split('-')
+		popout_amounts = []
+		for index1, candidateitem in enumerate(candidates):
+			popout_list = []
+			for index, item in enumerate(candidateitem.split()):
+				for usernameitem in username_list:
+					if SequenceMatcher(None, a=item.lower(), b=usernameitem.lower()).ratio() > 0.5:
+						popout_list.append(index)
+				for artistnameitem in artistname_list:
+					if SequenceMatcher(None, a=item.lower(), b=artistnameitem.lower()).ratio() > 0.5:
+						popout_list.append(index)
+			popout_amounts.append(len(popout_list))
+		if max(popout_amounts) > 1:
+			songtitle = candidates[popout_amounts.index(min(popout_amounts))]
+	elif '~' in songtitle:
+		candidates = songtitle.split('~')
+		popout_amounts = []
+		for index1, candidateitem in enumerate(candidates):
+			popout_list = []
+			for index, item in enumerate(candidateitem.split()):
+				for usernameitem in username_list:
+					if SequenceMatcher(None, a=item.lower(), b=usernameitem.lower()).ratio() > 0.5:
+						popout_list.append(index)
+				for artistnameitem in artistname_list:
+					if SequenceMatcher(None, a=item.lower(), b=artistnameitem.lower()).ratio() > 0.5:
+						popout_list.append(index)
+			popout_amounts.append(len(popout_list))
+		if max(popout_amounts) > 1:
+			songtitle = candidates[popout_amounts.index(min(popout_amounts))]
+	else:
+		popout_list = []
 		songtitle_list = songtitle.split()
-		fullname2_list = artistname.split()
-
-		counter = 0
-		flag_user_name_match = False
-		flag_full_name2_match = False
-		for sn in songtitle_list:
-			for us in username_list:
-				if sn == us:
-					counter += 1
-				if counter == 2:
-					flag_user_name_match = True
-					break
-			if flag_user_name_match:
-				break
-
-		lengthOfsongtitle = len(songtitle_list)
-		i = 1
-		if not flag_user_name_match:
-			counter = 0
-			for sn in songtitle_list:
-				for fn in fullname2_list:
-					if sn == fn:
-						counter += 1
-					if counter == 2:
-						flag_full_name2_match = True
-						break
-				if flag_full_name2_match:
-					temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 1, 0)
-					break
-				i += 1
+		for index, item in enumerate(songtitle_list):
+			for usernameitem in username_list:
+				if SequenceMatcher(None, a=item.lower(), b=usernameitem.lower()).ratio() > 0.5:
+					popout_list.append(index)
+			for artistnameitem in artistname_list:
+				if SequenceMatcher(None, a=item.lower(), b=artistnameitem.lower()).ratio() > 0.5:
+					popout_list.append(index)
+		
+		if len(popout_list) > 0:
+			popout_list = list(set(popout_list))
+			popout_list.sort(reverse=True)
+			for item in popout_list:
+				songtitle_list.pop(item)
+			songtitle = ' '.join(songtitle_list)
 
 
+	# if '- ' in songtitlefull:
+	# 	temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 0, 1)
+	# 	username_list = username.split()
+	# 	songtitle_list = songtitle.split()
+	# 	fullname2_list = artistname.split()
+
+	# 	counter = 0
+	# 	flag_user_name_match = False
+	# 	flag_full_name2_match = False
+	# 	for sn in songtitle_list:
+	# 		for us in username_list:
+	# 			if sn == us:
+	# 				counter += 1
+	# 			if counter == 2:
+	# 				flag_user_name_match = True
+	# 				break
+	# 		if flag_user_name_match:
+	# 			break
+
+	# 	lengthOfsongtitle = len(songtitle_list)
+	# 	i = 1
+	# 	if not flag_user_name_match:
+	# 		counter = 0
+	# 		for sn in songtitle_list:
+	# 			for fn in fullname2_list:
+	# 				if sn == fn:
+	# 					counter += 1
+	# 				if counter == 2:
+	# 					flag_full_name2_match = True
+	# 					break
+	# 			if flag_full_name2_match:
+	# 				temp_fullname, songtitle = song_title_and_artist_name(songtitlefull, 1, 0)
+	# 				break
+	# 			i += 1
+
+	
 	try:
 		if not songtitle[0] == '(':
 			songtitle = songtitle.split('(')[0]
@@ -1014,6 +1074,79 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		pass
 	try:
 		songtitle = songtitle.split('¨')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('@')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('#')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(',')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEATURING')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' Pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('*')[0]
+	except:
+		pass
+	try:
+		if songtitle[0] == '@':
+			songtitle = ' '.join(songtitle.split()[1:])
 	except:
 		pass
 	try:
