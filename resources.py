@@ -788,8 +788,8 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('*'))
 	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('['))
 
-	if '-' in songtitle:
-		candidates = songtitle.split('-')
+	if ' -' in songtitle:
+		candidates = songtitle.split(' -')
 		popout_amounts = []
 		for index1, candidateitem in enumerate(candidates):
 			popout_list = []
@@ -803,7 +803,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			popout_amounts.append(len(popout_list))
 		if max(popout_amounts) > 1:
 			songtitle = candidates[popout_amounts.index(min(popout_amounts))]
-	elif '~' in songtitle:
+	elif ' ~' in songtitle:
 		candidates = songtitle.split('~')
 		popout_amounts = []
 		for index1, candidateitem in enumerate(candidates):
