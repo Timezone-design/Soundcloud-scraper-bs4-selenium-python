@@ -85,7 +85,7 @@ if len(newlines.index) > 0:
   newlines_all.drop('index', axis=1, inplace=True)
 
   for index, url in enumerate(newlines_all['SongLink']):
-    filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
+    filename = take_screenshot(url, str(newlines_all.iloc[index]['SoundCloudURL']).rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
     if filename != 'None':
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = filename
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = SCREENSHOT_UPLOAD_URL + filename
