@@ -872,7 +872,9 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	# 				break
 	# 			i += 1
 
-	
+
+	if songtitle.strip() == '':
+		songtitle = songtitlefull
 	try:
 		if not songtitle[0] == '(':
 			songtitle = songtitle.split('(')[0]
@@ -1168,7 +1170,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		if item in artistname:
 			artistname = 'man'
 			break
-
+	
 	songtitle = songtitle.strip()
 	if songtitle:
 		songtitle = songtitle.encode("ascii", "ignore")
@@ -1192,8 +1194,19 @@ def take_screenshot(url, username, title, gostatus):
 	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	try:
 		driver.set_page_load_timeout(10000)
+		print("Getting screenshot from: ", url)
 		driver.get(url)
 		time.sleep(2)
+		print("See if there is cookie button.")
+		try:
+			l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
+			s = l.text
+			print("Cookie button found.")
+			l.click()
+			print("Cookie button clicked.")
+		except:
+			print("Cookie button not found.")
+			pass
 
 		if gostatus == 'No':
 			print('Driver opened. Now moving cursor...')

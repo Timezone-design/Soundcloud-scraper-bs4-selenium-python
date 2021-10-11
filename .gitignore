@@ -2,4 +2,4 @@
 venv
 __pycache__
 chromedriver_win32.zip
-screenshots/*
+screenshots

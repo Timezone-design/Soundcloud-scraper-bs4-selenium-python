@@ -62,7 +62,7 @@ newlines['Edd Discount Is Not Global'] = ''
 newlines['Edd Discount Min Price'] = ''
 newlines['Edd Discount Product Reqs'] = ''
 newlines['Title'] = newlines_all['Email']
-newlines['URL Slug'] = newlines_all['UserName'].replace(' ', '_') + '_' + newlines_all['SongTitle'].apply(lambda x: ''.join(x.lower() for x in x.split()[0]))
+newlines['URL Slug'] = newlines_all['UserName'].replace(' ', '_') + '_' + newlines_all['SongTitle'].apply(lambda x: ''.join(x.lower() for x in str(x).split()[0]))
 newlines['URL Slug'] = newlines['URL Slug'].apply(lambda x: SLUG_FILTER_PATTERN.sub('', x.lower()))
 newlines['Date'] = datetime.now().strftime("%y-%m-%d %H:%M:%S")
 newlines['Modified Date'] = datetime.now().strftime("%y-%m-%d %H:%M:%S")
@@ -70,21 +70,6 @@ newlines['Status'] = 'active'
 newlines['Edd Discount Excluded Products'] = ''
 newlines['Post type'] = 'edd_discount'
 
-# newlines = newlines_all[['ArtistNameCleaned', 'CouponCode']].copy()
-# newlines['ArtistNameCleaned'] = newlines['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
-# newlines.rename(columns={'ArtistNameCleaned': 'CouponCodeName'}, inplace=True)
-# newlines['DiscountAmount'] = dollaramount
-# newlines['DiscountType'] = 'flat'
-# newlines['Uses'] = '0'
-# newlines['MaxUses'] = 1
-# newlines['SingleUse'] = 0
-# newlines['StartDate'] = startdate
-# newlines['Expiration'] = expiredate
-# newlines['DiscountStatus'] = 'active'
-# newlines['ProductCondition'] = 'all'
-# newlines['ProductRequirements'] = ''
-# newlines['IsItOnlyForSelectProducts'] = '0'
-# newlines['MinimumPurchasePrice'] = ''
 print('{} new entries found.'.format(len(newlines.index)))
 if len(newlines.index) > 0:
   print('The first entry is {}.'.format(newlines.iloc[0]['Title']))
@@ -100,7 +85,7 @@ if len(newlines.index) > 0:
   newlines_all.drop('index', axis=1, inplace=True)
 
   for index, url in enumerate(newlines_all['SongLink']):
-    filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], newlines_all.iloc[index]['SongTitle'].rsplit()[0], newlines_all.iloc[index]['GO+'])
+    filename = take_screenshot(url, newlines_all.iloc[index]['SoundCloudURL'].rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
     if filename != 'None':
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = filename
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = SCREENSHOT_UPLOAD_URL + filename
