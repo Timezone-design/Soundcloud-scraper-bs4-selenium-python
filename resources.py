@@ -1192,23 +1192,33 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 def take_screenshot(url, username, title, gostatus):
 	print("Opening driver for screenshot...")
 	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+	driver.set_page_load_timeout(10000)
+	print("Getting screenshot from: ", url)
+	driver.get(url)
+	homepage = False
 	try:
-		driver.set_page_load_timeout(10000)
-		print("Getting screenshot from: ", url)
-		driver.get(url)
-		time.sleep(2)
-		print("See if there is cookie button.")
-		try:
-			l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
-			s = l.text
-			print("Cookie button found.")
-			l.click()
-			print("Cookie button clicked.")
-		except:
-			print("Cookie button not found.")
-			pass
+		blocked = driver.find_element_by_class_name('blockedTrackMessage')
+		if blocked:
+			print("The song deleted. Getting the home page.")
+			driver.get(url.rsplit('/', 1)[0])
+			homepage = True
+	except:
+		pass
+	
+	time.sleep(2)
 
-		if gostatus == 'No':
+	print("See if there is cookie button.")
+	try:
+		l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
+		s = l.text
+		l.click()
+		print("Cookie button found and clicked.")
+	except:
+		print("Cookie button not found.")
+		pass
+
+	try:
+		if gostatus == 'No' and not homepage:
 			print('Driver opened. Now moving cursor...')
 			target = driver.find_element_by_class_name('playbackTimeline__progressBar')
 			bar = driver.find_element_by_class_name('listenContext')
@@ -1217,6 +1227,8 @@ def take_screenshot(url, username, title, gostatus):
 			action.move_to_element_with_offset(target, 100, 0).click().perform()
 			action.move_to_element_with_offset(bar, 10, 10).perform()
 			print('Cursor moved. Now taking screenshot...')
+		elif homepage:
+			print("Taking screenshot of main page.")
 		else:
 			print('All the tracks are GO+, taking screenshot of main page.')
 		filename = '{}_{}.png'.format(slugify(username), slugify(title)).lower()
