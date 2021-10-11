@@ -1221,10 +1221,12 @@ def take_screenshot(url, username, title, gostatus):
 		if gostatus == 'No' and not homepage:
 			print('Driver opened. Now moving cursor...')
 			target = driver.find_element_by_class_name('playbackTimeline__progressBar')
+			playbutton = driver.find_element_by_class_name('sc-button-play')
 			bar = driver.find_element_by_class_name('listenContext')
 			action = ActionChains(driver)
 			# action.move_to_element_with_offset(WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'playbackTimeline__progressBar'))), 100, 0).click().perform()
 			action.move_to_element_with_offset(target, 100, 0).click().perform()
+			action.move_to_element(playbutton).click().perform()
 			action.move_to_element_with_offset(bar, 10, 10).perform()
 			print('Cursor moved. Now taking screenshot...')
 		elif homepage:
