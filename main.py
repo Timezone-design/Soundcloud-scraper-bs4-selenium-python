@@ -8,7 +8,7 @@ from datetime import datetime
 import json
 import requests
 from constants import *
-from resources import get_genre_includes, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes
+from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes
 
 
 
@@ -20,9 +20,9 @@ def generate_2nd_permalinks(driver):
 	time.sleep(1)
 	scroll_threshold = 500
 	scroll_pause_time = 2
-	genre_includes = get_genre_includes()
-	print("Following genre will be included.")
-	print(genre_includes)
+	# genre_includes = get_genre_includes()
+	# print("Following genre will be included.")
+	# print(genre_includes)
 
 	additional_rappers = []
 	i = 0
@@ -48,12 +48,10 @@ def generate_2nd_permalinks(driver):
 
 	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
 	for rapper_profile in soup.find_all(class_="sound__header"):
-		for include in genre_includes:
-			if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-				additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-				print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include, " to additional_main_txt/additional permalink.txt")
-				break
+		if check_genre(rapper_profile, 2):
+			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+			additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+			print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
 
 	with open('additional_main_txt/additional_permalink.txt', 'a') as additional_file:
 		for item in additional_rappers:
@@ -82,9 +80,9 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			pass
 
 	scroll_threshold = int(scroll_threshold)
-	genre_includes = get_genre_includes()
-	print("Following genre will be included.")
-	print(genre_includes)
+	# genre_includes = get_genre_includes()
+	# print("Following genre will be included.")
+	# print(genre_includes)
 	for permalink in permalinks:
 		driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 		rapper_urls = []
@@ -107,14 +105,12 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 				break
 
 		soup = BeautifulSoup(driver.page_source, "html.parser")
-
 		for rapper_profile in soup.find_all(class_="sound__header"):
-			for include in genre_includes:
-				if rapper_profile.find(class_='sc-tagContent') and include in rapper_profile.find(class_='sc-tagContent').get_text():
-					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-					rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-					print(rapper_profile_url.attrs['href'], "\tis added with genre\t", include)
-					break
+			if check_genre(rapper_profile, 2):
+				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+				rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+				print(rapper_profile_url.attrs['href'], "\tis added")
+
 
 		driver.close()
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
@@ -218,18 +214,7 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		genre_flag = 0
-		if rapper_soup.find(class_='sc-tagContent'):
-			genre_includes = get_genre_includes()
-			genre_first = rapper_soup.find(class_='sc-tagContent').get_text()
-
-			for item in genre_includes:
-				if item in genre_first:
-					genre_flag = 1
-					break
-			
-		if genre_flag == 0:
-			print(rapper.strip() + "/tracks is excluded for its genre is not matching.")
+		if not check_genre(rapper_soup, 2):
 			continue
 
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')

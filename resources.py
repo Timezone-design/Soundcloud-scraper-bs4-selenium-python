@@ -784,6 +784,16 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 
 	songtitle = songtitlefull
 
+	checklist = songtitle.split()
+	all_capital_single = True
+	for item in checklist:
+		if not item.isupper():
+			all_capital_single = False
+	
+	if all_capital_single:
+		wordlist = songtitlefull.split('  ')
+		songtitle = " ".join([''.join(x.split()) for x in wordlist])
+
 	username = remove_emoji(username)
 	username = re.sub(r'[^\x00-\x7f]', r'', username)
 	username = username.strip()
@@ -838,8 +848,8 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('*'))
 	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('['))
 
-	if ' -' in songtitle:
-		candidates = songtitle.split(' -')
+	if ' - ' in songtitle:
+		candidates = songtitle.split(' - ')
 		popout_amounts = []
 		for index1, candidateitem in enumerate(candidates):
 			popout_list = []
@@ -853,7 +863,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			popout_amounts.append(len(popout_list))
 		if max(popout_amounts) > 1:
 			songtitle = candidates[popout_amounts.index(min(popout_amounts))]
-	elif ' ~' in songtitle:
+	elif ' ~ ' in songtitle:
 		candidates = songtitle.split('~')
 		popout_amounts = []
 		for index1, candidateitem in enumerate(candidates):
@@ -1152,7 +1162,9 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	except:
 		pass
 	try:
-		songtitle = songtitle.split('-')[0]
+		tempsongtitle = songtitle.split('-')[0]
+		if tempsongtitle[-2:].lower() != 're' or tempsongtitle[-2:].lower() != 'un':
+			songtitle = tempsongtitle
 	except:
 		pass
 	try:
@@ -1200,6 +1212,34 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	songtitle = clean_songtitle(songtitle)
 	print('cleaned songtitle ', songtitle)
 
+
+	for prec_word in preceding_words:
+		if prec_word in songtitlefull:
+			second_half = songtitlefull.split(prec_word)[1].strip()
+			# check for artistname
+			if len(artistnamecleaned.split()) <= len(second_half.split()):
+				candidate_string = ' '.join(second_half.split()[0:len(artistnamecleaned.split())])
+				if SequenceMatcher(None, a=candidate_string.lower(), b=artistnamecleaned.lower()).ratio() > 0.5:
+					print('The sonetitlefull includes prod related word immediately followed by artistname. This profile will be excluded')
+					return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+			# check for username
+			if len(username.split()) <= len(second_half.split()):
+				candidate_string = ' '.join(second_half.split()[0:len(username.split())])
+				if SequenceMatcher(None, a=candidate_string.lower(), b=username.lower()).ratio() > 0.5:
+					print('The sonetitlefull includes prod related word immediately followed by artistname. This profile will be excluded')
+					return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	if len(artistname) > 5:
+		artistname.strip(['.'])
+	if len(artistnamecleaned) > 5:
+		artistnamecleaned.strip(['.'])
+	if len(songtitle) > 5:
+		songtitle.strip(['.'])
+	if len(username) > 5:
+		username.strip(['.'])
+	if len(fullname) > 5:
+		fullname.strip(['.'])
+	
 	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink
 
 
@@ -1263,3 +1303,18 @@ def take_screenshot(url, username, title, gostatus):
 	except:
 		pass
 	return 'None'
+
+def check_genre(soup, n):
+	genre_includes = get_genre_includes()
+	all_genres = soup.find_all(class_='sc-tagContent')
+	if len(all_genres) > n:
+		all_genres = all_genres[0:n]
+	elif len(all_genres) == 0:
+		print("This profile does not have any song. This will be ignored.")
+		return False
+	all_genres = [x.get_text().strip() for x in all_genres]
+	for genre in all_genres:
+		if not genre in genre_includes:
+			print("this profile has words not in genre include list. This will be ignored.")
+			return False
+	return True

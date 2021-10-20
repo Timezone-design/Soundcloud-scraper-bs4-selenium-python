@@ -7,7 +7,7 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import get_genre_includes, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper
+from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper
 
 	
 def generate_follower_permalinks(url):
@@ -142,18 +142,7 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		genre_flag = 0
-		if rapper_soup.find(class_='sc-tagContent'):
-			genre_includes = get_genre_includes()
-			genre_first = rapper_soup.find(class_='sc-tagContent').get_text()
-
-			for item in genre_includes:
-				if item in genre_first:
-					genre_flag = 1
-					break
-			
-		if genre_flag == 0:
-			print(rapper.strip() + "/tracks is excluded for its genre is not matching.")
+		if not check_genre(rapper_soup, 2):
 			continue
 
 
