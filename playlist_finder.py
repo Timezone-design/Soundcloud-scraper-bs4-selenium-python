@@ -44,6 +44,28 @@ def get_rapper_details():
 		print('playlist_finder_txt/playlist_rappers_unique.txt not exists...')
 		sys.exit()
 
+	if len(rapper_profile_url_unique) == 0:
+		print('Unique rapper URL count is 0. Rebuilding playlist unique rapper txt...')
+		print('Reading playlist_rappers.txt')
+		playlist_rappers = []
+		with open('playlist_finder_txt/playlist_rappers.txt') as f:
+			for item in f:
+				playlist_rappers.append(item.strip())
+
+		if len(playlist_rappers) == 0:
+			print('Nothing found in playlist_rappers.txt. Make file to continue...')
+			sys.exit()
+		enrich_playlist_rappers_unique(playlist_rappers)
+
+		print('Re-reading playlist rappers unique txt...')
+		with open('playlist_finder_txt/playlist_rappers_unique.txt') as f:
+			for item in f:
+				rapper_profile_url_unique.append(item.strip())
+	
+	if len(rapper_profile_url_unique) == 0:
+		print('No url found in playlist_rappers_unique.txt')
+		sys.exit()
+
 	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	driver.set_page_load_timeout(10000)
 
@@ -278,6 +300,15 @@ def enrich_playlist_rappers_unique(playlist_rappers):
 	else:
 		print('follower_boost_txt/following_rappers_unique.txt not exists...')
 
+	print('Reading playlist_finder_txt/playlist_rappers_unique.txt')
+	if os.path.exists('playlist_finder_txt/playlist_rappers_unique.txt'):
+		with open('playlist_finder_txt/playlist_rappers_unique.txt') as f:
+			for item in f:
+				if not item.strip() in look_in:
+					look_in.append(item.strip())
+	else:
+		print('playlist_finder_txt/playlist_rappers_unique.txt not exists...')
+
 	temp_list = []
 	for item in playlist_rappers:
 		if not item.strip() in look_in:
@@ -384,9 +415,10 @@ def main(): # Main workflow of SoundCloud Scraper
 	# ---------------------------------------------
 	# Making/Enriching playlist_rappers_unique.txt
 	# ---------------------------------------------
-
-	enrich_playlist_rappers_unique(playlist_rappers)
-	get_rapper_details()
+	if os.path.exists("playlist_finder_txt/playlist_rappers_unique.txt"):
+		enrich_playlist_rappers_unique(playlist_rappers)
+	else:
+		get_rapper_details()
 
 main()
 		

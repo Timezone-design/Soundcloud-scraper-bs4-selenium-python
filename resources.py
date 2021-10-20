@@ -1233,13 +1233,13 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	if len(artistname) > 5:
 		artistname = artistname.strip('.')
 	if len(artistnamecleaned) > 5:
-		artistnamecleaned.strip(['.'])
+		artistname = artistnamecleaned.strip('.')
 	if len(songtitle) > 5:
-		songtitle.strip(['.'])
+		songtitle = songtitle.strip('.')
 	if len(username) > 5:
-		username.strip(['.'])
+		username = username.strip('.')
 	if len(fullname) > 5:
-		fullname.strip(['.'])
+		fullname = fullname.strip('.')
 	
 	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink
 
