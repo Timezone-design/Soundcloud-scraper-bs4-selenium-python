@@ -7,45 +7,19 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper
+from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content
 
 	
 def generate_follower_permalinks(url):
 	url = url + '/following'
-	tempdriver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
-	tempdriver.set_page_load_timeout(10000)
-	tempdriver.get(url)
-	time.sleep(1)
-	scroll_threshold = 500
-	scroll_pause_time = 2
-	# genre_includes = get_genre_includes()
-	# print("Following genre will be included.")
-	# print(genre_includes)
-
-	additional_rappers = []
-	i = 0
 	print('Searching following in \t' + url + '\n')
 	with open('follower_boost_txt/position_of_rappers_unique_for_following_permalink.txt', 'a') as f:
 		f.write("%s\n" % datetime.now())
 		f.write("%s\n\n" % url)
 	print('Position saved to follower_boost_txt/position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
-	while True:
-		i += 1
-		try:
-			last_height = tempdriver.execute_script("return document.body.scrollHeight")
-			tempdriver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-			time.sleep(scroll_pause_time)
-			new_height = tempdriver.execute_script("return document.body.scrollHeight")
-			print('{}th scroll made.'.format(i))
-		except:
-			print("error in getting data. Passing to next iteration 3")
-			return
-
-		if last_height == new_height or i == scroll_threshold:
-			print("Scroll finished. Now scraping... 12")			
-			break
-
-	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
+	additional_rappers = []
+	
+	soup = get_endless_scroll_content(url)
 
 	for following_profile in soup.find_all(class_="userBadgeListItem__image"):
 		additional_rappers.append('https://soundcloud.com' + following_profile.attrs['href'])
@@ -55,8 +29,6 @@ def generate_follower_permalinks(url):
 		for item in additional_rappers:
 			f.write("%s\n" % item)
 	print("\n{} follower urls are added.\n".format(len(additional_rappers)))
-
-	tempdriver.close()
 
 
 def get_rapper_details():

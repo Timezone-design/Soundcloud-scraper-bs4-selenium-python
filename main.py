@@ -8,45 +8,18 @@ from datetime import datetime
 import json
 import requests
 from constants import *
-from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes
+from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content
 
 
 
 def generate_2nd_permalinks(driver):
 	url = driver.current_url.rsplit('/', 1)[0] + '/likes'
-	tempdriver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
-	tempdriver.set_page_load_timeout(10000)
-	tempdriver.get(url)
-	time.sleep(1)
-	scroll_threshold = 500
-	scroll_pause_time = 2
-	# genre_includes = get_genre_includes()
-	# print("Following genre will be included.")
-	# print(genre_includes)
-
-	additional_rappers = []
-	i = 0
 	with open('additional_main_txt/position_of_rappers_unique_for_additional_permalink_from_main.txt', 'a') as f:
 		f.write("%s\n" % datetime.now())
 		f.write("%s\n\n" % url)
 	print('Position saved to additional_main_txt/position_of_rappers_unique_for_additional_permalink_from_main.txt. Now scrolling page...')
-	while True:
-		i += 1
-		try:
-			last_height = tempdriver.execute_script("return document.body.scrollHeight")
-			tempdriver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-			time.sleep(scroll_pause_time)
-			new_height = tempdriver.execute_script("return document.body.scrollHeight")
-			print('{}th scroll made.'.format(i))
-		except:
-			print("error in getting data. Passing to next iteration 12")
-			return
-
-		if last_height == new_height or i == scroll_threshold:
-			print("Scroll finished. Now scraping... 12")			
-			break
-
-	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
+	soup = get_endless_scroll_content(url)
+	additional_rappers = []
 	for rapper_profile in soup.find_all(class_="sound__header"):
 		if check_genre(rapper_profile, 2):
 			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
@@ -57,62 +30,20 @@ def generate_2nd_permalinks(driver):
 		for item in additional_rappers:
 			additional_file.write("%s\n" % item)
 	print("\n{} additional repost urls are added.\n".format(len(additional_rappers)))
-	tempdriver.close()
 	driver.delete_all_cookies()
-
-
 
 
 def get_rapper_profile_urls_from_reposts(permalinks):
 
-	scroll_threshold = 10
-	while True: # Gets user input for API connection quantity
-		scroll_threshold = input("How many scrolls do you want to make for one page? (Default: 10) ")
-
-		try:
-			int(scroll_threshold) > 0
-			break
-		except Exception as e:
-			print("Please input a valid integer.")
-		else:
-			pass
-		finally:
-			pass
-
-	scroll_threshold = int(scroll_threshold)
-	# genre_includes = get_genre_includes()
-	# print("Following genre will be included.")
-	# print(genre_includes)
 	for permalink in permalinks:
-		driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+		soup = get_endless_scroll_content(permalink + '/tracks')
 		rapper_urls = []
-		driver.set_page_load_timeout(10000)
-		driver.get(permalink + '/tracks')
-		time.sleep(2)
-		scroll_pause_time = 2
-		i = 0
-		print('Now scrolling page...')
-		while True:
-			i += 1
-			last_height = driver.execute_script("return document.body.scrollHeight")
-			driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-			time.sleep(scroll_pause_time)
-			new_height = driver.execute_script("return document.body.scrollHeight")
-			print('{}th scroll made.'.format(i))
-
-			if last_height == new_height or i == scroll_threshold:
-				print("Scroll finished. Now scraping... 11")			
-				break
-
-		soup = BeautifulSoup(driver.page_source, "html.parser")
 		for rapper_profile in soup.find_all(class_="sound__header"):
 			if check_genre(rapper_profile, 2):
 				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 				rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 				print(rapper_profile_url.attrs['href'], "\tis added")
 
-
-		driver.close()
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
 		with open('main_txt/rappers.txt', 'a') as f:
