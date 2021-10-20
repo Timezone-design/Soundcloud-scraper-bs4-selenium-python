@@ -10,6 +10,7 @@ DRIVER_OPTIONS.add_argument("--window-size=1920x1080")
 INSTAGRAM_USERNAME_REGEX = re.compile(r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 SCREENSHOT_UPLOAD_URL = 'https://example.com/images/'
 SLUG_FILTER_PATTERN = re.compile('\W+')
+PLAYLIST_SEARCH_PATH = 'https://soundcloud.com/search/sets?q=hip%20hop%20rap'
 
 
 # Nikita Client ID

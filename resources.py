@@ -14,6 +14,7 @@ import sys
 from constants import *
 import time
 from difflib import SequenceMatcher
+from bs4 import BeautifulSoup
 
 def slugify(value, allow_unicode=False):
     """
@@ -1230,7 +1231,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 					return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if len(artistname) > 5:
-		artistname.strip(['.'])
+		artistname = artistname.strip('.')
 	if len(artistnamecleaned) > 5:
 		artistnamecleaned.strip(['.'])
 	if len(songtitle) > 5:
@@ -1318,3 +1319,32 @@ def check_genre(soup, n):
 			print("this profile has words not in genre include list. This will be ignored.")
 			return False
 	return True
+
+def get_endless_scroll_content(url):
+	tempdriver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+	tempdriver.set_page_load_timeout(10000)
+	tempdriver.get(url)
+	time.sleep(1)
+	scroll_threshold = 500
+	scroll_pause_time = 2
+
+	i = 0
+	while True:
+		i += 1
+		try:
+			last_height = tempdriver.execute_script("return document.body.scrollHeight")
+			tempdriver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
+			time.sleep(scroll_pause_time)
+			new_height = tempdriver.execute_script("return document.body.scrollHeight")
+			print('{}th scroll made.'.format(i))
+		except:
+			print("error in getting data. Passing to next iteration 3")
+			return
+
+		if last_height == new_height or i == scroll_threshold:
+			print("Scroll finished. Now scraping... 12")			
+			break
+
+	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
+	tempdriver.close()
+	return soup
