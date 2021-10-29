@@ -481,6 +481,19 @@ def get_genre_includes():
 		print(ex)
 	return includes
 
+def get_LA_includes():
+	includes = []
+	try:
+		if os.path.exists('json/LA.include.json'):
+			with open('json/LA.include.json') as fd:
+				obj = json.loads(fd.read())
+				includes = obj['includes']
+				return includes
+	except Exception as ex:
+		print("JSON reading failed for json/LA.include.json.")
+		print(ex)
+	return includes
+
 
 def get_manager_bio_detect():
 	includes = []
@@ -785,15 +798,15 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 
 	songtitle = songtitlefull
 
-	checklist = songtitle.split()
-	all_capital_single = True
-	for item in checklist:
-		if not item.isupper():
-			all_capital_single = False
+	# checklist = songtitle.split()
+	# all_capital_single = True
+	# for item in checklist:
+	# 	if not item.isupper():
+	# 		all_capital_single = False
 	
-	if all_capital_single:
-		wordlist = songtitlefull.split('  ')
-		songtitle = " ".join([''.join(x.split()) for x in wordlist])
+	# if all_capital_single:
+	# 	wordlist = songtitlefull.split('  ')
+	# 	songtitle = " ".join([''.join(x.split()) for x in wordlist])
 
 	username = remove_emoji(username)
 	username = re.sub(r'[^\x00-\x7f]', r'', username)
