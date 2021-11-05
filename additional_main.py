@@ -7,8 +7,15 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
+from main import RESCRAPE
+from resources import check_bio, check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
+
+RESCRAPE = False
+
+if 0 <= 1 < len(sys.argv):
+	if sys.argv[1] and sys.argv[1]=='--re-scrape':
+		RESCRAPE = True
 	
 def generate_2nd_permalinks(url):
 	url = url + '/likes'
@@ -35,9 +42,6 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 	permalinks = pd.unique(permalinks).tolist()
 	permalinks = [i.strip() for i in permalinks]
 
-	# genre_includes = get_genre_includes()
-	# print("Following genre will be included.")
-	# print(genre_includes)
 	for permalink in permalinks:
 		try:
 			rapper_urls = []
@@ -146,7 +150,7 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		if not check_genre(rapper_soup, 2):
+		if not check_genre(rapper_soup, 2, RESCRAPE):
 			continue
 
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
@@ -159,18 +163,11 @@ def get_rapper_details():
 			continue
 		if rapper_soup.find(class_='sc-tagContent'):
 			genre = rapper_soup.find(class_='sc-tagContent').get_text()
-		bio_excludes = get_bio_excludes()
-		bio_text = bio.text
 
-		flag = 0
-		for item in bio_excludes:
-			if item in bio_text:
-				flag = 1
-				break
-		if flag == 1:
-			print('Bio includes exception word. Passing to next url.')
+		if not check_bio(bio):
 			continue
 		
+		bio_text = bio.text
 		manager_bio = get_manager_bio_detect()
 		for item in manager_bio:
 			if item in bio_text:

@@ -27,9 +27,9 @@ if not path.exists(filenameFinal):
   finalFile.close()
 
 try:
-  emaildf = pd.read_csv(filenameEmail, encoding='ISO-8859-1', header=0, error_bad_lines=False, sep=',')
-except:
   emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
+except:
+  emaildf = pd.read_csv(filenameEmail, encoding='ISO-8859-1', header=0, error_bad_lines=False, sep=',')
   pass
 coupondf = pd.read_csv(filenameCoupon, encoding='utf-8-sig', header=0, error_bad_lines=False, sep=',')
 
@@ -86,7 +86,7 @@ if len(newlines.index) > 0:
   newlines_all['ScreenshotURL'] = ''
   newlines_all.drop('index', axis=1, inplace=True)
 
-  newlines_all.drop(['UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'HasInstagram', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL'], axis=1).to_csv(filenameLog, mode='a', header=False, encoding='utf-8', sep=',', index=False)
+  newlines_all.drop(['UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'HasInstagram', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'ScreenshotFileName', 'ScreenshotURL', 'InLosAngeles'], axis=1).to_csv(filenameLog, mode='a', header=False, encoding='utf-8', sep=',', index=False)
   print('File log made for screenshot waiting list')
   
   for index, url in enumerate(newlines_all['SongLink']):

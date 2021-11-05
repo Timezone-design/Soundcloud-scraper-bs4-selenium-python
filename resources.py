@@ -481,6 +481,20 @@ def get_genre_includes():
 		print(ex)
 	return includes
 
+def get_genre_excludes():
+	excludes = []
+	try:
+		if os.path.exists('json/genre.exclude.json'):
+			with open('json/genre.exclude.json') as fd:
+				obj = json.loads(fd.read())
+				excludes = obj['excludes']
+				return excludes
+	except Exception as ex:
+		print("JSON reading failed for json/genre.exclude.json.")
+		print(ex)
+	return excludes
+
+
 def get_LA_includes():
 	includes = []
 	try:
@@ -736,6 +750,13 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
 		print("Consider updating your API.")
 		sys.exit()
+
+	try:
+		len(user_search['collection'])
+	except:
+		print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
+		print("No object returned in search. Nothing to worry, but if this persists, contact developer.")
+		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
 	if len(user_search['collection']) == 0:
 		try:
@@ -1318,19 +1339,27 @@ def take_screenshot(url, username, title, gostatus):
 		pass
 	return 'None'
 
-def check_genre(soup, n):
-	genre_includes = get_genre_includes()
+def check_genre(soup, n, rescrape):
 	all_genres = soup.find_all(class_='sc-tagContent')
-	if len(all_genres) > n:
-		all_genres = all_genres[0:n]
-	elif len(all_genres) == 0:
-		print("This profile does not have any song. This will be ignored.")
-		return False
-	all_genres = [x.get_text().strip() for x in all_genres]
-	for genre in all_genres:
-		if not genre in genre_includes:
-			print("this profile has words not in genre include list. This will be ignored.")
+	if not rescrape:
+		genre_includes = get_genre_includes()
+		if len(all_genres) > n:
+			all_genres = all_genres[0:n]
+		elif len(all_genres) == 0:
+			print("This profile does not have any song. This will be ignored.")
 			return False
+		all_genres = [x.get_text().strip() for x in all_genres]
+		for genre in all_genres:
+			if not genre in genre_includes:
+				print("This profile has words not in genre include list. This will be ignored.")
+				return False
+	else:
+		genre_excludes = get_genre_excludes()
+		for item in genre_excludes:
+			if item in all_genres:
+				print("This profile have this genre: ", item)
+				print("Ignoring profile...")
+				return False
 	return True
 
 def get_endless_scroll_content(url):
@@ -1361,3 +1390,29 @@ def get_endless_scroll_content(url):
 	soup = BeautifulSoup(tempdriver.page_source, "html.parser")
 	tempdriver.close()
 	return soup
+
+
+def check_bio(soup):
+	bio_excludes = get_bio_excludes()
+	bio_text = soup.text
+
+	flag = 0
+	checklist = ["rapper", "Rapper", "rappers", "Rappers", "rap", "Rap"]
+	for item in checklist:
+		if item in bio_text:
+			flag = 1
+			break
+
+	if flag == 1:
+		print('Bio includes inclusion word, changing the exclude list...')
+		bio_excludes = ["producer", "Producer", "Rapper/Producer", "rapper/producer", "Rapper/producer", "rapper/Producer", "email me for beats", "DJ"]
+	
+	flag = 0
+	for item in bio_excludes:
+		if item in bio_text:
+			flag = 1
+			break
+	if flag == 1:
+		print('Bio includes exception word. Passing to next url.')
+		return False
+	return True

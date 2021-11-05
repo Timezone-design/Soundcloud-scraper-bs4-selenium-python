@@ -1,4 +1,3 @@
-import sys
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -9,13 +8,8 @@ from datetime import datetime
 import json
 import requests
 from constants import *
-from resources import check_bio, check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes
+from resources import get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes
 
-RESCRAPE = False
-
-if 0 <= 1 < len(sys.argv):
-	if sys.argv[1] and sys.argv[1]=='--re-scrape':
-		RESCRAPE = True
 
 
 def generate_2nd_permalinks(driver):
@@ -27,10 +21,9 @@ def generate_2nd_permalinks(driver):
 	soup = get_endless_scroll_content(url)
 	additional_rappers = []
 	for rapper_profile in soup.find_all(class_="sound__header"):
-		if check_genre(rapper_profile, 2):
-			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-			additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-			print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
+		rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+		additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+		print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
 
 	with open('additional_main_txt/additional_permalink.txt', 'a') as additional_file:
 		for item in additional_rappers:
@@ -45,10 +38,9 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		soup = get_endless_scroll_content(permalink + '/tracks')
 		rapper_urls = []
 		for rapper_profile in soup.find_all(class_="sound__header"):
-			if check_genre(rapper_profile, 2):
-				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
-				rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
-				print(rapper_profile_url.attrs['href'], "\tis added")
+			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
+			rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
+			print(rapper_profile_url.attrs['href'], "\tis added")
 
 		print("\n{} / {} repost urls are searched.\n".format(permalinks.index(permalink) + 1, len(permalinks)))
 
@@ -151,9 +143,6 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		if not check_genre(rapper_soup, 2, RESCRAPE):
-			continue
-
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
 		genre = ''
 		role = 'Artist'
@@ -172,11 +161,11 @@ def get_rapper_details():
 			if not check_bio(bio):
 				continue
 			
-			bio_text = bio.text
 			manager_bio = get_manager_bio_detect()
 			for item in manager_bio:
 				if item in bio_text:
 					role = 'Manager'
+
 
 			web_profiles = rapper_soup.find('div', class_="web-profiles")
 
