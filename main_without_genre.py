@@ -8,7 +8,7 @@ from datetime import datetime
 import json
 import requests
 from constants import *
-from resources import get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes
+from resources import check_bio, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes
 
 
 
@@ -161,6 +161,7 @@ def get_rapper_details():
 			if not check_bio(bio):
 				continue
 			
+			bio_text = bio.text
 			manager_bio = get_manager_bio_detect()
 			for item in manager_bio:
 				if item in bio_text:

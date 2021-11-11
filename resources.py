@@ -744,19 +744,27 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 		print("Cannot find username. This profile will be excluded")
 		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
 
-	try:
-		user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
-	except:
-		print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
-		print("Consider updating your API.")
-		sys.exit()
+	for i in range(0, 100):
 
-	try:
-		len(user_search['collection'])
-	except:
-		print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
-		print("No object returned in search. Nothing to worry, but if this persists, contact developer.")
-		return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+		try:
+			user_search = json.loads(requests.get(profile_search_api.format(urllib.parse.quote(permalink))).content.decode('utf-8'))
+		except:
+			print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
+			print("Consider updating your API.")
+			sys.exit()
+
+		try:
+			len(user_search['collection'])
+			break
+		except:
+			if i == 100:
+				print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
+				print("No object returned in search of 100 times. Nothing to worry, but if this persists, contact developer.")
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+			else:
+				print("No object returned. Trying again for {}th lap.".format(i + 2))
+				continue
+
 
 	if len(user_search['collection']) == 0:
 		try:
