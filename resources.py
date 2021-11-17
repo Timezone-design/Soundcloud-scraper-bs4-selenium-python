@@ -757,7 +757,7 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 			len(user_search['collection'])
 			break
 		except:
-			if i == 100:
+			if i == 99:
 				print("Error occured while using user search API in https://soundcloud.com/" + permalink + "\n")
 				print("No object returned in search of 100 times. Nothing to worry, but if this persists, contact developer.")
 				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"

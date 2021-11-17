@@ -26,11 +26,29 @@ if not path.exists(filenameFinal):
   finalwriter.writerow(['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'HasInstagram', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'InLosAngeles', 'ScreenshotFileName', 'ScreenshotURL'])
   finalFile.close()
 
-try:
-  emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
-except:
-  emaildf = pd.read_csv(filenameEmail, encoding='ISO-8859-1', header=0, error_bad_lines=False, sep=',')
-  pass
+emaildfEncoding = ''
+
+if emaildfEncoding == '':
+  try:
+    emaildf = pd.read_csv(filenameEmail, encoding='utf-8', header=0, error_bad_lines=False, sep=',')
+    emaildfEncoding = 'utf-8'
+  except:
+    pass
+
+if emaildfEncoding == '':
+  try:
+    emaildf = pd.read_csv(filenameEmail, encoding='utf16', header=0, error_bad_lines=False, sep='\t')
+    emaildfEncoding = 'utf16'
+  except:
+    pass
+
+if emaildfEncoding == '':
+  try:
+    emaildf = pd.read_csv(filenameEmail, encoding='ISO-8859-1', header=0, error_bad_lines=False, sep=',')
+    emaildfEncoding = 'ISO-8859-1'
+  except:
+    pass
+
 coupondf = pd.read_csv(filenameCoupon, encoding='utf-8-sig', header=0, error_bad_lines=False, sep=',')
 
 # print(list(emaildf.columns))
@@ -46,7 +64,6 @@ emaildf.reset_index(inplace=True)
 newlines_all = emaildf[~emaildf['CouponCode'].isin(coupondf['Edd Discount Code'])].dropna(how = 'all')
 newlines = pd.DataFrame(columns=['Edd Discount Name', 'Edd Discount Code', 'Edd Discount Amount', 'Edd Discount Type', 'Edd Discount Uses', 'Edd Discount Max Uses', 'Edd Discount Is Single Use', 'Edd Discount Start', 'Edd Discount Expiration', 'Edd Discount Status', 'Edd Discount Product Condition', 'Edd Discount Is Not Global', 'Edd Discount Min Price', 'Edd Discount Product Reqs', 'Title', 'URL Slug', 'Date', 'Modified Date', 'Status', 'Edd Discount Excluded Products', 'Post type'])
 print('Data extracted from Email csv')
-
 
 
 newlines['Edd Discount Name'] = newlines_all['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
@@ -107,4 +124,4 @@ if len(newlines.index) > 0:
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = 'N/A'
 
   print('Moving to final csv')
-  newlines_all.to_csv(filenameFinal, mode='a', header=False, encoding='utf-16', sep='\t', index=False)
+  newlines_all.to_csv(filenameFinal, mode='a', header=False, encoding=emaildfEncoding, sep='\t', index=False)
