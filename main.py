@@ -27,7 +27,7 @@ def generate_2nd_permalinks(driver):
 	soup = get_endless_scroll_content(url)
 	additional_rappers = []
 	for rapper_profile in soup.find_all(class_="sound__header"):
-		if check_genre(rapper_profile, 2):
+		if check_genre(rapper_profile, 2, RESCRAPE):
 			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 			additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 			print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
@@ -45,7 +45,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 		soup = get_endless_scroll_content(permalink + '/tracks')
 		rapper_urls = []
 		for rapper_profile in soup.find_all(class_="sound__header"):
-			if check_genre(rapper_profile, 2):
+			if check_genre(rapper_profile, 2, RESCRAPE):
 				rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 				rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 				print(rapper_profile_url.attrs['href'], "\tis added")

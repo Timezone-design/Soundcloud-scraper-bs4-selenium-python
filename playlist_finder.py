@@ -10,6 +10,11 @@ from datetime import datetime
 from constants import *
 from resources import check_genre, get_bio_excludes, get_genre_includes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
+RESCRAPE = False
+
+if 0 <= 1 < len(sys.argv):
+	if sys.argv[1] and sys.argv[1]=='--re-scrape':
+		RESCRAPE = True
 
 def get_rapper_details():
 
@@ -87,7 +92,7 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		if not check_genre(rapper_soup, 2):
+		if not check_genre(rapper_soup, 2, RESCRAPE):
 			continue
 
 

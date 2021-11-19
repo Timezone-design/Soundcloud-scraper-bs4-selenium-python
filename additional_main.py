@@ -7,7 +7,6 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from main import RESCRAPE
 from resources import check_bio, check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
 
@@ -26,7 +25,7 @@ def generate_2nd_permalinks(url):
 	additional_rappers = []
 	soup = get_endless_scroll_content(url)
 	for rapper_profile in soup.find_all(class_="sound__header"):
-		if check_genre(rapper_profile, 2):
+		if check_genre(rapper_profile, 2, RESCRAPE):
 			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 			additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 			print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
@@ -47,7 +46,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			rapper_urls = []
 			soup = get_endless_scroll_content(permalink + '/likes')
 			for rapper_profile in soup.find_all(class_="sound__header"):
-				if check_genre(rapper_profile, 2):
+				if check_genre(rapper_profile, 2, RESCRAPE):
 					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 					rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 					print(rapper_profile_url.attrs['href'], "\tis added")

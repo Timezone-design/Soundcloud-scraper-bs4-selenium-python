@@ -37,8 +37,8 @@ if emaildfEncoding == '':
 
 if emaildfEncoding == '':
   try:
-    emaildf = pd.read_csv(filenameEmail, encoding='utf16', header=0, error_bad_lines=False, sep='\t')
-    emaildfEncoding = 'utf16'
+    emaildf = pd.read_csv(filenameEmail, encoding='utf-16', header=0, error_bad_lines=False, sep='\t')
+    emaildfEncoding = 'utf-16'
   except:
     pass
 
@@ -59,14 +59,14 @@ dollaramount = input('Dollar Amount : ')
 
 # print(emaildf['CouponCodeName'])
 
-emaildf.drop_duplicates('CouponCodeName', inplace=True)
+emaildf.drop_duplicates('Email', inplace=True)
 emaildf.reset_index(inplace=True)
 newlines_all = emaildf[~emaildf['CouponCode'].isin(coupondf['Edd Discount Code'])].dropna(how = 'all')
 newlines = pd.DataFrame(columns=['Edd Discount Name', 'Edd Discount Code', 'Edd Discount Amount', 'Edd Discount Type', 'Edd Discount Uses', 'Edd Discount Max Uses', 'Edd Discount Is Single Use', 'Edd Discount Start', 'Edd Discount Expiration', 'Edd Discount Status', 'Edd Discount Product Condition', 'Edd Discount Is Not Global', 'Edd Discount Min Price', 'Edd Discount Product Reqs', 'Title', 'URL Slug', 'Date', 'Modified Date', 'Status', 'Edd Discount Excluded Products', 'Post type'])
 print('Data extracted from Email csv')
 
 
-newlines['Edd Discount Name'] = newlines_all['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}')
+newlines['Edd Discount Name'] = newlines_all['ArtistNameCleaned'].apply(lambda x: f'Discount -${dollaramount} for mp3 lease for {x}' if not pd.isna(x) and x != '#NAME?' else f'Discount -${dollaramount} for mp3 lease')
 newlines['Edd Discount Code'] = newlines_all['CouponCode']
 newlines['Edd Discount Amount'] = dollaramount
 newlines['Edd Discount Type'] = 'flat'
@@ -115,7 +115,8 @@ if len(newlines.index) > 0:
       f.write("--------------------------------------------------------------")
       f.write('\n')
       print('Position logged to txt file: ', newlines_all.iloc[index]['SoundCloudURL'])
-    filename = take_screenshot(url, str(newlines_all.iloc[index]['SoundCloudURL']).rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
+    filename = 'None'
+    # filename = take_screenshot(url, str(newlines_all.iloc[index]['SoundCloudURL']).rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
     if filename != 'None':
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = filename
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = SCREENSHOT_UPLOAD_URL + filename
@@ -124,4 +125,4 @@ if len(newlines.index) > 0:
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = 'N/A'
 
   print('Moving to final csv')
-  newlines_all.to_csv(filenameFinal, mode='a', header=False, encoding=emaildfEncoding, sep='\t', index=False)
+  newlines_all.to_csv(filenameFinal, mode='w', header=False, encoding=emaildfEncoding, sep=('\t' if emaildfEncoding == 'utf-16' else ','), index=False)
