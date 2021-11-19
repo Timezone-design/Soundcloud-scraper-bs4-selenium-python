@@ -115,8 +115,8 @@ if len(newlines.index) > 0:
       f.write("--------------------------------------------------------------")
       f.write('\n')
       print('Position logged to txt file: ', newlines_all.iloc[index]['SoundCloudURL'])
-    filename = 'None'
-    # filename = take_screenshot(url, str(newlines_all.iloc[index]['SoundCloudURL']).rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
+    # filename = 'None'
+    filename = take_screenshot(url, str(newlines_all.iloc[index]['SoundCloudURL']).rsplit('/')[-1], str(newlines_all.iloc[index]['SongTitle']).rsplit()[0], newlines_all.iloc[index]['GO+'])
     if filename != 'None':
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = filename
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = SCREENSHOT_UPLOAD_URL + filename

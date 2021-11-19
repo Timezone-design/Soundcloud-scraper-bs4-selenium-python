@@ -273,9 +273,32 @@ def main(): # Main workflow of SoundCloud Scraper
 		repost_excludes = get_repost_excludes()
 		for x in range(int(api_conn_count)): # Send API request
 
+			continue_flag = False
 			url = init_url.format(x * 200)
 
-			api_response_object = json.loads(requests.get(url).content.decode('utf-8'))
+			for iter in range(0, 100):
+				try:
+					api_response_object = json.loads(requests.get(url).content.decode('utf-8'))
+				except:
+					print("Error occured while fetching init url.")
+					print("Consider updating your API.")
+					sys.exit()
+				
+				try:
+					temp = api_response_object["collection"]
+					break
+				except:
+					if iter == 99:
+						print("Error occured while fetching init url.")
+						print("No object returned in search of 100 times. Nothing to worry, but if this persists, contact developer.")
+						continue_flag = True
+						break
+					else:
+						print("No object returned. Trying again for {}th lap.".format(iter + 2))
+						continue
+			
+			if continue_flag:
+				continue
 
 			print("{}th api is sent.".format(x))
 
