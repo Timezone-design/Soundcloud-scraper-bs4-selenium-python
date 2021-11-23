@@ -17,6 +17,7 @@ if 0 <= 1 < len(sys.argv):
 	if sys.argv[1] and sys.argv[1]=='--re-scrape':
 		RESCRAPE = True
 
+print("Rescrape key: ", RESCRAPE)
 
 def generate_2nd_permalinks(driver):
 	url = driver.current_url.rsplit('/', 1)[0] + '/likes'
@@ -42,7 +43,7 @@ def generate_2nd_permalinks(driver):
 def get_rapper_profile_urls_from_reposts(permalinks):
 
 	for permalink in permalinks:
-		soup = get_endless_scroll_content(permalink + '/tracks')
+		soup = get_endless_scroll_content(permalink + '/reposts')
 		rapper_urls = []
 		for rapper_profile in soup.find_all(class_="sound__header"):
 			if check_genre(rapper_profile, 2, RESCRAPE):
@@ -213,7 +214,7 @@ def get_rapper_details():
 					gostatus = 'No'
 					if songlink == 'none':
 						gostatus = 'Yes'
-						songlink = rapper.strip()
+						songlink = rapper.strip().rsplit('/', 1)[1]
 
 				except:
 					print('Error parsing couponcodes and popularity information. Moving to next iteration.')

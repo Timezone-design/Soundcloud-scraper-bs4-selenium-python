@@ -14,7 +14,7 @@ RESCRAPE = False
 if 0 <= 1 < len(sys.argv):
 	if sys.argv[1] and sys.argv[1]=='--re-scrape':
 		RESCRAPE = True
-	
+print("Rescrape key: ", RESCRAPE)
 def generate_follower_permalinks(url):
 	url = url + '/following'
 	print('Searching following in \t' + url + '\n')

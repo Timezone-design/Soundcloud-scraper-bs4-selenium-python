@@ -124,5 +124,8 @@ if len(newlines.index) > 0:
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotFileName')] = 'N/A'
       newlines_all.iloc[index, newlines_all.columns.get_loc('ScreenshotURL')] = 'N/A'
 
-  print('Moving to final csv')
-  newlines_all.to_csv(filenameFinal, mode='w', header=False, encoding=emaildfEncoding, sep=('\t' if emaildfEncoding == 'utf-16' else ','), index=False)
+    print('Moving to final csv')
+    emaildfEncoding = 'utf-16'
+    newlines_all.loc[[index]].to_csv(filenameFinal, mode='a', header=False, encoding=emaildfEncoding, sep=('\t' if emaildfEncoding == 'utf-16' else ','), index=False)
+    # newlines_all.loc[[index]].to_csv(filenameFinal, mode='a', header=False, encoding=emaildfEncoding, sep=('\t' if emaildfEncoding == 'utf-16' else ','), index=False)
+  # newlines_all.to_csv(filenameFinal, mode='w', header=False, encoding=emaildfEncoding, sep=('\t' if emaildfEncoding == 'utf-16' else ','), index=False)

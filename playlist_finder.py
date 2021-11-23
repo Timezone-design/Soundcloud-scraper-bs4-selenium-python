@@ -15,7 +15,7 @@ RESCRAPE = False
 if 0 <= 1 < len(sys.argv):
 	if sys.argv[1] and sys.argv[1]=='--re-scrape':
 		RESCRAPE = True
-
+print("Rescrape key: ", RESCRAPE)
 def get_rapper_details():
 
 	filenameEmail = "csv/Rappers with Email updated.csv"

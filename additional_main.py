@@ -15,7 +15,7 @@ RESCRAPE = False
 if 0 <= 1 < len(sys.argv):
 	if sys.argv[1] and sys.argv[1]=='--re-scrape':
 		RESCRAPE = True
-	
+print("Rescrape key: ", RESCRAPE)
 def generate_2nd_permalinks(url):
 	url = url + '/likes'
 	with open('additional_main_txt/position_of_rappers_unique_for_additional_permalink.txt', 'a') as f:

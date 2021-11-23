@@ -1286,6 +1286,19 @@ def get_other_info_of_rapper(rapper_soup, permalink):
 	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink
 
 
+def click_cookie_button(driver):
+
+	print("See if there is cookie button.")
+	try:
+		l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
+		s = l.text
+		l.click()
+		print("Cookie button found and clicked.")
+	except:
+		print("Cookie button not found.")
+		pass
+
+
 def take_screenshot(url, username, title, gostatus):
 	print("Opening driver for screenshot...")
 	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
@@ -1304,15 +1317,7 @@ def take_screenshot(url, username, title, gostatus):
 	
 	time.sleep(2)
 
-	print("See if there is cookie button.")
-	try:
-		l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
-		s = l.text
-		l.click()
-		print("Cookie button found and clicked.")
-	except:
-		print("Cookie button not found.")
-		pass
+	click_cookie_button(driver)
 
 	try:
 		if gostatus == 'No' and not homepage:
@@ -1331,6 +1336,8 @@ def take_screenshot(url, username, title, gostatus):
 			print("Taking screenshot of main page.")
 		else:
 			print('All the tracks are GO+, taking screenshot of main page.')
+			click_cookie_button(driver)
+
 		filename = '{}_{}.png'.format(slugify(username), slugify(title)).lower()
 		driver.save_screenshot(os.path.join('screenshots', filename))
 		driver.close()
@@ -1349,6 +1356,7 @@ def take_screenshot(url, username, title, gostatus):
 
 def check_genre(soup, n, rescrape):
 	all_genres = soup.find_all(class_='sc-tagContent')
+	all_genres = [x.get_text().strip() for x in all_genres]
 	if not rescrape:
 		genre_includes = get_genre_includes()
 		if len(all_genres) > n:
@@ -1356,7 +1364,6 @@ def check_genre(soup, n, rescrape):
 		elif len(all_genres) == 0:
 			print("This profile does not have any song. This will be ignored.")
 			return False
-		all_genres = [x.get_text().strip() for x in all_genres]
 		for genre in all_genres:
 			if not genre in genre_includes:
 				print("This profile has words not in genre include list. This will be ignored.")
