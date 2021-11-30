@@ -23,3 +23,7 @@ profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&variant_id
 # init_url = "https://api-v2.soundcloud.com/search/users?q=hip%20hop%20rap%20repost&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=2367%2C2371&facet=place&user_id=894984-656968-329615-449581&client_id=B31E7OJEB3BxbSbJBHarCQOhvKZUY09J&limit=200&offset={}&linked_partitioning=1&app_version=1631196797&app_locale=en"
 # track_search_api = 'https://api-v2.soundcloud.com/search/tracks?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=2367%2C2371&facet=genre&user_id=894984-656968-329615-449581&client_id=B31E7OJEB3BxbSbJBHarCQOhvKZUY09J&limit=200&offset=0&linked_partitioning=1&app_version=1631196797&app_locale=en'
 # profile_search_api = 'https://api-v2.soundcloud.com/search/users?q={}&sc_a_id=cd72f6993ec796ae3b8a77356b5c7f5a34b1d2b9&variant_ids=2367%2C2371&facet=place&user_id=894984-656968-329615-449581&client_id=B31E7OJEB3BxbSbJBHarCQOhvKZUY09J&limit=200&offset=0&linked_partitioning=1&app_version=1631196797&app_locale=en'
+
+# AUDIOMACK
+
+AUDIOMACK_INIT_URL = "https://audiomack.com/rap/trending-now"

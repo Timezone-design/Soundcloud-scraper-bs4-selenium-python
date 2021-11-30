@@ -358,9 +358,9 @@ def clean_songtitle(songtitle):
 	songtitle = songtitle.replace('spotify', '')
 	songtitle = songtitle.replace('Spotify', '')
 
-
 	songtitle = string.capwords(songtitle)
 	return songtitle
+
 
 def clean_artistname(artistname):
 	artistname = artistname.strip()
@@ -480,6 +480,7 @@ def get_genre_includes():
 		print("JSON reading failed for json/genre.include.json.")
 		print(ex)
 	return includes
+
 
 def get_genre_excludes():
 	excludes = []
@@ -663,6 +664,7 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 	return email, instagram_username, instagram_url
 
+
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 	email = None
@@ -735,6 +737,7 @@ def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 	print("Instagram: ", instagram_username)
 
 	return email, instagram_username, instagram_url
+
 
 def get_other_info_of_rapper(rapper_soup, permalink):
 	try:
@@ -1354,6 +1357,7 @@ def take_screenshot(url, username, title, gostatus):
 		pass
 	return 'None'
 
+
 def check_genre(soup, n, rescrape):
 	all_genres = soup.find_all(class_='sc-tagContent')
 	all_genres = [x.get_text().strip() for x in all_genres]
@@ -1377,12 +1381,14 @@ def check_genre(soup, n, rescrape):
 				return False
 	return True
 
+
 def get_endless_scroll_content(url):
 	tempdriver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
 	tempdriver.set_page_load_timeout(10000)
 	tempdriver.get(url)
 	time.sleep(1)
-	scroll_threshold = 500
+	# scroll_threshold = 500
+	scroll_threshold = 10
 	scroll_pause_time = 2
 
 	i = 0
