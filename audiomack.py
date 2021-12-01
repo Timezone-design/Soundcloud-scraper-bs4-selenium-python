@@ -10,9 +10,22 @@ import requests
 from datetime import datetime
 
 from constants import *
-from resources import get_endless_scroll_content, check_genre, check_bio, get_manager_bio_detect, get_manager_email_detect, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, generate_password, months, get_LA_includes, get_popularity
+from resources import get_endless_scroll_content, check_genre, check_bio, get_genre_excludes, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, get_other_info_of_rapper, generate_password, months, get_LA_includes, get_popularity
 
 RESCRAPE = False
+
+def am_get_email_and_instagram_info_of_rapper(soup):
+	email = None
+	instagram_username = None
+	soundcloud_url = None
+	website_url = None
+
+	instagram_username = soup.find('a', class_='social-icon--instagram')['href'].rsplit('/', 1)[1]
+	email = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', soup.find('div', class_='ArtistHeader-module__bio--siafZ').get_text())
+	
+	return email, instagram_username, soundcloud_url, website_url
+
+
 
 def get_rapper_details():
 
@@ -89,28 +102,36 @@ def get_rapper_details():
 		songtitlefull = None
 		songtitle = None
 
-		print('\n\nRapper url: ', rapper.strip() + "/tracks")
+		print('\n\nRapper url: ', rapper.strip())
 
-		driver.get(rapper.strip() + "/tracks")
+		driver.get(rapper.strip())
+		l = driver.find_element_by_class_name('Button-module__button--2psmQ')
+		l.click()
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		all_genres = rapper_soup.find_all(class_='sc-tagContent')
-		all_genres = [x.get_text().strip() for x in all_genres]
+		all_genres = rapper_soup.find_all(class_='music-detail__tag')
+		all_genres = [x.get_text().strip().replace('#', '') for x in all_genres]
 		if not check_genre(all_genres, 2, RESCRAPE):
+			print(f'Song genres do not match include list. Passing to next url.')
 			continue
 
-		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')
+		bio = rapper_soup.find('div', class_='ArtistHeader-module__bio--siafZ')
 		genre = ''
 		role = 'Artist'
 
 		if not bio:
 			print("Bio not detected. Passing to next url.")
 			continue
-		if rapper_soup.find(class_='sc-tagContent'):
-			genre = rapper_soup.find(class_='sc-tagContent').get_text()
+
+		genre = rapper_soup.find('span', class_='ArtistHeader-module__label--2qKDp').find('a').get_text()
+		genre_includes = get_genre_includes()
+		if not genre in genre_includes:
+			print(f'Artist genre {genre} is not in the include list. Passing to next url.')
+			continue
 		
 		if not check_bio(bio):
+			print('Bio contains words which are not valid. Passing to next url.')
 			continue
 		
 		bio_text = bio.text
@@ -119,11 +140,9 @@ def get_rapper_details():
 			if item in bio_text:
 				role = 'Manager'
 
-		web_profiles = rapper_soup.find('div', class_="web-profiles")
-
 		print('Searching {}th user as above url.'.format(rapper_profile_url_unique.index(rapper) + 1))
 
-		rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
+		rapper_email, rapper_instagram_username, soundcloud_url, website_url = am_get_email_and_instagram_info_of_rapper(rapper_soup)
 
 		if rapper_email or rapper_instagram_username:
 			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])

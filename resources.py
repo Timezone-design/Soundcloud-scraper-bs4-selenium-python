@@ -1294,7 +1294,6 @@ def click_cookie_button(driver):
 	print("See if there is cookie button.")
 	try:
 		l = driver.find_element_by_css_selector("button#onetrust-accept-btn-handler")
-		s = l.text
 		l.click()
 		print("Cookie button found and clicked.")
 	except:
