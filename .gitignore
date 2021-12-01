@@ -4,3 +4,5 @@ __pycache__
 chromedriver_win32.zip
 screenshots
 *.zip
+*.txt
+*.csv

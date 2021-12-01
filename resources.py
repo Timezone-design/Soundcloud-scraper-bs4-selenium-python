@@ -1358,9 +1358,8 @@ def take_screenshot(url, username, title, gostatus):
 	return 'None'
 
 
-def check_genre(soup, n, rescrape):
-	all_genres = soup.find_all(class_='sc-tagContent')
-	all_genres = [x.get_text().strip() for x in all_genres]
+def check_genre(all_genres, n, rescrape):
+	
 	if not rescrape:
 		genre_includes = get_genre_includes()
 		if len(all_genres) > n:

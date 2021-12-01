@@ -92,7 +92,9 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-		if not check_genre(rapper_soup, 2, RESCRAPE):
+		all_genres = rapper_soup.find_all(class_='sc-tagContent')
+		all_genres = [x.get_text().strip() for x in all_genres]
+		if not check_genre(all_genres, 2, RESCRAPE):
 			continue
 
 
