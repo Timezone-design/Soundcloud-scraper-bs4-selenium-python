@@ -591,6 +591,31 @@ def get_popularity(soup, followers):
 				return 'True'
 
 
+def am_get_popularity(soup, followers):
+	for index, item in enumerate(soup.find_all(class_='music-detail-container')):
+		uploaddate = item.find(class_='music__meta-released').find('time')['datetime'].split('T')[0]
+		uploaddateobj = datetime.fromisoformat(uploaddate)
+		uploadedmonth = months(datetime.today(), uploaddateobj)
+		if uploadedmonth >= 2 or index + 1 == len(soup.find_all(class_='music-detail-container')):
+			print('{}th upload is selected for popularity verification.'.format(index + 1))
+			try:
+				songplay = int(item.find(class_='music-interaction__inner').text.split()[0].replace(',', ''))
+			except:
+				songplay = 0
+				pass
+
+			try:
+				comments = int(item.find('a', class_='music-interaction--comments').find(class_='music-interaction__count').text.split()[0].replace(',', ''))
+			except:
+				comments = 0
+				pass
+			
+			if songplay / followers < 0.04 and comments < 5:
+				return 'fake'
+			else:
+				return 'True'
+
+
 def get_email_and_instagram_info_of_rapper(bio, web_profiles):
 
 	email = None
@@ -1435,3 +1460,418 @@ def check_bio(soup):
 		print('Bio includes exception word. Passing to next url.')
 		return False
 	return True
+
+# return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink, phoneno1, phoneno2
+def am_get_other_info_of_rapper(rapper_soup, rapper_url):
+	username = rapper_soup.select_one('p[class*="ArtistHeader-module__slug"]').get_text().strip()
+	print(f"Username: {username}")
+
+	fullname = rapper_soup.select_one('h1[class*="ArtistHeader-module__name"]').get_text().strip()
+	print(f"Fullname: {fullname}")
+
+	artistname = username
+	artistname_cleaned = clean_artistname(artistname)
+	print(f"Cleaned artistname: {artistname_cleaned}")
+
+	songtitlefull = rapper_soup.find(class_='music__heading--title').get_text().strip()
+	songtitlefull = unicodedata.normalize('NFKC', songtitlefull)
+
+	search_entity = []
+	search_entity.append(username)
+	search_entity.append(fullname)
+	# search_entity.append(artistname)
+	search_entity.append(songtitlefull)
+	title_excludes = get_title_excludes()
+	for entity in search_entity:
+		for item in title_excludes:
+			if entity is not None and item in entity:
+				print("The username or fullname or songtitlefull includes a word in title.exclude.json: ", item,  ' This profile will be excluded.')
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	preceding_words = ["Prod. by", "Prod. By", "prod. by", "prod by", "Prod by", "Prod By", "PROD. BY", "PROD BY", "Produced by", "ProducedBy", "produced by", "beat by", "Beat By", "Beat by", "Beat By", "Prod", "prod"]
+	if username in songtitlefull:
+		for word in preceding_words:
+			if word + username in songtitlefull or '-' + word in songtitlefull or '- ' + word in songtitlefull:
+				print('The songtitlefull includes prod-related part. This profile will be excluded.')
+				return "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded", "excluded"
+
+	songtitle = songtitlefull
+
+	songtitle = re.sub("[\{].*[\}]", "", songtitle)
+	songtitle = re.sub("[\(].*[\)]", "", songtitle)
+	songtitle = re.sub("[\[].*[\]]", "", songtitle)
+	songtitle = re.sub("[\*].*[\*]", "", songtitle)
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('#'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('@'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('*'))
+	songtitle = ' '.join(word for word in songtitle.split(' ') if not word.startswith('['))
+
+	if songtitle.strip() == '':
+		songtitle = songtitlefull
+	try:
+		if not songtitle[0] == '(':
+			songtitle = songtitle.split('(')[0]
+		if not songtitle[0] == "[":
+			songtitle = songtitle.split('[')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' x ')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' X ')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('ft.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Ft.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FT')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FT.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('/')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('|')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('+')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FREE] ')[1]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(':')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('?')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Mixed by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Mixed By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('mixed by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('-PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('_PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PROD.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('produced by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Produced by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Produced By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('PRODUCED')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('beat by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Beat by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Beat By')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('BEAT BY')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('¨')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Feat.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEAT.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('@')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('#')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(',')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('Featuring')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('FEATURING')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' prod')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' prod.')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' Pro')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' by')[0]
+	except:
+		pass
+	try:
+		songtitle = songtitle.split(' By')[0]
+	except:
+		pass
+	try:
+		tempsongtitle = songtitle.split('-')[0]
+		if tempsongtitle[-2:].lower() != 're' or tempsongtitle[-2:].lower() != 'un':
+			songtitle = tempsongtitle
+	except:
+		pass
+	try:
+		songtitle = songtitle.split('*')[0]
+	except:
+		pass
+	try:
+		if songtitle[0] == '@':
+			songtitle = ' '.join(songtitle.split()[1:])
+	except:
+		pass
+	try:
+		if songtitle[0] == '#':
+			songtitle = ' '.join(songtitle.split()[1:])
+	except:
+		pass
+	try:
+		songtitle = songtitle.replace('"', '')
+		songtitle = songtitle.replace("'", "")
+	except:
+		pass
+	src_str  = re.compile("freestyle", re.IGNORECASE)
+	songtitle  = src_str.sub('', songtitle)
+
+	songtitle = clean_songtitle(songtitle)
+	print('cleaned songtitle ', songtitle)
+
+	songlink = rapper_soup.find(class_='music-detail__link').attrs['href']
+
+	bio_text = rapper_soup.get_text()
+
+	phonematch = re.search(PHONE_NO_PATTERN, bio_text)
+
+	phoneno1 = ''
+
+	if phonematch != None:
+		print(f'Fullmatch: {phonematch.group(1)}')
+		phoneno1 = phonematch.group(1)
+
+	phoneno2 = ''
+
+	user_stats = rapper_soup.select_one('ul[class*="ArtistHeader-module__stats"]').find_all('li')
+
+	for stat in user_stats:
+		text = stat.get_text()
+		if 'Followers' in text:
+			followers = stat
+			break
+	
+	followers = followers.get_text().replace('Followers', '').strip()
+
+	followers = text_to_num(followers)
+
+	popularity = 'unknown'
+	if followers >= 10000:
+		popularity = 'trending'
+	if followers >= 50000:
+		popularity = 'hot'
+	if followers >= 100000:
+		popularity = 'popular'
+	if followers >= 250000:
+		popularity = 'famous'
+	if followers >= 500000:
+		popularity = 'infamous'
+
+	artistnamecleaned = clean_artistname(artistname)
+	location = ''
+	country = ''
+
+	return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink, phoneno1, phoneno2
+
+
+def text_to_num(text, bad_data_val = 0):
+	d = {
+		'K': 1000,
+		'M': 1000000,
+		'B': 1000000000
+	}
+	if not isinstance(text, str):
+		# Non-strings are bad are missing data in poster's submission
+		return bad_data_val
+
+	elif text[-1] in d:
+		# separate out the K, M, or B
+		num, magnitude = text[:-1], text[-1]
+		return int(float(num) * d[magnitude])
+	else:
+		return float(text)
+
+def am_close_ad(driver):
+
+	try:
+		ad = driver.find_element_by_class_name('fs-close-button')
+		ad.click()
+		print("Ad closed.")
+	except:
+		print("No Ad found.")
+		pass
+
+	return driver

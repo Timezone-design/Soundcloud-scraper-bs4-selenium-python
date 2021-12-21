@@ -10,7 +10,7 @@ import requests
 from datetime import datetime
 
 from constants import *
-from resources import get_endless_scroll_content, check_genre, check_bio, get_genre_excludes, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, get_other_info_of_rapper, generate_password, months, get_LA_includes, get_popularity
+from resources import get_endless_scroll_content, check_genre, check_bio, get_genre_excludes, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, get_other_info_of_rapper, generate_password, months, get_LA_includes, get_popularity, am_get_other_info_of_rapper,am_get_popularity, am_close_ad, text_to_num
 
 RESCRAPE = False
 
@@ -22,9 +22,10 @@ def am_get_email_and_instagram_info_of_rapper(soup):
 
 	instagram_username = soup.find('a', class_='social-icon--instagram')['href'].rsplit('/', 1)[1]
 	email = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', soup.find('div', class_='ArtistHeader-module__bio--siafZ').get_text())
-	
-	return email, instagram_username, soundcloud_url, website_url
+	soundcloud_url = 'No'
+	website_url = 'No'
 
+	return email, instagram_username, soundcloud_url, website_url
 
 
 def get_rapper_details():
@@ -104,9 +105,18 @@ def get_rapper_details():
 
 		print('\n\nRapper url: ', rapper.strip())
 
-		driver.get(rapper.strip())
-		l = driver.find_element_by_class_name('Button-module__button--2psmQ')
-		l.click()
+		driver.set_page_load_timeout(10)
+		try:
+			driver.get(rapper.strip())
+		except:
+			pass
+		# Check if ad exists
+		driver = am_close_ad(driver)
+		try:
+			l = driver.find_element_by_class_name('Button-module__button--2psmQ')
+			l.click()
+		except:
+			pass
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
@@ -124,7 +134,12 @@ def get_rapper_details():
 			print("Bio not detected. Passing to next url.")
 			continue
 
-		genre = rapper_soup.find('span', class_='ArtistHeader-module__label--2qKDp').find('a').get_text()
+		genre = rapper_soup.find_all('li', class_='ArtistHeader-module__metaItem--2LbhY')
+		for gen in genre:
+			if 'Genre' in gen.get_text():
+				genre_text = gen.find('a').get_text()
+				break;
+		genre = genre_text
 		genre_includes = get_genre_includes()
 		if not genre in genre_includes:
 			print(f'Artist genre {genre} is not in the include list. Passing to next url.')
@@ -145,26 +160,25 @@ def get_rapper_details():
 		rapper_email, rapper_instagram_username, soundcloud_url, website_url = am_get_email_and_instagram_info_of_rapper(rapper_soup)
 
 		if rapper_email or rapper_instagram_username:
-			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
+			username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink, phoneno1, phoneno2 = am_get_other_info_of_rapper(rapper_soup, rapper.strip())
 			if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
 				print('User info includes exception words. Passing to next url')
 				continue
 			
 			try:
-				couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
+				couponcodename = 'Discount -$30 for mp3 lease for {}'.format(fullname)
 				couponcode = generate_password(10)
-				songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
-				if songplays == "View":
-					songplays = "0"
+				songplays = rapper_soup.find('div', class_='music-interactions__counts').find(class_='music-interaction__count').text.split()[0].replace(',', '')
+				songplays = text_to_num(songplays)
 				print('Recent song play: {}'.format(songplays))
-				uploaddate = rapper_soup.find(class_='soundTitle__uploadTime').find('time')['datetime'].split('T')[0]
+				uploaddate = rapper_soup.find(class_='music__meta-released').find('time')['datetime'].split('T')[0]
 				print('Recent song upload: {}'.format(uploaddate))
 				uploaddateobj = datetime.fromisoformat(uploaddate)
 				uploadedmonth = months(datetime.today(), uploaddateobj)
 				print('Recent song upload was {} months ago'.format(uploadedmonth))
 				popularityadjusted = popularity
 				if popularity != 'unknown':
-					temp = get_popularity(rapper_soup, followers)
+					temp = am_get_popularity(rapper_soup, followers)
 					if temp == 'fake':
 						popularityadjusted = temp
 				activestatus = 'Active'
@@ -185,7 +199,10 @@ def get_rapper_details():
 			if location in LA_includes:
 				inlosangeles = "Yes"
 
+			has_email = 'No'
 			if rapper_email:
+				rapper_email = rapper_email.group(0)
+				has_email = rapper_email
 				manager_email = get_manager_email_detect()
 				for item in manager_email:
 					if item in rapper_email:
@@ -193,12 +210,14 @@ def get_rapper_details():
 				has_instagram = 'No'
 				if rapper_instagram_username:
 					has_instagram = 'Yes'
-				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
-				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
+				emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
+				print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
 			
 			if rapper_instagram_username:
-				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
-				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
+				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
+				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
+
+			allwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, has_email, soundcloud_url, website_url])
 
 	driver.close()
 		
@@ -249,8 +268,8 @@ def get_profile_list():
 			rappers.append(line.strip())
 
 	rappers_unique = []
-	if os.path.exists('audiomack/rapper_unique.txt'):
-		with open('audiomack/rapper_unique.txt', 'r', encoding='utf-8') as f:
+	if os.path.exists('audiomack/rappers_unique.txt'):
+		with open('audiomack/rappers_unique.txt', 'r', encoding='utf-8') as f:
 			for line in f:
 				rappers_unique.append(line.strip())
 		
