@@ -1455,7 +1455,7 @@ def get_endless_scroll_content(url):
     tempdriver.set_page_load_timeout(10000)
     tempdriver.get(url)
     time.sleep(1)
-    click_cookie_button(tempdriver)
+		click_cookie_button(tempdriver)
     # scroll_threshold = 500
     scroll_threshold = 10
     scroll_pause_time = 2
