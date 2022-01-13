@@ -51,9 +51,9 @@ def get_rapper_details():
     if os.path.getsize(filenameInstagram) == 0:
         print("Writing a new file for Instagram")
         instawriter.writerow(INSTA_FILE_HEADER_AUDIOMACK)
-    if os.path.getsize(filenameInstagram) == 0:
+    if os.path.getsize(filenameAll) == 0:
         print("Writing a new file for All")
-        instawriter.writerow(ALL_FILE_HEADER_AUDIOMACK)
+        allwriter.writerow(ALL_FILE_HEADER_AUDIOMACK)
 
     rapper_profile_url = []
     rapper_profile_url_unique = []

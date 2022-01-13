@@ -1526,7 +1526,7 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
         'h1[class*="ArtistHeader-module__name"]').get_text().strip()
     print(f"Fullname: {fullname}")
 
-    artistname = username
+    artistname = fullname
     artistname_cleaned = clean_artistname(artistname)
     print(f"Cleaned artistname: {artistname_cleaned}")
 
