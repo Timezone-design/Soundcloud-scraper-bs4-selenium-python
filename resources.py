@@ -484,6 +484,20 @@ def get_genre_includes():
     return includes
 
 
+def am_get_genre_excludes():
+    excludes = []
+    try:
+        if os.path.exists('json/am.genre.exclude.json'):
+            with open('json/am.genre.exclude.json') as fd:
+                obj = json.loads(fd.read())
+                excludes = obj['excludes']
+                return excludes
+    except Exception as ex:
+        print("JSON reading failed for json/genre.exclude.json.")
+        print(ex)
+    return excludes
+
+
 def get_genre_excludes():
     excludes = []
     try:
@@ -1439,6 +1453,30 @@ def check_genre(all_genres, n, rescrape):
                 print(
                     "This profile has words not in genre include list. This will be ignored.")
                 return False
+    else:
+        genre_excludes = get_genre_excludes()
+        for item in genre_excludes:
+            if item in all_genres:
+                print("This profile have this genre: ", item)
+                print("Ignoring profile...")
+                return False
+    return True
+
+
+def am_check_genre(all_genres, n, rescrape):
+
+    if not rescrape:
+        genre_includes = get_genre_includes()
+        if len(all_genres) > n:
+            all_genres = all_genres[0:n]
+        elif len(all_genres) == 0:
+            print("This profile does not have any song. This will be ignored.")
+            return False
+        for genre in all_genres:
+            if genre in genre_includes:
+                print(
+                    "This profile has words in genre include list. This will be included.")
+                return True
     else:
         genre_excludes = get_genre_excludes()
         for item in genre_excludes:

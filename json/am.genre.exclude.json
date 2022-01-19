@@ -1,0 +1,4 @@
+{
+    "excludes": ["beat", "Beat", "beats", "Beats", "instrumental", "Instrumental", "producer", "Producer", "type", "Type"]
+}
+

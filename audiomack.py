@@ -10,7 +10,7 @@ import requests
 from datetime import datetime
 
 from constants import *
-from resources import get_endless_scroll_content, check_genre, check_bio, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num
+from resources import get_endless_scroll_content, am_check_genre, check_bio, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num, am_get_genre_excludes
 
 RESCRAPE = False
 
@@ -21,12 +21,29 @@ def am_get_email_and_instagram_info_of_rapper(soup):
     soundcloud_url = None
     website_url = None
 
-    instagram_username = soup.find(
-        'a', class_='social-icon--instagram')['href'].rsplit('/', 1)[1]
-    email = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', soup.find('div',
+    soup = soup.find('div', class_='ArtistPage-module__headerWrap--22Dxe')
+
+    try:
+        instagram_username = soup.find(
+            'a', class_='social-icon--instagram')['href'].split('/')[3]
+    except:
+        instagram_username = ''
+
+    try:
+        email = re.search(r'([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)', soup.find('div',
                       class_='ArtistHeader-module__bio--siafZ').get_text())
+    except:
+        pass
+
+    # if email:
+    #     email = email.group(0)
+
     soundcloud_url = 'No'
-    website_url = 'No'
+
+    try:
+        website_url = soup.find('a', class_='social-icon--url')['href']
+    except:
+        website_url = 'No'
 
     return email, instagram_username, soundcloud_url, website_url
 
@@ -133,7 +150,7 @@ def get_rapper_details():
         all_genres = rapper_soup.find_all(class_='music-detail__tag')
         all_genres = [x.get_text().strip().replace('#', '')
                       for x in all_genres]
-        if not check_genre(all_genres, 2, RESCRAPE):
+        if not am_check_genre(all_genres, 2, RESCRAPE):
             print(f'Song genres do not match include list. Passing to next url.')
             continue
 
@@ -141,32 +158,34 @@ def get_rapper_details():
         genre = ''
         role = 'Artist'
 
-        if not bio:
-            print("Bio not detected. Passing to next url.")
-            continue
+        # if not bio:
+        #     print("Bio not detected. Passing to next url.")
+        #     continue
 
         genre = rapper_soup.find_all(
             'li', class_='ArtistHeader-module__metaItem--2LbhY')
+        genre_text = ''
         for gen in genre:
             if 'Genre' in gen.get_text():
                 genre_text = gen.find('a').get_text()
                 break
         genre = genre_text
-        genre_includes = get_genre_includes()
-        if not genre in genre_includes:
+        genre_excludes = am_get_genre_excludes()
+        if genre in genre_excludes:
             print(
-                f'Artist genre {genre} is not in the include list. Passing to next url.')
+                f'Artist genre {genre} is in the audiomack genre exclude list. Passing to next url.')
             continue
 
-        if not check_bio(bio):
+        if bio and not check_bio(bio):
             print('Bio contains words which are not valid. Passing to next url.')
             continue
-
-        bio_text = bio.text
-        manager_bio = get_manager_bio_detect()
-        for item in manager_bio:
-            if item in bio_text:
-                role = 'Manager'
+        
+        if bio:
+            bio_text = bio.text
+            manager_bio = get_manager_bio_detect()
+            for item in manager_bio:
+                if item in bio_text:
+                    role = 'Manager'
 
         print('Searching {}th user as above url.'.format(
             rapper_profile_url_unique.index(rapper) + 1))
@@ -243,6 +262,9 @@ def get_rapper_details():
 
             allwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus,
                                'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, has_email, soundcloud_url, website_url, phoneno1])
+
+        else:
+            print("No email or instagram username found.")
 
     driver.close()
 
