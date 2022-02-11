@@ -21,7 +21,7 @@ def am_get_email_and_instagram_info_of_rapper(soup):
     soundcloud_url = None
     website_url = None
 
-    soup = soup.find('div', class_='ArtistPage-module__headerWrap--22Dxe')
+    soup = soup.select_one('div[class*="ArtistPage-module__headerWrap"]')
 
     try:
         instagram_username = soup.find(
@@ -239,16 +239,16 @@ def get_rapper_details():
                 inlosangeles = "Yes"
 
             has_email = 'No'
+            has_instagram = 'No'
+            if rapper_instagram_username:
+                has_instagram = 'Yes'
             if rapper_email:
                 rapper_email = rapper_email.group(0)
-                has_email = rapper_email
+                has_email = 'Yes'
                 manager_email = get_manager_email_detect()
                 for item in manager_email:
                     if item in rapper_email:
                         role = 'Manager'
-                has_instagram = 'No'
-                if rapper_instagram_username:
-                    has_instagram = 'Yes'
                 emailwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull,
                                      gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, phoneno1])
                 print('Email written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle,
@@ -260,8 +260,7 @@ def get_rapper_details():
                 print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull,
                       gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, phoneno1])
 
-            allwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus,
-                               'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, has_email, soundcloud_url, website_url, phoneno1])
+            allwriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_email, rapper_instagram_username, rapper_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, 'https://audiomack.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, has_email, soundcloud_url, ('Yes', 'No')[website_url == 'No'], (website_url, '')[website_url == 'No'], phoneno1])
 
         else:
             print("No email or instagram username found.")

@@ -4,7 +4,7 @@ import re
 SCROLL_THRESHOLD = 500
 DRIVER_PATH = 'chromedriver.exe'
 DRIVER_OPTIONS = Options()
-# DRIVER_OPTIONS.headless = True
+DRIVER_OPTIONS.headless = True
 DRIVER_OPTIONS.add_argument('--log-level=3')
 DRIVER_OPTIONS.add_argument("--window-size=1920x1080")
 INSTAGRAM_USERNAME_REGEX = re.compile(
@@ -35,7 +35,7 @@ EMAIL_FILE_HEADER_AUDIOMACK = ['SoundCloudURL', 'UserName', 'FullName', 'ArtistN
 INSTA_FILE_HEADER_AUDIOMACK = ['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'InstagramUserName', 'InstagramURL', 'SongTitle', 'SongTitleFull', 'GO+',
                                'SongLink', 'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'InLosAngeles', 'PhoneNo']
 ALL_FILE_HEADER_AUDIOMACK = ['SoundCloudURL', 'UserName', 'FullName', 'ArtistName', 'ArtistNameCleaned', 'Location', 'Country', 'Email', 'InstagramUserName', 'InstagramURL', 'HasInstagram', 'SongTitle', 'SongTitleFull', 'GO+', 'SongLink',
-                             'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'InLosAngeles', 'HasEmail', 'HasSoundcloud', 'HasWebsite', 'PhoneNo']
+                             'Genre', 'ArtistOrManager', 'NumberOfFollowers', 'Popularity', 'CouponCodeName', 'CouponCode', 'SongPlays', 'UploadDate', 'PopularityAdjusted', 'ActiveState', 'InLosAngeles', 'HasEmail', 'HasSoundcloud', 'HasWebsite', 'WebsiteUrl', 'PhoneNo']
 AUDIOMACK_API_BASE = 'https://api.audiomack.com/v1'
 PHONE_NO_PATTERN = re.compile(
     r'^[a-zA-Z]*((\+?\d{1,3}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4})[a-zA-Z]*$')

@@ -627,14 +627,14 @@ def am_get_popularity(soup, followers):
                 songplay = 0
                 pass
 
-            try:
-                comments = int(item.find('a', class_='music-interaction--comments').find(
-                    class_='music-interaction__count').text.split()[0].replace(',', ''))
-            except:
-                comments = 0
-                pass
+            # try:
+            #     comments = int(item.find('a', class_='music-interaction--comments').find(
+            #         class_='music-interaction__count').text.split()[0].replace(',', ''))
+            # except:
+            #     comments = 0
+            #     pass
 
-            if songplay / followers < 0.04 and comments < 5:
+            if songplay / followers < 0.04:
                 return 'fake'
             else:
                 return 'True'
@@ -1875,12 +1875,6 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
     except:
         pass
     try:
-        tempsongtitle = songtitle.split('-')[0]
-        if tempsongtitle[-2:].lower() != 're' or tempsongtitle[-2:].lower() != 'un':
-            songtitle = tempsongtitle
-    except:
-        pass
-    try:
         songtitle = songtitle.split('*')[0]
     except:
         pass
@@ -1905,7 +1899,16 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
     songtitle = clean_songtitle(songtitle)
     print('cleaned songtitle ', songtitle)
 
-    songlink = rapper_soup.find(class_='music-detail__link').attrs['href']
+    songlinks = rapper_soup.find_all(class_='music-detail__link')
+
+    songlink = ''
+    for link in songlinks:
+        if 'album' in link.attrs['href']:
+            continue
+        songlink = link.attrs['href']
+
+    if 'album' in songlink:
+        print("album found")
 
     bio_text = rapper_soup.get_text()
 
@@ -1921,7 +1924,7 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
 
     user_stats = rapper_soup.select_one(
         'ul[class*="ArtistHeader-module__stats"]').find_all('li')
-
+    followers = ''
     for stat in user_stats:
         text = stat.get_text()
         if 'Followers' in text:
