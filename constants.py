@@ -4,7 +4,7 @@ import re
 SCROLL_THRESHOLD = 500
 DRIVER_PATH = 'chromedriver.exe'
 DRIVER_OPTIONS = Options()
-DRIVER_OPTIONS.headless = True
+# DRIVER_OPTIONS.headless = True
 DRIVER_OPTIONS.add_argument('--log-level=3')
 DRIVER_OPTIONS.add_argument("--window-size=1920x1080")
 INSTAGRAM_USERNAME_REGEX = re.compile(
