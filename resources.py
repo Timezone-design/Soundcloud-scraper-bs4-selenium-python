@@ -1921,19 +1921,20 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
         phoneno1 = phonematch.group(1)
 
     phoneno2 = ''
+    followers = None
 
-    user_stats = rapper_soup.select_one(
-        'ul[class*="ArtistHeader-module__stats"]').find_all('li')
-    followers = ''
-    for stat in user_stats:
-        text = stat.get_text()
-        if 'Followers' in text:
-            followers = stat
-            break
-
-    followers = followers.get_text().replace('Followers', '').strip()
-
-    followers = text_to_num(followers)
+    try:
+        user_stats = rapper_soup.select_one('ul[class*="ArtistHeader-module__stats"]').find_all('li')
+        for stat in user_stats:
+            text = stat.get_text()
+            if 'Followers' in text:
+                followers = stat
+                break
+        followers = followers.get_text().replace('Followers', '').strip()
+        followers = text_to_num(followers)
+    except:
+        followers = 0
+        pass
 
     popularity = 'unknown'
     if followers >= 10000:
