@@ -29,16 +29,18 @@ def follower_boost(url):
   driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
   driver.get(url)
   time.sleep(2)
-  next_button = driver.find_element_by_css_selector('[data-direction="next"]')
+  next_button = driver.find_elements_by_css_selector('[data-direction="next"]')[-1]
 
   if not next_button:
     next_button_available = False
 
   while next_button_available:
-    next_button.click()
+    actions = ActionChains(driver)
+    actions.move_to_element_with_offset(next_button, 10, 10).pause(1).click().perform()
+    # next_button.click()
     time.sleep(1.5)
-    next_button = driver.find_element_by_css_selector('[data-direction="next"]')
-    if not next_button:
+    next_button = driver.find_elements_by_css_selector('[data-direction="next"]')[-1]
+    if not next_button or next_button.get_attribute('disabled') != None:
       next_button_available = False
   
   soup = BeautifulSoup(driver.page_source, 'html.parser')
