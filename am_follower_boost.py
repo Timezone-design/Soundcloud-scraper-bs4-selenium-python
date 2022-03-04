@@ -1,14 +1,12 @@
-from lib2to3.pgen2 import driver
 import sys
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import os
 import csv
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
-import json
-import requests
 from datetime import datetime
 
 from constants import *
@@ -29,7 +27,8 @@ def follower_boost(url):
   driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
   driver.get(url)
   time.sleep(2)
-  next_button = driver.find_elements_by_css_selector('[data-direction="next"]')[-1]
+  driver = am_close_ad(driver)
+  next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
 
   if not next_button:
     next_button_available = False
@@ -39,7 +38,7 @@ def follower_boost(url):
     actions.move_to_element_with_offset(next_button, 10, 10).pause(1).click().perform()
     # next_button.click()
     time.sleep(1.5)
-    next_button = driver.find_elements_by_css_selector('[data-direction="next"]')[-1]
+    next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
     if not next_button or next_button.get_attribute('disabled') != None:
       next_button_available = False
   
@@ -180,8 +179,7 @@ def get_rapper_details():
         # Check if ad exists
         driver = am_close_ad(driver)
         try:
-            l = driver.find_element_by_class_name(
-                'Button-module__button--2psmQ')
+            l = driver.find_element(By.CLASS_NAME, 'Button-module__button--2psmQ')
             l.click()
         except:
             pass
