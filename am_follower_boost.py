@@ -1,3 +1,4 @@
+from itertools import count
 import sys
 import time
 from selenium import webdriver
@@ -22,27 +23,34 @@ def follower_boost(url):
     f.write("%s\n\n" % url)
   print('Position saved to audiomack/position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
   additional_rappers = []
-  
-  next_button_available = True
-  driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
-  driver.get(url)
-  time.sleep(2)
-  driver = am_close_ad(driver)
-  next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
 
-  if not next_button:
-    next_button_available = False
+  soup = get_endless_scroll_content(url + '/followers')  
 
-  while next_button_available:
-    actions = ActionChains(driver)
-    actions.move_to_element_with_offset(next_button, 10, 10).pause(1).click().perform()
-    # next_button.click()
-    time.sleep(1.5)
-    next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
-    if not next_button or next_button.get_attribute('disabled') != None:
-      next_button_available = False
+#   next_button_available = True
+#   driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+#   driver.get(url)
+#   time.sleep(2)
+#   driver = am_close_ad(driver)
+#   next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
+
+#   if not next_button:
+#     next_button_available = False
+
+#   count = 0
+#   print("Pressing next button...")
+
+#   while next_button_available:
+#     actions = ActionChains(driver)
+#     actions.move_to_element_with_offset(next_button, 10, 10).pause(1).click().perform()
+#     print(str(count), end=' ')
+#     count = count + 1
+#     # next_button.click()
+#     time.sleep(1)
+#     next_button = driver.find_elements(By.CSS_SELECTOR, '[data-direction="next"]')[-1]
+#     if not next_button or next_button.get_attribute('disabled') != None:
+#       next_button_available = False
+#   print('')
   
-  soup = BeautifulSoup(driver.page_source, 'html.parser')
   follower_section = soup.select('[class*="ArtistPage-module__section"]')[-1]
 
   for following_profile in follower_section.find_all('a'):

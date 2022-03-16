@@ -153,6 +153,20 @@ def get_rapper_details():
 		time.sleep(2)
 		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 		
+		# check if there is error
+		error_message = None
+		try:
+			error_message = rapper_soup.find('h1', class_='errorTitle')
+			# write to no-user file
+			if 'find' in error_message.get_text():
+				with open('additional_main_txt/rapper_with_deleted_profile', 'a') as f:
+					f.write(rapper.strip())
+					f.write('\n')
+				print(f'{rapper.strip()} is enrolled to deleted profile txt.')
+				continue
+		except:
+			pass
+
 		all_genres = rapper_soup.find_all(class_='sc-tagContent')
 		all_genres = [x.get_text().strip() for x in all_genres]
 		if not check_genre(all_genres, 2, RESCRAPE):

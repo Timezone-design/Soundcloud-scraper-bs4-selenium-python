@@ -1,3 +1,4 @@
+from turtle import home
 import emoji
 import string
 import json
@@ -1406,11 +1407,12 @@ def take_screenshot(url, username, title, gostatus):
             target = driver.find_element_by_class_name(
                 'playbackTimeline__progressBar')
             playbutton = driver.find_element_by_class_name('sc-button-play')
-            bar = driver.find_element_by_class_name('listenContext')
+            # bar = driver.find_element_by_class_name('listenContext')
             action = ActionChains(driver)
             # action.move_to_element_with_offset(WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, 'playbackTimeline__progressBar'))), 100, 0).click().perform()
             action.move_to_element_with_offset(
                 target, 100, 0).click().perform()
+            time.sleep(1)
             action.move_to_element(playbutton).click().perform()
             time.sleep(1)
             # action.move_to_element_with_offset(bar, 10, 10).perform()
@@ -1419,16 +1421,25 @@ def take_screenshot(url, username, title, gostatus):
             print("Taking screenshot of main page.")
         else:
             print('All the tracks are GO+, taking screenshot of main page.')
-            click_cookie_button(driver)
+            homepage = True
+            # click_cookie_button(driver)
 
         filename = '{}_{}.png'.format(
             slugify(username), slugify(title)).lower()
+        if homepage:
+            click_cookie_button(driver)
+            print("Logging URL with homepage screenshot.")
+            with open('main_txt/rapper_with_deleted_song.txt', 'a') as f:
+                f.write(url.rsplit('/', 1)[0])
+                f.write('\n')
+        time.sleep(1)
         driver.save_screenshot(os.path.join('screenshots', filename))
         driver.close()
         print('Screenshot saved in the name of {}'.format(filename))
         print('\n')
         return filename
-    except:
+    except Exception as e:
+        print(e)
         print('screenshot failed to be created.')
         pass
 
@@ -1494,8 +1505,8 @@ def get_endless_scroll_content(url):
     tempdriver.get(url)
     time.sleep(1)
     click_cookie_button(tempdriver)
-    # scroll_threshold = 500
-    scroll_threshold = 10
+    scroll_threshold = 500
+    # scroll_threshold = 10
     scroll_pause_time = 2
 
     i = 0

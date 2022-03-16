@@ -1,4 +1,5 @@
 import csv
+import email
 import pandas as pd
 from os import path
 from resources import take_screenshot
@@ -27,6 +28,7 @@ if not path.exists(filenameFinal):
   finalFile.close()
 
 emaildfEncoding = ''
+emaildf = None
 
 if emaildfEncoding == '':
   try:
