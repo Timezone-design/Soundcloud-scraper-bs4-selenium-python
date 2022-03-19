@@ -8,7 +8,7 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import check_genre, get_bio_excludes, get_genre_includes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
+from resources import check_all_genre, get_bio_excludes, get_genre_includes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
 RESCRAPE = False
 
@@ -88,13 +88,18 @@ def get_rapper_details():
 
 		print('\n\nRapper url: ', rapper.strip() + "/tracks")
 
-		driver.get(rapper.strip() + "/tracks")
-		time.sleep(2)
-		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+		# driver.get(rapper.strip() + "/tracks")
+		# time.sleep(2)
+		# rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+		rapper_soup = get_endless_scroll_content(rapper.strip() + "/tracks")
 
 		all_genres = rapper_soup.find_all(class_='sc-tagContent')
 		all_genres = [x.get_text().strip() for x in all_genres]
-		if not check_genre(all_genres, 2, RESCRAPE):
+		if len(all_genres) == 0:
+			with open('playlist_finder_txt/rapper_with_deleted_song.txt', 'a') as f:
+				f.write(rapper.strip())
+				f.write('\n')
+		if not check_all_genre(all_genres):
 			continue
 
 
@@ -208,8 +213,8 @@ def enrich_playlist_profiles():
 		try:
 			genre = item.find('a', class_='soundTitle__tag').find('span').get_text()
 		except:
+			print("Couldn't find genre. Passing to next url.")
 			continue
-			pass
 		
 		appeared = 'https://soundcloud.com' + item.find('a', class_='soundTitle__username').attrs['href']
 		print("\nCurrent URL: ", appeared)

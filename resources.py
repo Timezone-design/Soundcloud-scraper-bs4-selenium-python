@@ -1450,6 +1450,30 @@ def take_screenshot(url, username, title, gostatus):
     return 'None'
 
 
+def check_all_genre(all_genres):
+    if len(all_genres) == 0:
+        return False
+    genre_excludes = get_genre_excludes()
+    for item in genre_excludes:
+        if item in all_genres:
+            print("This profile have this genre: ", item)
+            print("Ignoring profile...")
+            return False
+    
+    genre_includes = get_genre_includes()
+    match = 0
+
+    for item in all_genres:
+        if item in genre_includes:
+            match = match + 1
+
+    if match / len(all_genres) >= 0.7:
+        print(f"{match / len(all_genres) * 100:.1f}% genres of the songs are in genre include. Profile will be included.")
+        return True
+    else:
+        print(f"{match / len(all_genres) * 100:.1f}% genres of the songs are in genre include. Profile will not be included.")
+        return False
+
 def check_genre(all_genres, n, rescrape):
 
     if not rescrape:

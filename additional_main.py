@@ -7,7 +7,7 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import check_bio, check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
+from resources import check_bio, check_all_genre, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
 
 RESCRAPE = False
@@ -27,7 +27,7 @@ def generate_2nd_permalinks(url):
 	for rapper_profile in soup.find_all(class_="sound__header"):
 		all_genres = rapper_profile.find_all(class_='sc-tagContent')
 		all_genres = [x.get_text().strip() for x in all_genres]
-		if check_genre(all_genres, 2, RESCRAPE):
+		if check_all_genre(all_genres):
 			rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 			additional_rappers.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 			print(rapper_profile_url.attrs['href'], "\tis added to additional_main_txt/additional permalink.txt")
@@ -50,7 +50,7 @@ def get_rapper_profile_urls_from_reposts(permalinks):
 			for rapper_profile in soup.find_all(class_="sound__header"):
 				all_genres = rapper_profile.find_all(class_='sc-tagContent')
 				all_genres = [x.get_text().strip() for x in all_genres]
-				if check_genre(all_genres, 2, RESCRAPE):
+				if check_all_genre(all_genres):
 					rapper_profile_url = rapper_profile.find(class_='soundTitle__username')
 					rapper_urls.append("https://soundcloud.com{}".format(rapper_profile_url.attrs['href']))
 					print(rapper_profile_url.attrs['href'], "\tis added")
@@ -149,17 +149,17 @@ def get_rapper_details():
 
 		print('\n\nRapper url: ', rapper.strip() + "/tracks")
 
-		driver.get(rapper.strip() + "/tracks")
-		time.sleep(2)
-		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
-		
+		# driver.get(rapper.strip() + "/tracks")
+		# time.sleep(2)
+		# rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+		rapper_soup = get_endless_scroll_content(rapper.strip() + "/tracks")
 		# check if there is error
 		error_message = None
 		try:
 			error_message = rapper_soup.find('h1', class_='errorTitle')
 			# write to no-user file
 			if 'find' in error_message.get_text():
-				with open('additional_main_txt/rapper_with_deleted_profile', 'a') as f:
+				with open('additional_main_txt/rapper_with_deleted_profile.txt', 'a') as f:
 					f.write(rapper.strip())
 					f.write('\n')
 				print(f'{rapper.strip()} is enrolled to deleted profile txt.')
@@ -169,7 +169,11 @@ def get_rapper_details():
 
 		all_genres = rapper_soup.find_all(class_='sc-tagContent')
 		all_genres = [x.get_text().strip() for x in all_genres]
-		if not check_genre(all_genres, 2, RESCRAPE):
+		if len(all_genres) == 0:
+			with open('playlist_finder_txt/rapper_with_deleted_song.txt', 'a') as f:
+				f.write(rapper.strip())
+				f.write('\n')
+		if not check_all_genre(all_genres):
 			continue
 
 		bio = rapper_soup.find('div', class_='truncatedUserDescription__content')

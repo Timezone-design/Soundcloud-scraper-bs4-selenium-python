@@ -7,7 +7,7 @@ import pandas as pd
 import sys
 from datetime import datetime
 from constants import *
-from resources import check_bio, check_genre, get_bio_excludes, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
+from resources import check_bio, check_all_genre, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_endless_scroll_content, get_LA_includes
 
 RESCRAPE = False
 
@@ -92,9 +92,7 @@ def get_rapper_details():
 
 	print("{} unique rapper URLs detected.".format(len(rapper_profile_url_unique)))
 
-	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
-	driver.set_page_load_timeout(10000)
-
+	
 	rappers_before = []
 	with open('main_txt/rappers_unique.txt', 'r') as f:
 		for item in f:
@@ -117,9 +115,11 @@ def get_rapper_details():
 
 		print('\n\nRapper url: ', rapper.strip() + "/tracks")
 
-		driver.get(rapper.strip() + "/tracks")
-		time.sleep(2)
-		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+		# driver.get(rapper.strip() + "/tracks")
+		# time.sleep(2)
+		# rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+
+		rapper_soup = get_endless_scroll_content(rapper.strip() + "/tracks")
 
 		# check if there is error
 		error_message = None
@@ -127,7 +127,7 @@ def get_rapper_details():
 			error_message = rapper_soup.find('h1', class_='errorTitle')
 			# write to no-user file
 			if 'find' in error_message.get_text():
-				with open('follower_boost_txt/rapper_with_deleted_profile', 'a') as f:
+				with open('follower_boost_txt/rapper_with_deleted_profile.txt', 'a') as f:
 					f.write(rapper.strip())
 					f.write('\n')
 				print(f'{rapper.strip()} is enrolled to deleted profile txt.')
@@ -137,7 +137,11 @@ def get_rapper_details():
 		
 		all_genres = rapper_soup.find_all(class_='sc-tagContent')
 		all_genres = [x.get_text().strip() for x in all_genres]
-		if not check_genre(all_genres, 2, RESCRAPE):
+		if len(all_genres) == 0:
+			with open('follower_boost_txt/rapper_with_deleted_song.txt', 'a') as f:
+				f.write(rapper.strip())
+				f.write('\n')
+		if not check_all_genre(all_genres):
 			continue
 
 
@@ -222,8 +226,7 @@ def get_rapper_details():
 				instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
 				print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
 
-	driver.close()
-		
+
 
 	emailFile.close()
 	instaFile.close()

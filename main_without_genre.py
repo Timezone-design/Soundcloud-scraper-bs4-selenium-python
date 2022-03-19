@@ -112,8 +112,7 @@ def get_rapper_details():
 
 	print("{} unique rapper URLs detected.".format(len(rapper_profile_url_unique)))
 
-	driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
-	driver.set_page_load_timeout(10000)
+	driver = None
 
 	print('This will create a list of unique rappers and also look in /likes to get a boost in resuts number.')
 	print('Do you want to get only boost?')
@@ -124,7 +123,9 @@ def get_rapper_details():
 			flag = flag.lower()
 			break
 		print("Please input Y or N.")
-
+	if flag == 'y':
+		driver = webdriver.Chrome(options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+		driver.set_page_load_timeout(10000)
 	for rapper in rapper_profile_url_unique:
 
 		rapper_email = None
@@ -140,17 +141,17 @@ def get_rapper_details():
 
 		print('\n\nRapper url: ', rapper.strip() + "/tracks")
 
-		driver.get(rapper.strip() + "/tracks")
-		time.sleep(2)
-		rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
-
+		# driver.get(rapper.strip() + "/tracks")
+		# time.sleep(2)
+		# rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
+		rapper_soup = get_endless_scroll_content(rapper.strip() + "/tracks")
 		# check if there is error
 		error_message = None
 		try:
 			error_message = rapper_soup.find('h1', class_='errorTitle')
 			# write to no-user file
 			if 'find' in error_message.get_text():
-				with open('main_txt/rapper_with_deleted_profile', 'a') as f:
+				with open('main_txt/rapper_with_deleted_profile.txt', 'a') as f:
 					f.write(rapper.strip())
 					f.write('\n')
 				print(f'{rapper.strip()} is enrolled to deleted profile txt.')
@@ -244,8 +245,8 @@ def get_rapper_details():
 				if rapper_instagram_username:
 					instawriter.writerow([rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
 					print('Insta written as: ', [rapper.strip(), username, fullname, artistname, artistnamecleaned, location, country, rapper_instagram_username, rapper_instagram_url, songtitle, songtitlefull, gostatus, 'https://soundcloud.com' + songlink, genre, role, followers, popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles])
-
-	driver.close()
+	if flag == 'y':
+		driver.close()
 		
 
 	emailFile.close()
