@@ -18,7 +18,7 @@ RESCRAPE = False
 
 def follower_boost(url):
   print('Searching following in \t' + url + '\n')
-  with open('audiomack/position_of_rappers_unique_for_following_permalink.txt', 'a') as f:
+  with open('audiomack/position_of_rappers_unique_for_following_permalink.txt', 'a', encoding='utf-16') as f:
     f.write("%s\n" % datetime.now())
     f.write("%s\n\n" % url)
   print('Position saved to audiomack/position_of_rappers_unique_for_following_permalink.txt. Now scrolling page...')
@@ -50,14 +50,17 @@ def follower_boost(url):
 #     if not next_button or next_button.get_attribute('disabled') != None:
 #       next_button_available = False
 #   print('')
-  
-  follower_section = soup.select('[class*="ArtistPage-module__section"]')[-1]
+  try:
+    follower_section = soup.select('[class*="ArtistPage-module__section"]')[-1]
+  except:
+    print("No follower section found.")
+    return
 
   for following_profile in follower_section.find_all('a'):
     additional_rappers.append('https://audiomack.com' + following_profile.attrs['href'])
     print(following_profile.attrs['href'], "\tis added by following boost.")
 
-  with open('audiomack/following_permalink.txt', 'a') as f:
+  with open('audiomack/following_permalink.txt', 'a', encoding='utf-16') as f:
     for item in additional_rappers:
       f.write("%s\n" % item)
   print("\n{} follower urls are added.\n".format(len(additional_rappers)))
@@ -128,7 +131,7 @@ def get_rapper_details():
 
         # if not, to see if it can be created from duplicate series
         if os.path.exists("audiomack/following_permalink.txt"):
-            with open('audiomack/following_permalink.txt') as f:
+            with open('audiomack/following_permalink.txt', encoding='utf-16') as f:
                 for item in f:
                     rapper_profile_url.append(item)
 
@@ -137,7 +140,7 @@ def get_rapper_details():
                                          for i in rapper_profile_url_unique]
 
             url_deletion_list = ['beat', 'repost', 'network', 'prod']
-            with open('audiomack/following_rappers_unique.txt', 'w') as f:
+            with open('audiomack/following_rappers_unique.txt', 'w', encoding='utf-16') as f:
                 for item in rapper_profile_url_unique:
                     url_deletion_flag = False
                     for url_deletion_item in url_deletion_list:
@@ -153,7 +156,7 @@ def get_rapper_details():
             print("Please make audiomack/following_permalink.txt first!")
 
     else:
-        with open('audiomack/following_rappers_unique.txt') as f:
+        with open('audiomack/following_rappers_unique.txt', encoding='utf-16') as f:
             for item in f:
                 rapper_profile_url_unique.append(item)
 
@@ -351,7 +354,7 @@ def get_profile_list():
             href = block.find('ul', class_='music__meta').find(
                 'li', class_='music__meta-released').find('a')['href']
             href = 'https://audiomack.com' + href
-            with open('audiomack/rapper.txt', append_write, encoding='utf-8') as f:
+            with open('audiomack/rapper.txt', append_write, encoding='utf-16') as f:
                 f.write(href)
                 f.write('\n')
                 print(f'{href} is written in rappers.txt')
@@ -361,19 +364,19 @@ def get_profile_list():
     print('Now creating rappers_unique.txt')
 
     rappers = []
-    with open('audiomack/rapper.txt', 'r', encoding='utf-8') as f:
+    with open('audiomack/rapper.txt', 'r', encoding='utf-16') as f:
         for line in f:
             rappers.append(line.strip())
 
     rappers_unique = []
     if os.path.exists('audiomack/rappers_unique.txt'):
-        with open('audiomack/rappers_unique.txt', 'r', encoding='utf-8') as f:
+        with open('audiomack/rappers_unique.txt', 'r', encoding='utf-16') as f:
             for line in f:
                 rappers_unique.append(line.strip())
 
     rappers_list = pd.unique(rappers).tolist()
 
-    with open('audiomack/rappers_unique.txt', 'a', encoding='utf-8') as f:
+    with open('audiomack/rappers_unique.txt', 'a', encoding='utf-16') as f:
         for item in rappers_list:
             if not item in rappers_unique:
                 f.write(item)
@@ -400,7 +403,7 @@ def main():
     
   if flag == 'y':
     unique_list = []
-    with open('audiomack/rappers_unique.txt', 'r') as f:
+    with open('audiomack/rappers_unique.txt', 'r', encoding='utf-16') as f:
       for item in f:
         unique_list.append(item.strip())
     for item in unique_list:

@@ -80,7 +80,7 @@ def get_rapper_details():
 
         # if not, to see if it can be created from duplicate series
         if os.path.exists("audiomack/rappers.txt"):
-            with open('audiomack/rappers.txt') as f:
+            with open('audiomack/rappers.txt', encoding='utf-16') as f:
                 for item in f:
                     rapper_profile_url.append(item)
 
@@ -89,7 +89,7 @@ def get_rapper_details():
                                          for i in rapper_profile_url_unique]
 
             url_deletion_list = ['beat', 'repost', 'network', 'prod']
-            with open('audiomack/rappers_unique.txt', 'w') as f:
+            with open('audiomack/rappers_unique.txt', 'w', encoding='utf-16') as f:
                 for item in rapper_profile_url_unique:
                     url_deletion_flag = False
                     for url_deletion_item in url_deletion_list:
@@ -105,7 +105,7 @@ def get_rapper_details():
             print("Please make audiomack/rappers.txt first!")
 
     else:
-        with open('audiomack/rappers_unique.txt') as f:
+        with open('audiomack/rappers_unique.txt', encoding='utf-16') as f:
             for item in f:
                 rapper_profile_url_unique.append(item)
 
@@ -304,7 +304,7 @@ def get_profile_list():
             href = block.find('ul', class_='music__meta').find(
                 'li', class_='music__meta-released').find('a')['href']
             href = 'https://audiomack.com' + href
-            with open('audiomack/rapper.txt', append_write, encoding='utf-8') as f:
+            with open('audiomack/rapper.txt', append_write, encoding='utf-16') as f:
                 f.write(href)
                 f.write('\n')
                 print(f'{href} is written in rappers.txt')
@@ -314,19 +314,19 @@ def get_profile_list():
     print('Now creating rappers_unique.txt')
 
     rappers = []
-    with open('audiomack/rapper.txt', 'r', encoding='utf-8') as f:
+    with open('audiomack/rapper.txt', 'r', encoding='utf-16') as f:
         for line in f:
             rappers.append(line.strip())
 
     rappers_unique = []
     if os.path.exists('audiomack/rappers_unique.txt'):
-        with open('audiomack/rappers_unique.txt', 'r', encoding='utf-8') as f:
+        with open('audiomack/rappers_unique.txt', 'r', encoding='utf-16') as f:
             for line in f:
                 rappers_unique.append(line.strip())
 
     rappers_list = pd.unique(rappers).tolist()
 
-    with open('audiomack/rappers_unique.txt', 'a', encoding='utf-8') as f:
+    with open('audiomack/rappers_unique.txt', 'a', encoding='utf-16') as f:
         for item in rappers_list:
             if not item in rappers_unique:
                 f.write(item)
