@@ -75,14 +75,12 @@ def am_get_email_and_instagram_info_of_rapper(soup):
     soup = soup.select_one('div[class*="ArtistPage-module__headerWrap"]')
 
     try:
-        instagram_username = soup.find(
-            'a', class_='social-icon--instagram')['href'].split('/')[3]
+        instagram_username = soup.select_one('a[class*="social-icon--instagram"]')['href'].split('/')[3]
     except:
         instagram_username = ''
 
     try:
-        email = re.search(r'([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)', soup.find('div',
-                      class_='ArtistHeader-module__bio--siafZ').get_text())
+        email = re.search(r'([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)', soup.select_one('div[class*="ArtistHeader-module__bio"]').get_text())
     except:
         pass
 
@@ -92,7 +90,7 @@ def am_get_email_and_instagram_info_of_rapper(soup):
     soundcloud_url = 'No'
 
     try:
-        website_url = soup.find('a', class_='social-icon--url')['href']
+        website_url = soup.select_one('a[class*="social-icon--url"]')['href']
     except:
         website_url = 'No'
 
@@ -190,21 +188,29 @@ def get_rapper_details():
         # Check if ad exists
         driver = am_close_ad(driver)
         try:
-            l = driver.find_element(By.CLASS_NAME, 'Button-module__button--2psmQ')
+            l = driver.find_element(by=By.CSS_SELECTOR, value='[class*="Button-module__button"]')
             l.click()
         except:
             pass
         time.sleep(2)
         rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
-        all_genres = rapper_soup.find_all(class_='music-detail__tag')
+        # check if string latest tracks exists
+        result = rapper_soup.find_all(text=re.compile("Latest Tracks", re.IGNORECASE))
+        print(len(result))
+
+        if len(result) == 0:
+            print("Profile is fan/listner. Passing to next url")
+            continue
+
+        all_genres = rapper_soup.select('a[class*="MusicTags-module__tag"]')
         all_genres = [x.get_text().strip().replace('#', '')
                       for x in all_genres]
         if not am_check_genre(all_genres, 2, RESCRAPE):
             print(f'Song genres do not match include list. Passing to next url.')
             continue
 
-        bio = rapper_soup.find('div', class_='ArtistHeader-module__bio--siafZ')
+        bio = rapper_soup.select_one('[class*="ArtistHeader-module__bio"]')
         genre = ''
         role = 'Artist'
 
@@ -212,8 +218,7 @@ def get_rapper_details():
         #     print("Bio not detected. Passing to next url.")
         #     continue
 
-        genre = rapper_soup.find_all(
-            'li', class_='ArtistHeader-module__metaItem--2LbhY')
+        genre = rapper_soup.select('li[class*="ArtistHeader-module__metaItem"]')
         genre_text = ''
         for gen in genre:
             if 'Genre' in gen.get_text():
