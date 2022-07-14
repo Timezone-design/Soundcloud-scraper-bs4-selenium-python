@@ -195,6 +195,16 @@ def get_rapper_details():
         time.sleep(2)
         rapper_soup = BeautifulSoup(driver.page_source, "html.parser")
 
+        title_checker = False
+        all_titles = rapper_soup.select('h3[class*="ArtistPage-module__title"]')
+        for title in all_titles:
+            if "Latest Tracks" in title.get_text().strip():
+                title_checker = True
+
+        if not title_checker:
+            print("This guy does not have his tracks. Skipping...")
+            continue
+
         # check if string latest tracks exists
         result = rapper_soup.find_all(text=re.compile("Latest Tracks", re.IGNORECASE))
         print(len(result))
