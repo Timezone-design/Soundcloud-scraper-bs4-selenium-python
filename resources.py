@@ -1522,6 +1522,27 @@ def am_check_genre(all_genres, n, rescrape):
     return True
 
 
+def am_check_additional_genre(additional_genres):
+    gen_text_list = []
+    for gen in additional_genres:
+        gen_text = gen.get_text().strip().replace("#", "")
+        gen_text_list.append(gen_text)
+    
+    rap = [ "Hip-Hop/Rap", "Boom Bap", "East Coast Rap", "Drill", "Alternative Rap", "West Coast Rap", "Grime", "Southern", "Pop Rap"]
+    afrobeat = [ "Afrobeats", "Reggae", "Carribean" ]
+    melodic = [ "Melodic-Rap", "RnBass" ]
+    randb = [ "R&B", "Contemporary", "Soul" ]
+
+    if set(gen_text_list) & set(rap):
+        return "Hip-Hop/Rap"
+    if set(gen_text_list) & set(afrobeat):
+        return "Afrobeats"
+    if set(gen_text_list) & set(melodic):
+        return "Melodic-Rap"
+    if set(gen_text_list) & set(randb):
+        return "R&B"
+    return ""
+
 def get_endless_scroll_content(url):
     tempdriver = webdriver.Chrome(
         options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)

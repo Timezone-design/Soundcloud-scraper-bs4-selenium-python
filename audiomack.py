@@ -1,3 +1,4 @@
+from audioop import add
 import sys
 import time
 from selenium import webdriver
@@ -11,7 +12,7 @@ from datetime import datetime
 from selenium.webdriver.common.by import By
 
 from constants import *
-from resources import get_endless_scroll_content, am_check_genre, check_bio, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num, am_get_genre_excludes
+from resources import get_endless_scroll_content, am_check_genre, check_bio, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num, am_get_genre_excludes, get_title_excludes, am_check_additional_genre
 
 RESCRAPE = False
 
@@ -148,7 +149,7 @@ def get_rapper_details():
         title_checker = False
         all_titles = rapper_soup.select('h3[class*="ArtistPage-module__title"]')
         for title in all_titles:
-            if "Latest Tracks" in title.get_text().strip():
+            if "latest" in title.get_text().strip().lower():
                 title_checker = True
 
         if not title_checker:
@@ -182,6 +183,10 @@ def get_rapper_details():
             print(
                 f'Artist genre {genre} is in the audiomack genre exclude list. Passing to next url.')
             continue
+
+        additional_genre = rapper_soup.select('a[class*="MusicTags-module__tag"]')
+        if genre == "":
+            genre = am_check_additional_genre(additional_genre)
 
         if bio and not check_bio(bio):
             print('Bio contains words which are not valid. Passing to next url.')

@@ -11,7 +11,7 @@ import pandas as pd
 from datetime import datetime
 
 from constants import *
-from resources import get_endless_scroll_content, am_check_genre, check_bio, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num, am_get_genre_excludes
+from resources import am_check_additional_genre, get_endless_scroll_content, am_check_genre, check_bio, get_genre_includes, get_manager_bio_detect, get_manager_email_detect, generate_password, months, get_LA_includes, am_get_other_info_of_rapper, am_get_popularity, am_close_ad, text_to_num, am_get_genre_excludes
 
 RESCRAPE = False
 
@@ -224,11 +224,6 @@ def get_rapper_details():
         genre = ''
         role = 'Artist'
 
-        # if not bio:
-        #     print("Bio not detected. Passing to next url.")
-        #     continue
-
-        genre = rapper_soup.select('li[class*="ArtistHeader-module__metaItem"]')
         genre_text = ''
         for gen in genre:
             if 'Genre' in gen.get_text():
@@ -240,6 +235,10 @@ def get_rapper_details():
             print(
                 f'Artist genre {genre} is in the audiomack genre exclude list. Passing to next url.')
             continue
+
+        additional_genre = rapper_soup.select('a[class*="MusicTags-module__tag"]')
+        if genre == "":
+            genre = am_check_additional_genre(additional_genre)
 
         if bio and not check_bio(bio):
             print('Bio contains words which are not valid. Passing to next url.')
