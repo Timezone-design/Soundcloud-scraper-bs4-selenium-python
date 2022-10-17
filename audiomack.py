@@ -131,7 +131,7 @@ def get_rapper_details():
 
         print('\n\nRapper url: ', rapper.strip())
 
-        driver.set_page_load_timeout(10)
+        # driver.set_page_load_timeout(10)
         try:
             driver.get(rapper.strip())
         except:
@@ -149,8 +149,10 @@ def get_rapper_details():
         title_checker = False
         all_titles = rapper_soup.select('h3[class*="ArtistPage-module__title"]')
         for title in all_titles:
+            # print(title.get_text().strip().lower())
             if "latest" in title.get_text().strip().lower():
                 title_checker = True
+                break
 
         if not title_checker:
             print("This guy does not have his tracks. Skipping...")

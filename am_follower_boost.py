@@ -198,8 +198,10 @@ def get_rapper_details():
         title_checker = False
         all_titles = rapper_soup.select('h3[class*="ArtistPage-module__title"]')
         for title in all_titles:
-            if "Latest Tracks" in title.get_text().strip():
+            # print(title.get_text().strip().lower())
+            if "latest" in title.get_text().strip().lower():
                 title_checker = True
+                break
 
         if not title_checker:
             print("This guy does not have his tracks. Skipping...")
