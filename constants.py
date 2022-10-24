@@ -7,6 +7,7 @@ DRIVER_OPTIONS = Options()
 DRIVER_OPTIONS.headless = True
 DRIVER_OPTIONS.add_argument('--log-level=3')
 DRIVER_OPTIONS.add_argument("--window-size=1920x1080")
+DRIVER_OPTIONS.add_argument("--mute-audio")
 INSTAGRAM_USERNAME_REGEX = re.compile(
     r'^(instagram|I\.?G\.?)\s?:?\s?@?(.*((-|_).*)?\s?)$', re.IGNORECASE)
 SCREENSHOT_UPLOAD_URL = 'https://example.com/images/'

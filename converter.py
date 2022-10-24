@@ -17,7 +17,7 @@ if not path.exists(filenameCoupon):
   print('Writing a new file for Coupon Code.')
   couponFile = open(filenameCoupon, 'w', newline='', encoding='utf-8-sig')
   couponwriter = csv.writer(couponFile, delimiter=',')
-  couponwriter.writerow(['Edd Discount Name', 'Edd Discount Code', 'Edd Discount Amount', 'Edd Discount Type', 'Edd Discount Uses', 'Edd Discount Max Uses', 'Edd Discount Is Single Use', 'Edd Discount Start', 'Edd Discount Expiration', 'Edd Discount Status', 'Edd Discount Product Condition', 'Edd Discount Is Not Global', 'Edd Discount Min Price', 'Edd Discount Product Reqs', 'Title', 'URL Slug', 'Date', 'Modified Date', 'Status', 'Edd Discount Excluded Products', 'Post type'])
+  couponwriter.writerow(['Edd Discount Name', 'Edd Discount Code', 'Edd Discount Amount', 'Edd Discount Type', 'Edd Discount Uses', 'Edd Discount Max Uses', 'Edd Discount Is Single Use', 'Edd Discount Start', 'Edd Discount Expiration', 'Edd Discount Status', 'Edd Discount Product Condition', 'Edd Discount Is Not Global', 'Edd Discount Min Price', 'Edd Discount Product Reqs', 'ArtistName', 'Title', 'URL Slug', 'Date', 'Modified Date', 'Status', 'Edd Discount Excluded Products', 'Post type'])
   couponFile.close()
 
 if not path.exists(filenameFinal):
@@ -82,6 +82,7 @@ newlines['Edd Discount Product Condition'] = 'all'
 newlines['Edd Discount Is Not Global'] = ''
 newlines['Edd Discount Min Price'] = ''
 newlines['Edd Discount Product Reqs'] = ''
+newlines['ArtistName'] = newlines_all['ArtistName']
 newlines['Title'] = newlines_all['Email']
 newlines['URL Slug'] = newlines_all['UserName'].replace(' ', '_') + '_' + newlines_all['SongTitle'].apply(lambda x: ''.join(x.lower() for x in str(x).split()[0]))
 newlines['URL Slug'] = newlines['URL Slug'].apply(lambda x: SLUG_FILTER_PATTERN.sub('', str(x).lower()))

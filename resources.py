@@ -5,7 +5,10 @@ import json
 import os
 import random
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from datetime import datetime
 import re
 import urllib.parse
@@ -1380,6 +1383,17 @@ def click_cookie_button(driver):
         pass
 
 
+def am_click_cookie_button(driver):
+
+    print("See if there is cookie button.")
+    try:
+        l = driver.find_element(by=By.CSS_SELECTOR, value='[class*="ConfirmMessage-module__cookie"] [class*="ConfirmMessage-module__icon"]')
+        l.click()
+        print("Cookie button found and clicked.")
+    except:
+        print("Cookie button not found.")
+        pass
+
 def take_screenshot(url, username, title, gostatus):
     print("Opening driver for screenshot...")
     driver = webdriver.Chrome(options=DRIVER_OPTIONS,
@@ -1433,6 +1447,86 @@ def take_screenshot(url, username, title, gostatus):
                 f.write(url.rsplit('/', 1)[0])
                 f.write('\n')
         time.sleep(1)
+        driver.save_screenshot(os.path.join('screenshots', filename))
+        driver.close()
+        print('Screenshot saved in the name of {}'.format(filename))
+        print('\n')
+        return filename
+    except Exception as e:
+        print(e)
+        print('screenshot failed to be created.')
+        pass
+
+    try:
+        driver.close()
+    except:
+        pass
+    return 'None'
+
+
+def wait_for_class_to_be_available_css(browser, css, total_wait=100):
+    try:
+        # Give only one class name, if you want to check multiple classes then 'and' will be use in XPATH
+        # e.g //*[contains(@class, "class_name") and contains(@class, "second_class_name")]
+        elem = browser.find_element(by=By.CSS_SELECTOR, value=css)
+        return
+    except:
+        total_wait -= 1
+        time.sleep(1)
+        if total_wait > 1: wait_for_class_to_be_available_css(browser, total_wait)
+
+
+def am_take_screenshot(url, username, title):
+    print("Opening driver for screenshot...")
+    driver = webdriver.Chrome(options=DRIVER_OPTIONS,
+                              executable_path=DRIVER_PATH)
+    driver.set_page_load_timeout(10000)
+    print("Getting screenshot from: ", url)
+    driver.get(url)
+    homepage = False
+    # try:
+    #     blocked = driver.find_element_by_class_name('blockedTrackMessage')
+    #     if blocked:
+    #         print("The song deleted. Getting the home page.")
+    #         driver.get(url.rsplit('/', 1)[0])
+    #         homepage = True
+    # except:
+    #     pass
+
+    time.sleep(2)
+
+    am_click_cookie_button(driver)
+
+    try:
+        if not homepage:
+            print('Driver opened. Now moving cursor...')
+            action = ActionChains(driver)
+            playbutton = driver.find_element(by=By.CSS_SELECTOR, value='[class*="PlayButton-module__playButton"]')
+            # playbar = driver.find_element(by=By.CSS_SELECTOR, value='[class*="PlayButton-module__playButton"]')
+            action.move_to_element_with_offset(playbutton, 50, 50).click().perform()
+            # wait_for_class_to_be_available_css(driver, '[class*="PlayButton-module__playing"]')
+            time.sleep(30)
+            # bar = driver.find_element_by_class_name('listenContext')
+            # action.move_to_element_with_offset(WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[class*="PlayButton-module__playing"]'))), 250, 50).click().perform()
+            
+            action.move_to_element_with_offset(playbutton, 250, 50).click().perform()
+            print('Cursor moved. Now taking screenshot...')
+        elif homepage:
+            print("Taking screenshot of main page.")
+        else:
+            print('All the tracks are GO+, taking screenshot of main page.')
+            homepage = True
+            # click_cookie_button(driver)data-action="pause"
+
+        filename = '{}_{}.png'.format(
+            slugify(username), slugify(title)).lower()
+        if homepage:
+            click_cookie_button(driver)
+            print("Logging URL with homepage screenshot.")
+            with open('main_txt/rapper_with_deleted_song.txt', 'a') as f:
+                f.write(url.rsplit('/', 1)[0])
+                f.write('\n')
+        time.sleep(10)
         driver.save_screenshot(os.path.join('screenshots', filename))
         driver.close()
         print('Screenshot saved in the name of {}'.format(filename))
