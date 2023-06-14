@@ -417,6 +417,20 @@ def get_bio_excludes():
     return excludes
 
 
+def get_bio_includes():
+    includes = []
+    try:
+        if os.path.exists('json/bio.include.json'):
+            with open('json/bio.include.json') as fd:
+                obj = json.loads(fd.read())
+                includes = obj['includes']
+                return includes
+    except Exception as ex:
+        print("JSON reading failed for json/bio.include.json.")
+        print(ex)
+    return includes
+
+
 def get_title_excludes():
     excludes = []
     try:
@@ -430,6 +444,21 @@ def get_title_excludes():
         print("JSON reading failed for json/title.exclude.json.")
         print(ex)
     return excludes
+
+
+def get_title_includes():
+    includes = []
+    try:
+        if os.path.exists('json/title.include.json'):
+            with open('json/title.include.json') as fd:
+                obj = json.loads(fd.read())
+                includes = obj['includes']
+                # print("title includes returned: ", includes)
+                return includes
+    except Exception as ex:
+        print("JSON reading failed for json/title.include.json.")
+        print(ex)
+    return includes
 
 
 def get_famous_rapper_excludes():
@@ -458,6 +487,20 @@ def get_email_excludes():
         print("JSON reading failed for json/email.exclude.json.")
         print(ex)
     return excludes
+
+
+def get_email_includes():
+    includes = []
+    try:
+        if os.path.exists('json/email.include.json'):
+            with open('json/email.include.json') as fd:
+                obj = json.loads(fd.read())
+                includes = obj['includes']
+                return includes
+    except Exception as ex:
+        print("JSON reading failed for json/email.include.json.")
+        print(ex)
+    return includes
 
 
 def get_repost_excludes():
@@ -1674,7 +1717,8 @@ def get_endless_scroll_content(url):
 
 
 def check_bio(soup):
-    bio_excludes = get_bio_excludes()
+    # bio_excludes = get_bio_excludes()
+    bio_includes = get_bio_includes()
     bio_text = soup.text
 
     if 'soundcloud' in bio_text:
@@ -1727,9 +1771,9 @@ def am_get_other_info_of_rapper(rapper_soup, rapper_url):
     search_entity.append(fullname)
     # search_entity.append(artistname)
     search_entity.append(songtitlefull)
-    title_excludes = get_title_excludes()
+    title_includes = get_title_includes()
     for entity in search_entity:
-        for item in title_excludes:
+        for item in title_includes:
             if entity is not None and item in entity:
                 print("The username or fullname or songtitlefull includes a word in title.exclude.json: ",
                       item,	' This profile will be excluded.')
