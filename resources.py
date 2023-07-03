@@ -1,4 +1,3 @@
-from turtle import home
 import emoji
 import string
 import json
@@ -1744,9 +1743,6 @@ def check_bio(soup):
     if flag == 1:
         print('Bio includes exception word. Passing to next url.')
         return False
-    return True
-
-# return username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink, phoneno1, phoneno2
 
 
 def am_get_other_info_of_rapper(rapper_soup, rapper_url):
@@ -2186,7 +2182,6 @@ def text_to_num(text, bad_data_val=0):
 
 
 def am_close_ad(driver):
-
     try:
         ad = driver.find_element_by_class_name('fs-close-button')
         ad.click()
@@ -2196,3 +2191,26 @@ def am_close_ad(driver):
         pass
 
     return driver
+
+def sc_check_bm_email_include(email):
+    includes = get_email_includes()
+    for word in includes:
+        if word in email:
+            return True
+    return False
+
+
+def sc_check_bm_title_include(title):
+    includes = get_title_includes()
+    for word in includes:
+        if word in title:
+            return True
+    return False
+
+
+def sc_check_bm_bio_include(bio):
+    includes = get_bio_includes()
+    for word in includes:
+        if word in bio:
+            return True
+    return False

@@ -9,7 +9,7 @@ from datetime import datetime
 import json
 import requests
 from constants import *
-from resources import check_bio, check_genre, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes
+from resources import sc_check_bm_email_include, sc_check_bm_bio_include, check_genre, get_manager_bio_detect, generate_password, get_manager_email_detect, get_popularity, months, get_email_and_instagram_info_of_rapper, get_other_info_of_rapper, get_repost_excludes, get_endless_scroll_content, get_LA_includes, sc_check_bm_title_include
 
 CSV_EMAIL_FINAL = 'Beatmakers with Email final.csv'
 CSV_EMAIL_UPDATED = 'Beatmakers with Email updated.csv'
@@ -117,7 +117,7 @@ def get_rapper_details():
 						rapper_profile_url_unique.remove(item.strip())
 						print(item.strip, "\tremoved for it appeared in permalinks.txt")
 
-			# url_deletion_list = ['beat', 'repost', 'network', 'prod']
+			url_deletion_list = ['repost', 'network', 'prod']
 			with open(f'{BM_FOLDER}/beatmakers_unique.txt', 'w') as f:
 				for item in rapper_profile_url_unique:
 					url_deletion_flag = False
@@ -185,16 +185,21 @@ def get_rapper_details():
 			generate_2nd_permalinks(driver)
 			continue
 		else:
+			bm_inclusion_flag = False
 			if not bio:
 				print("Bio not detected. Passing to next url.")
 				continue
 			if rapper_soup.find(class_='sc-tagContent'):
 				genre = rapper_soup.find(class_='sc-tagContent').get_text()
 			
-			if not check_bio(bio):
-				continue
+			# if not check_bio(bio):
+			# 	continue
 			
 			bio_text = bio.text
+
+			if sc_check_bm_bio_include(bio_text):
+				bm_inclusion_flag = True
+
 			manager_bio = get_manager_bio_detect()
 			for item in manager_bio:
 				if item in bio_text:
@@ -206,13 +211,20 @@ def get_rapper_details():
 
 			rapper_email, rapper_instagram_username, rapper_instagram_url = get_email_and_instagram_info_of_rapper(bio, web_profiles)
 
-			if rapper_email or rapper_instagram_username:
+			if rapper_email and sc_check_bm_email_include(rapper_email):
+				bm_inclusion_flag = True
+			if rapper_email or rapper_instagram_username or bm_inclusion_flag:
 				username, fullname, artistname, artistnamecleaned, location, country, songtitle, songtitlefull, followers, popularity, songlink = get_other_info_of_rapper(rapper_soup, rapper.strip().split('/')[-1])
 				if username == fullname == artistname == artistnamecleaned == location == country == songtitle == songtitlefull == 'excluded':
 					print('User info includes exception words. Passing to next url')
 					continue
-				
 				try:
+					if sc_check_bm_title_include():
+						bm_inclusion_flag = True
+					
+					if not bm_inclusion_flag:
+						print('Profile seemed not to be a beatmaker. Passing...')
+						continue
 					couponcodename = 'Discount -$30 for mp3 lease for {}'.format(artistnamecleaned)
 					couponcode = generate_password(10)
 					songplays = rapper_soup.find('li', class_='sc-ministats-item').find(class_='sc-visuallyhidden').text.split()[0].replace(',', '')
