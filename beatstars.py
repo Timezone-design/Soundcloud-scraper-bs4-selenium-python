@@ -22,37 +22,36 @@ def get_profile_list():
             break
         print("Please input Y or N.")
 
-    if flag == 'n':
-        return
+    if flag == 'y':
 
-    try:
-        for char in list(string.ascii_lowercase):
-            soup = get_endless_scroll_content(BEATSTARS_SEARCH_URL + char)
-            blocks = soup.find_all('mp-card-figure-member')
-            for block in blocks:
-                swiper = block.find('mp-swiper-list-template')
-                if swiper.find('article') is None:
-                    print(f'\tNo tracks found. Skipping...')
-                button = block.find('div', class_='more-options')
-                if button.find('a') is None:
-                    continue
-                href = button.find('a')['href']
-                href = f'https://beatstars.com{href}'
-                with open('beatstars/beatmakers.txt', append_write, encoding='utf-8') as f:
-                    f.write(href)
-                    f.write('\n')
-                    print(f'{href} is written in beatmakers.txt')
+        try:
+            for char in ['a', 'b']:
+                soup = get_endless_scroll_content(BEATSTARS_SEARCH_URL + char)
+                blocks = soup.find_all('mp-card-figure-member')
+                for block in blocks:
+                    swiper = block.find('mp-swiper-list-template')
+                    if swiper.find('article') is None:
+                        print(f'\tNo tracks found. Skipping...')
+                    button = block.find('div', class_='more-options')
+                    if button.find('a') is None:
+                        continue
+                    href = button.find('a')['href']
+                    href = f'https://beatstars.com{href}'
+                    with open('beatstars/beatmakers.txt', append_write, encoding='utf-8') as f:
+                        f.write(href)
+                        f.write('\n')
+                        print(f'{href} is written in beatmakers.txt')
 
-    except Exception as e:
-        print(e)
-        print('Error occurred while scrolling content.')
-        if os.path.exists('beatstars/beatmakers.txt'):
-            print(
-                "beatmakers.txt exists. Moving to next steps to scrape each profiles.")
-            pass
-        else:
-            print("beatmakers.txt also not found. Terminating the scraper...")
-            sys.exit()
+        except Exception as e:
+            print(e)
+            print('Error occurred while scrolling content.')
+            if os.path.exists('beatstars/beatmakers.txt'):
+                print(
+                    "beatmakers.txt exists. Moving to next steps to scrape each profiles.")
+                pass
+            else:
+                print("beatmakers.txt also not found. Terminating the scraper...")
+                sys.exit()
 
     print('Creating beatmaker_unique.txt')
 
@@ -71,7 +70,7 @@ def get_profile_list():
 
     with open('beatstars/beatmakers_unique.txt', 'a', encoding='utf-8') as f:
         for item in beatmakers_list:
-            if not item in beatmakers_list:
+            if not item in beatmakers_unique:
                 f.write(item)
                 f.write('\n')
 

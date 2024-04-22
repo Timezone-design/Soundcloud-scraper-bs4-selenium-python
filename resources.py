@@ -1382,8 +1382,9 @@ def click_cookie_button(driver):
 
 def take_screenshot(url, username, title, gostatus):
     print("Opening driver for screenshot...")
+    service = webdriver.chrome.service.Service(executable_path=DRIVER_PATH)
     driver = webdriver.Chrome(options=DRIVER_OPTIONS,
-                              executable_path=DRIVER_PATH)
+                              service=service)
     driver.set_page_load_timeout(10000)
     print("Getting screenshot from: ", url)
     driver.get(url)
@@ -1499,8 +1500,9 @@ def am_check_genre(all_genres, n, rescrape):
 
 
 def get_endless_scroll_content(url):
+    service = webdriver.chrome.service.Service(executable_path=DRIVER_PATH)
     tempdriver = webdriver.Chrome(
-        options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
+        options=DRIVER_OPTIONS, service=service)
     tempdriver.set_page_load_timeout(10000)
     tempdriver.set_script_timeout(10000)
     tempdriver.get(url)
