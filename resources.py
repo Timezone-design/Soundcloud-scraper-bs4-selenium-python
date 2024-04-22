@@ -1502,11 +1502,12 @@ def get_endless_scroll_content(url):
     tempdriver = webdriver.Chrome(
         options=DRIVER_OPTIONS, executable_path=DRIVER_PATH)
     tempdriver.set_page_load_timeout(10000)
+    tempdriver.set_script_timeout(10000)
     tempdriver.get(url)
     time.sleep(1)
     click_cookie_button(tempdriver)
-    scroll_threshold = 500
-    # scroll_threshold = 10
+    # scroll_threshold = 500
+    scroll_threshold = 2
     scroll_pause_time = 2
 
     i = 0
@@ -1521,8 +1522,9 @@ def get_endless_scroll_content(url):
             new_height = tempdriver.execute_script(
                 "return document.body.scrollHeight")
             print('{}th scroll made.'.format(i))
-        except:
-            print("error in getting data. Passing to next iteration 3")
+        except Exception as e:
+            print(e)
+            print("error in getting data. Passing to next iteration")
             return
 
         if last_height == new_height or i == scroll_threshold:

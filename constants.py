@@ -39,3 +39,7 @@ ALL_FILE_HEADER_AUDIOMACK = ['SoundCloudURL', 'UserName', 'FullName', 'ArtistNam
 AUDIOMACK_API_BASE = 'https://api.audiomack.com/v1'
 PHONE_NO_PATTERN = re.compile(
     r'^[a-zA-Z]*((\+?\d{1,3}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4})[a-zA-Z]*$')
+
+# BEATSTARS
+
+BEATSTARS_SEARCH_URL = "https://beatstars.com/search?type=musicians&q="
