@@ -1,10 +1,130 @@
 import os
 import string
 import sys
+import csv
+import time
 import pandas as pd
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
-from constants import BEATSTARS_SEARCH_URL
-from resources import get_endless_scroll_content
+from constants import BEATSTARS_SEARCH_URL, DRIVER_OPTIONS, DRIVER_PATH
+from resources import am_close_ad, get_endless_scroll_content
+
+
+def get_beatmaker_details():
+    filenameEmail = "beatstars/Beatmakers with Email.csv"
+    filenameInstagram = "beatstars/Beatmakers with Instagram.csv"
+    filenameAll = "beatstars/Beatmakers All.csv"
+
+    emailFile = open(filenameEmail, 'a', newline='', encoding='utf-16')
+    instaFile = open(filenameInstagram, 'a', newline='', encoding='utf-16')
+    allFile = open(filenameAll, 'a', newline='', encoding='utf-16')
+
+    emailwriter = csv.writer(emailFile, delimiter='\t')
+    instawriter = csv.writer(instaFile, delimiter='\t')
+    allwriter = csv.writer(allFile, delimiter='\t')
+
+    # if os.path.getsize(filenameEmail) == 0:
+    #     print("Writing a new file for Email")
+    #     emailwriter.writerow(EMAIL_FILE_HEADER_AUDIOMACK)
+    # if os.path.getsize(filenameInstagram) == 0:
+    #     print("Writing a new file for Instagram")
+    #     instawriter.writerow(INSTA_FILE_HEADER_AUDIOMACK)
+    # if os.path.getsize(filenameAll) == 0:
+    #     print("Writing a new file for All")
+    #     allwriter.writerow(ALL_FILE_HEADER_AUDIOMACK)
+
+    beatstar_profile_url = []
+    beatstar_profile_url_unique = []
+
+
+    if not os.path.exists("beatstars/beatmakers_unique.txt"):
+
+        # if not, to see if it can be created from duplicate series
+        if os.path.exists("beatstars/beatmakers.txt"):
+            with open('beatstars/beatmakers.txt') as f:
+                for item in f:
+                    beatstar_profile_url.append(item)
+
+            beatstar_profile_url_unique = pd.unique(beatstar_profile_url).tolist()
+            beatstar_profile_url_unique = [i.strip()
+                                         for i in beatstar_profile_url_unique]
+
+            url_deletion_list = ['beat', 'repost', 'network', 'prod']
+            with open('beatstars/beatmakers_unique.txt', 'w') as f:
+                for item in beatstar_profile_url_unique:
+                    url_deletion_flag = False
+                    for url_deletion_item in url_deletion_list:
+                        if url_deletion_item in item.strip():
+                            url_deletion_flag = True
+                    if url_deletion_flag:
+                        print(
+                            item.strip(), '\tis removed for it has a word in deletion list.')
+                        continue
+                    f.write("%s\n" % item.strip())
+
+        else:
+            print("Please make beatstars/beatmakers.txt first!")
+
+    else:
+        with open('beatstars/beatmakers_unique.txt') as f:
+            for item in f:
+                beatstar_profile_url_unique.append(item)
+    
+    print("{} unique beatstar URLs detected.".format(
+        len(beatstar_profile_url_unique)))
+    
+    service = webdriver.chrome.service.Service(executable_path=DRIVER_PATH)
+    driver = webdriver.Chrome(options=DRIVER_OPTIONS,
+                              service=service)
+    driver.set_script_timeout(10000)
+    driver.set_page_load_timeout(10000)
+
+    for beatstar in beatstar_profile_url_unique:
+        beatstar_email = None
+        beatstar_instagram_username = None
+        beatstar_instagram_url = None
+        username = None
+        fullname = None
+        artistname = None
+        location = None
+        country = None
+        songtitlefull = None
+        songtitle = None
+
+        print('\nStar url: ', beatstar.strip())
+
+        try:
+            driver.get(beatstar.strip() + '/about')
+        except:
+            pass
+
+        # Check if ad exists
+        driver = am_close_ad(driver)
+        try:
+            l = driver.find_element_by_id(
+                'onetrust-accept-btn-handler')
+            l.click()
+        except:
+            pass
+        time.sleep(2)
+        username = driver.current_url.split('/')[-1]
+        driver.get(driver.current_url + '/about')
+
+        beatstar_soup = BeautifulSoup(driver.page_source, "html.parser")
+        about_me_info = beatstar_soup.find('div', class_='about-me-info')
+        user_location = beatstar_soup.find('bs-caption-figure-template', class_='user_location')
+        if user_location is not None:
+            location = user_location.text
+        social_network_list = beatstar_soup.find('ul', class_='social-networks-list')
+        fullname = beatstar_soup.find('bs-caption-figure-template', class_='s-line heading-s center').find('h1').text
+        print(fullname)
+        print(location)
+        print(about_me_info)
+        print(social_network_list)
+        if social_network_list is not None:
+            sys.exit()
+
 
 def get_profile_list():
     # opening the start URL and get profiles
@@ -79,6 +199,6 @@ def get_profile_list():
 
 def main():
     get_profile_list()
-    # get_beatmaker_details()
+    get_beatmaker_details()
 
 main()
