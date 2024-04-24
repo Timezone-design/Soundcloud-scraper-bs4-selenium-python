@@ -1509,7 +1509,7 @@ def get_endless_scroll_content(url):
     time.sleep(1)
     click_cookie_button(tempdriver)
     # scroll_threshold = 500
-    scroll_threshold = 2
+    scroll_threshold = 10
     scroll_pause_time = 2
 
     i = 0
