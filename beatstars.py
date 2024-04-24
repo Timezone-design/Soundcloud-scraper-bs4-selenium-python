@@ -1,4 +1,5 @@
 import os
+import re
 import string
 import sys
 import csv
@@ -7,8 +8,43 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-from constants import BEATSTARS_SEARCH_URL, DRIVER_OPTIONS, DRIVER_PATH
-from resources import am_close_ad, get_endless_scroll_content
+from constants import ALL_FILE_HEADER_AUDIOMACK, BEATSTARS_SEARCH_URL, DRIVER_OPTIONS, DRIVER_PATH, EMAIL_FILE_HEADER_AUDIOMACK, INSTA_FILE_HEADER_AUDIOMACK
+from resources import am_close_ad, generate_password, get_LA_includes, get_endless_scroll_content
+
+
+def get_beatstar_instagram_url(soup):
+    links = soup.find_all('a')
+    instagram_username = ''
+    instagram_url = ''
+    for link in links:
+        href = link['href']
+        if 'instagram' in href:
+            instagram_url = href
+            instagram_username = href.split('/')[-1]
+            break
+    return instagram_username, instagram_url
+
+
+def get_beatstar_email(soup):
+    email = ''
+    try:
+        email = re.search(r'([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)', soup.get_text())
+    except:
+        pass
+    return email
+
+
+def get_beatstar_first_song_link(soup):
+    url = ''
+    title = ''
+    if soup is not None:
+        links = soup.find_all('a', class_='name')
+        for link in links:
+            if link['href'][:3] == '/TK':
+                url = link['href']
+                title = link.text
+                break
+    return title, url
 
 
 def get_beatmaker_details():
@@ -24,15 +60,15 @@ def get_beatmaker_details():
     instawriter = csv.writer(instaFile, delimiter='\t')
     allwriter = csv.writer(allFile, delimiter='\t')
 
-    # if os.path.getsize(filenameEmail) == 0:
-    #     print("Writing a new file for Email")
-    #     emailwriter.writerow(EMAIL_FILE_HEADER_AUDIOMACK)
-    # if os.path.getsize(filenameInstagram) == 0:
-    #     print("Writing a new file for Instagram")
-    #     instawriter.writerow(INSTA_FILE_HEADER_AUDIOMACK)
-    # if os.path.getsize(filenameAll) == 0:
-    #     print("Writing a new file for All")
-    #     allwriter.writerow(ALL_FILE_HEADER_AUDIOMACK)
+    if os.path.getsize(filenameEmail) == 0:
+        print("Writing a new file for Email")
+        emailwriter.writerow(EMAIL_FILE_HEADER_AUDIOMACK)
+    if os.path.getsize(filenameInstagram) == 0:
+        print("Writing a new file for Instagram")
+        instawriter.writerow(INSTA_FILE_HEADER_AUDIOMACK)
+    if os.path.getsize(filenameAll) == 0:
+        print("Writing a new file for All")
+        allwriter.writerow(ALL_FILE_HEADER_AUDIOMACK)
 
     beatstar_profile_url = []
     beatstar_profile_url_unique = []
@@ -102,8 +138,7 @@ def get_beatmaker_details():
         # Check if ad exists
         driver = am_close_ad(driver)
         try:
-            l = driver.find_element_by_id(
-                'onetrust-accept-btn-handler')
+            l = driver.find_element_by_id('onetrust-accept-btn-handler')
             l.click()
         except:
             pass
@@ -117,13 +152,58 @@ def get_beatmaker_details():
         if user_location is not None:
             location = user_location.text
         social_network_list = beatstar_soup.find('ul', class_='social-networks-list')
-        fullname = beatstar_soup.find('bs-caption-figure-template', class_='s-line heading-s center').find('h1').text
-        print(fullname)
-        print(location)
-        print(about_me_info)
-        print(social_network_list)
+        fullname_soup = beatstar_soup.find('bs-caption-figure-template', class_='s-line heading-s center')
+        if fullname_soup:
+            fullname = fullname_soup.find('h1').text
+        else:
+            print("Profile not found, continuing loop.")
+        artistname = fullname
+        artistnamecleaned = fullname
+        
+        if about_me_info is not None:
+            beatstar_email = get_beatstar_email(about_me_info)
         if social_network_list is not None:
-            sys.exit()
+            beatstar_instagram_username, beatstar_instagram_url = get_beatstar_instagram_url(social_network_list)
+
+        if beatstar_email or beatstar_instagram_username:
+            couponcodename = 'Discount -$30 for mp3 lease for {}'.format(
+                    fullname)
+            couponcode = generate_password(10)
+            songplays = 0
+            uploaddate = ''
+            popularity = 'True'
+            popularityadjusted = 'True'
+            activestatus = 'Active'
+            gostatus = 'No'
+            songtitle, songlink = get_beatstar_first_song_link(beatstar_soup.find('div', class_='content-media'))
+            songtitlefull = songtitle
+            inlosangeles = "No"
+            LA_includes = get_LA_includes()
+            if location in LA_includes:
+                inlosangeles = "Yes"
+            
+            has_email = 'No'
+            has_instagram = 'No'
+            if beatstar_instagram_url:
+                has_instagram = 'Yes'
+
+            if beatstar_email:
+                beatstar_email = beatstar_email.group(0)
+                emailwriter.writerow([beatstar.strip(), username, fullname, artistname, artistnamecleaned, location, country, beatstar_email, beatstar_instagram_username, beatstar_instagram_url, has_instagram, songtitle, songtitlefull,
+                                     gostatus, songlink, '', '', '', popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, ''])
+
+            if beatstar_instagram_url:
+                instawriter.writerow([beatstar.strip(), username, fullname, artistname, artistnamecleaned, location, country, beatstar_instagram_username, beatstar_instagram_url, songtitle, songtitlefull, gostatus,
+                                     songlink, '', '', '', popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, ''])
+
+            allwriter.writerow([beatstar.strip(), username, fullname, artistname, artistnamecleaned, location, country, beatstar_email, beatstar_instagram_username, beatstar_instagram_url, has_instagram, songtitle, songtitlefull, gostatus, songlink, '', '', '', popularity, couponcodename, couponcode, songplays, uploaddate, popularityadjusted, activestatus, inlosangeles, has_email, '', '', '', ''])
+        else:
+            print("No email or instagram username found.")
+
+    driver.close()
+
+    emailFile.close()
+    instaFile.close()
 
 
 def get_profile_list():
